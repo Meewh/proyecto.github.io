@@ -39,11 +39,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     
-    userMenu.addEventListener("click", (e) => { //cerrar sesion
+    userMenu.addEventListener("click", (e) => { //cierra sesion y recarga
         if (e.target && e.target.id === "logoutBtn") {
             localStorage.removeItem("usuario");
             localStorage.removeItem("logueado");
-            window.location.href = "login.html";
+            location.reload();
         }
     });
 
