@@ -8,22 +8,47 @@
   
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: rgb(248, 249, 250);
-    }
-  </style>
-</head>
+  <link href="css/stylesLogin.css" rel="stylesheet">
+  </head>
 
 <body>
-  <main class="mt-5">
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+  <header>
+    <img src="img\Logo.png" alt="Logo" class="logo-header">
+    <span>Inicio</span>
+  </header>
+
+  <div class="card">
+    <div class="card-left">
+      <img src="img\Logo.png" alt="Logo" class="logo">
+      <h1>Crea una cuenta</h1>
+      <p>Ingresa tus datos</p>
     </div>
-  </main>
+
+    <div class="card-right">
+      <div class="input-group">
+        <input type="text" id="nombre">
+        <label for="nombre">Nombre</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="apellido">
+        <label for="apellido">Apellido</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="direccion">
+        <label for="direccion">Dirección</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="telefono">
+        <label for="telefono">Teléfono</label>
+      </div>
+
+      <button>Crear cuenta</button>
+    </div>
+  </div>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
