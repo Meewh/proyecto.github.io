@@ -5,64 +5,67 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Login</title>
-  
+
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Hoja de estilos de Gio: <link href="css/stylesLogin.css" rel="stylesheet"> -->
+  <link href="css/stylesLogin.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: rgb(248, 249, 250);
-    }
-  </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link active" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <main class="mt-5">
+  <header>
+    <a href="index.html" class="header-link">
+    <img src="img\Logo.png" alt="Logo" class="logo-header">
+    <span>Inicio</span>
+    </a>
+  </header>
+
+  <main>
     <div class="login-container">
-      <h2>Iniciar Sesión</h2>
-      <form id="loginForm">
-        <label for="usuario">Usuario</label>
-        <input type="text" id="usuario" name="usuario" required> <br>
-        <br>
-        <label for="contraseña">Contraseña</label>
-        <input type="password" id="contraseña" name="contraseña" required><br>
-        <br>
-        <button type="submit">Ingresar</button>
-        <button type="button" id="btnRegistro" class="registro">Registrarse</button>
+
+      
+      <div class="form-left"> <!-- esto va a la izquierda -->
+        <img src="img\Logo.png" alt="Logo" class="logo">
+        <h2>Iniciar Sesión</h2>
+      </div>
+
+      
+      <form id="loginForm" class="form-right"> <!-- esto va a la derecha -->
+
+        <div class="input-group">
+          <input type="text" id="usuario" name="usuario" required>
+          <label for="usuario">Usuario</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" id="contraseña" name="contraseña" required>
+          <label for="contraseña">Contraseña</label>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" id="btnRegistro" class="registro">Registrarse</button>
+          <button type="submit">Ingresar</button>
+        </div>
+
+        <p id="mensaje" class="error"></p>
       </form>
-      <p id="mensaje" class="error"></p>
     </div>
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <script src="js/login.js"></script>
 </body>
 
 </html>
+
 
   <!-- Codigo gio - inicio -->
   <!-- <header>
