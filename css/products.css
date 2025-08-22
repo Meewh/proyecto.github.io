@@ -1,5 +1,5 @@
 .product-card {
-    border: 2px solid #ffa500;
+    border: 2px solid #F09100;
     border-radius: 12px;
     padding: 15px;
     text-align: left;
@@ -35,7 +35,7 @@
 .price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ff7a00;
+    color: #F09100;
 }
 
 .sold {
@@ -44,7 +44,7 @@
 }
 
 .filters {
-    background-color: #ff7a00;
+    background-color: #F09100;
 }
 
 .filters h5 {
