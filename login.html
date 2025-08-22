@@ -31,23 +31,25 @@
 
       
       <form id="loginForm" class="form-right"> <!-- esto va a la derecha -->
-
+      
         <div class="input-group">
           <input type="text" id="usuario" name="usuario" required>
           <label for="usuario">Usuario</label>
         </div>
-
+      
         <div class="input-group">
           <input type="password" id="contraseña" name="contraseña" required>
           <label for="contraseña">Contraseña</label>
         </div>
-
-        <div class="btn-group">
-          <button type="button" id="btnRegistro" class="registro">Registrarse</button>
-          <button type="submit">Ingresar</button>
+      
+        <div class="btn-container">
+          <button type="submit" class="btn-ingresar">Ingresar</button>
+          <p class="registro-text">¿No tienes una cuenta?</p>
+          <a href="#" id="btnRegistro" class="link-registro">Regístrate</a>
         </div>
-
+      
         <p id="mensaje" class="error"></p>
+
       </form>
     </div>
   </main>
