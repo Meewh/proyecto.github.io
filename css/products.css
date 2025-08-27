@@ -1,0 +1,56 @@
+.product-card {
+    border: 2px solid #F09100;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+    transition: all 0.3s ease;
+    font-family: 'Inria Sans', sans-serif
+}
+
+.product-card h5 {
+    font-size: 1.6rem;
+}
+
+.product-card h5 {
+    font-size: 1.6rem;
+}
+
+.product-card .sold {
+    text-align: right;
+    margin-bottom: 0%;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #F09100;
+}
+
+.sold {
+    color: gray;
+    font-size: 0.9rem;
+}
+
+.filters {
+    background-color: #F09100;
+}
+
+.filters h5 {
+    color: #ffffff;
+}
+
+.filters p {
+    color: #ffffff;
+}

@@ -27,8 +27,9 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    padding: 40px 0; /* centra el card en la página */
+
+    padding: 40px 0;
+    /* centra el card en la página */
 }
 
 .login-container {
@@ -70,7 +71,8 @@ main {
 }
 
 
-.form-right { /* parte derecha del form */
+.form-right {
+    /* parte derecha del form */
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -126,7 +128,8 @@ button:hover {
 }
 
 
-.error { /* error abajo */
+.error {
+    /* error abajo */
     color: #ffcccc;
     font-size: 14px;
     margin-top: 10px;
@@ -187,6 +190,7 @@ footer {
 .link-registro:hover {
     text-decoration: underline;
 }
+
 .link-registro,
 .link-registro:visited,
 .link-registro:hover,
@@ -194,6 +198,7 @@ footer {
     color: #ffffff;
 
 }
+
 /*fin*/
 
 /* para hacer que el boton inicio quede bonito y no se vuelva azul y subrayando al ponerl el mouse*/
@@ -204,12 +209,13 @@ footer {
     color: inherit;
     font-weight: bold;
 }
+
 /* para que se deje de cambiar a color azul y subrayarce por el <a> */
 .header-link,
 .header-link:visited,
 .header-link:hover,
 .header-link:active {
     color: #ffffff;
-    
+
     text-decoration: none;
 }

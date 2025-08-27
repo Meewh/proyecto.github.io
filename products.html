@@ -10,10 +10,17 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/products.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+  <nav class="navbar navbar-expand-lg p-1" id="navbar">
+    <div class="form-left"> <!-- esto va a la izquierda -->
+      <img src="img\Logo.png" alt="Logo" class="logo">
+    </div>
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,25 +37,76 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item dropdown" style="position: relative;">
+            <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
+              <span id="bienvenida">Iniciar sesión</span> <span id="flecha">▼</span>
+            </button>
+            <ul id="userMenu" style="
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                min-width: 150px;
+                z-index: 9999;
+            ">
+              <!-- guarda temporalmente todo en el cache de la pag -->
+            </ul>
           </li>
+
         </ul>
       </div>
     </div>
   </nav>
-  <main class="pb-5 container">
+
+
+
+
+  <main class="pb-5">
+    <div class="text-center p-4">
+      <h2>Productos</h2>
+      <p class="lead">Verás aquí todos los productos del sitio.</p>
+    </div>
+
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div class="row">
+
+        <!-- ASIDE -->
+        <aside class="col-md-3 mb-4">
+          <div class="filters p-3 border rounded" style="min-height: 400px;">
+            <h5 class="fw-bold">Filtros</h5>
+            <p class="">En desarrollo</p>
+          </div>
+        </aside>
+
+        <!-- LISTA DE PRODUCTOS -->
+        <div class="col-md-9">
+          <div class="row" id="product-list-container">
+
+            <!-- esto se rellena en el js -->
+
+          </div>
+        </div>
+
       </div>
     </div>
   </main>
+
+
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">
@@ -62,6 +120,7 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/nav.js"></script>
 </body>
 
 </html>
