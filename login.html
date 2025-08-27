@@ -12,42 +12,43 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link active" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-          </li>
-        </ul>
+  <header>
+    <a href="index.html" class="header-link">
+      <img src="img\Logo.png" alt="Logo" class="logo-header">
+      <span>Inicio</span>
+    </a>
+  </header>
+
+  <main>
+    <div class="login-container">
+
+
+      <div class="form-left"> <!-- esto va a la izquierda -->
+        <img src="img\Logo.png" alt="Logo" class="logo" style="width: 200px;">
+        <h2>Iniciar Sesión</h2>
       </div>
 
-      
-      <form id="loginForm" class="form-right"> <!-- esto va a la derecha -->
 
+      <form id="loginForm" class="form-right"> <!-- esto va a la derecha -->
+      
         <div class="input-group">
           <input type="text" id="usuario" name="usuario" required>
           <label for="usuario">Usuario</label>
         </div>
-
+      
         <div class="input-group">
           <input type="password" id="contraseña" name="contraseña" required>
           <label for="contraseña">Contraseña</label>
         </div>
-
+      
         <div class="btn-container">
           <button type="submit" class="btn-ingresar">Ingresar</button>
           <p class="registro-text">¿No tienes una cuenta?</p>
           <a href="#" id="btnRegistro" class="link-registro">Regístrate</a>
         </div>
-
+      
         <p id="mensaje" class="error"></p>
+
       </form>
     </div>
   </main>
