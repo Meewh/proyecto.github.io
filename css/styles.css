@@ -202,3 +202,11 @@ a.custom-card:hover {
   width: 60px;
   border-radius: 8px;
 }
+
+#flecha {
+  transition: transform 0.3s ease;
+}
+
+#flecha.bi-arrow-up {
+  transform: rotate(180deg);
+}
