@@ -99,13 +99,64 @@
             </div>
 
 
-            <!-- ASIDE -->
-            <aside class="col-md-3 mb-4 d-none d-md-block">
-                <div class="filters p-3 border rounded" style="min-height: 400px;">
-                    <h5 class="fw-bold">Filtros</h5>
-                    <p class="">En desarrollo</p>
-                </div>
-            </aside>
+        <!-- ASIDE con filtros -->
+        <aside class="col-md-3 mb-4">
+          <div class="filters p-3 border rounded" style="min-height: 400px;">
+            <h5 class="fw-bold mb-3">Filtros</h5>
+
+            <!-- Condición -->
+            <div class="mb-3">
+              <h6>Condición</h6>
+              <div>
+                <input type="checkbox" id="cond-nuevo" value="nuevo"> <label for="cond-nuevo">Nuevo</label><br>
+                <input type="checkbox" id="cond-reacond" value="reacondicionado"> <label for="cond-reacond">Reacondicionado</label><br>
+                <input type="checkbox" id="cond-usado" value="usado"> <label for="cond-usado">Usado</label>
+              </div>
+            </div>
+
+            <!-- Precio -->
+            <div class="mb-3">
+              <h6>Precio</h6>
+              <input type="number" id="precio-min" class="form-control mb-2" placeholder="Mínimo">
+              <input type="number" id="precio-max" class="form-control mb-2" placeholder="Máximo">
+            </div>
+
+            <!-- Relevancia -->
+            <div class="mb-3">
+              <h6>Ordenar por</h6>
+              <select id="ordenar" class="form-select">
+                <option value="relevancia">Relevancia</option>
+                <option value="precio-asc">Precio: menor a mayor</option>
+                <option value="precio-desc">Precio: mayor a menor</option>
+                <option value="nombre-asc">Nombre A-Z</option>
+                <option value="nombre-desc">Nombre Z-A</option>
+              </select>
+            </div>
+
+            <!-- Tiempo de entrega -->
+            <div class="mb-3">
+              <h6>Tiempo de entrega</h6>
+              <select id="entrega" class="form-select">
+                <option value="">Cualquiera</option>
+                <option value="24">24h</option>
+                <option value="48">48h</option>
+                <option value="72">72h o más</option>
+              </select>
+            </div>
+
+            <!-- Extra: Disponibilidad -->
+            <div class="mb-3">
+              <h6>Disponibilidad</h6>
+              <input type="checkbox" id="stock" value="en-stock"> <label for="stock">En stock</label>
+            </div>
+
+            <!-- Botones -->
+            <div class="d-grid gap-2">
+              <button id="aplicar-filtros" class="btn btn-primary">Aplicar</button>
+              <button id="limpiar-filtros" class="btn btn-secondary">Limpiar</button>
+            </div>
+          </div>
+        </aside>
 
             <!-- LISTA DE PRODUCTOS -->
             <div class="col-md-9">
