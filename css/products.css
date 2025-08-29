@@ -54,3 +54,31 @@
 .filters p {
     color: #ffffff;
 }
+
+.navfiltro {
+    align-items: start;
+}
+
+.btn {
+    background-color: #F09100;
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: white;
+    color: black;
+    border-color: #F09100;
+}
+
+.btnExit {
+    background: none;     /* sin fondo */
+    border: none;         /* sin borde */
+    padding: 0;           /* sin espacio extra */
+    margin: 0;            /* sin margen */
+    cursor: pointer;      /* que se vea como botón clickeable */
+}
+
+.btnExit i {
+    font-size: 2.5rem;    /* tamaño de la flecha */
+    color: orange;        /* color de la flecha */
+}

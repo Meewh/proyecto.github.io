@@ -1,6 +1,5 @@
 let products = [];
 
-
 function showProductsList() {
 
     let htmlContentToAppend = "";
@@ -8,7 +7,7 @@ function showProductsList() {
         let product = products[i];
 
         htmlContentToAppend += `
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
               <div class="product-card">
                 <img src="${product.image}" alt="Producto" class="product-image">
                 <h5 class="fw-bold">${product.name}
@@ -22,6 +21,16 @@ function showProductsList() {
     }
     document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
 }
+
+const dropdownItems = document.querySelectorAll('.dropdown-item');
+const dropdownButton = document.getElementById('dropdownButton');
+
+dropdownItems.forEach(item => {
+    item.addEventListener('click', function (e) {
+        e.preventDefault(); // evita que el enlace navegue
+        dropdownButton.textContent = this.textContent;
+    });
+});
 
 
 document.addEventListener("DOMContentLoaded", function (e) {
