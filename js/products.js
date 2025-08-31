@@ -8,7 +8,7 @@ function showProductsList(lista) {
     let html = "";
     for (const p of lista) {
         html += `
-      <div class="col-md-4 mb-4">
+      <div class="col-12 col-sm-6 col-md-4 mb-4">
         <div class="product-card">
           <img src="${p.image}" alt="Producto" class="product-image">
           <h5 class="fw-bold">${p.name}</h5>

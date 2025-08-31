@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55edbd5d-ed13-4f94-90ed-e03ecd8215ec" name="Changes" comment="fix: agregar responsive a productos">
+    <list default="true" id="55edbd5d-ed13-4f94-90ed-e03ecd8215ec" name="Changes" comment="change: adaptar filtros para aparecer y desaparecer, no funcionan los filtros del boton">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/products.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,18 +21,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Alen-Borges"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Alen-Borges&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Meewh/proyecto.github.io.git",
-    "accountId": "aa681221-c8c5-4fc1-9957-f7b6a29445c5"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Meewh/proyecto.github.io.git&quot;,
+    &quot;accountId&quot;: &quot;aa681221-c8c5-4fc1-9957-f7b6a29445c5&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -44,6 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JavaScript Debug.products.html.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "products-responsive",
@@ -56,6 +57,16 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="products.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/proyecto.github.io/products.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.products.html" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -72,7 +83,8 @@
       <option name="presentableId" value="Default" />
       <updated>1756467757808</updated>
       <workItem from="1756467759742" duration="12000" />
-      <workItem from="1756467773852" duration="10376000" />
+      <workItem from="1756467773852" duration="11016000" />
+      <workItem from="1756668324505" duration="1108000" />
     </task>
     <task id="LOCAL-00001" summary="Crear rama responsive">
       <option name="closed" value="true" />
@@ -90,7 +102,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756476516540</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="change: adaptar filtros para aparecer y desaparecer, no funcionan los filtros del boton">
+      <option name="closed" value="true" />
+      <created>1756480549166</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1756480549166</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,7 +127,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="origin/products-responsive" />
                       </list>
                     </value>
                   </entry>
@@ -122,6 +142,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Crear rama responsive" />
     <MESSAGE value="fix: agregar responsive a productos" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: agregar responsive a productos" />
+    <MESSAGE value="change: adaptar filtros para aparecer y desaparecer, no funcionan los filtros del boton" />
+    <option name="LAST_COMMIT_MESSAGE" value="change: adaptar filtros para aparecer y desaparecer, no funcionan los filtros del boton" />
   </component>
 </project>
