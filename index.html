@@ -13,37 +13,31 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg p-1">
-
-
-
+  <nav class="navbar navbar-expand-lg p-1" id="navbar">
     <div class="form-left"> <!-- esto va a la izquierda -->
-      <img src="img\Logo.png" alt="Logo" class="logo">
+        <img src="img\Logo.png" alt="Logo" class="logo">
     </div>
-
-
-
-    <div class="container" id="navbar">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item dropdown" style="position: relative;">
-            <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
-              <span id="bienvenida">Iniciar sesión</span> <span id="flecha"  class="bi bi-caret-down-fill"/span>
-            </button>
-            <ul id="userMenu" style="
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav w-100 justify-content-between">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="categories.html">Categorías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sell.html">Vender</a>
+                </li>
+                <li class="nav-item dropdown" style="position: relative;">
+                    <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
+                        <span id="bienvenida">Iniciar sesión</span> <span id="flecha">▼</span>
+                    </button>
+                    <ul id="userMenu" style="
                 display: none;
                 position: absolute;
                 top: 100%;
@@ -57,14 +51,14 @@
                 min-width: 150px;
                 z-index: 9999;
             ">
-              <!-- guarda temporalmente todo en el cache de la pag -->
-            </ul>
-          </li>
+                        <!-- guarda temporalmente todo en el cache de la pag -->
+                    </ul>
+                </li>
 
-        </ul>
-      </div>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
 
   
   <main>
@@ -111,6 +105,7 @@
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
   <script src="js/mikan.js"></script>
+  <script src="js/nav.js"></script>
 </body>
 
 </html>
