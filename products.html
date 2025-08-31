@@ -2,46 +2,48 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link href="css/products.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/products.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
 
 
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg p-1" id="navbar">
+<nav class="navbar navbar-expand-lg p-1" id="navbar">
     <div class="form-left"> <!-- esto va a la izquierda -->
-      <img src="img\Logo.png" alt="Logo" class="logo">
+        <img src="img\Logo.png" alt="Logo" class="logo">
     </div>
     <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item dropdown" style="position: relative;">
-            <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
-              <span id="bienvenida">Iniciar sesión</span> <span id="flecha">▼</span>
-            </button>
-            <ul id="userMenu" style="
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav w-100 justify-content-between">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="categories.html">Categorías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sell.html">Vender</a>
+                </li>
+                <li class="nav-item dropdown" style="position: relative;">
+                    <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
+                        <span id="bienvenida">Iniciar sesión</span> <span id="flecha">▼</span>
+                    </button>
+                    <ul id="userMenu" style="
                 display: none;
                 position: absolute;
                 top: 100%;
@@ -55,29 +57,50 @@
                 min-width: 150px;
                 z-index: 9999;
             ">
-              <!-- guarda temporalmente todo en el cache de la pag -->
+                        <!-- guarda temporalmente todo en el cache de la pag -->
+                    </ul>
+                </li>
+
             </ul>
-          </li>
-
-        </ul>
-      </div>
+        </div>
     </div>
-  </nav>
+</nav>
 
 
-
-
-  <main class="pb-5">
-    <div class="text-center p-4">
-      <h2>Productos</h2>
-      <p class="lead">Verás aquí todos los productos del sitio.</p>
-    </div>
-
+<main class="pb-5">
     <div class="container">
-      <div class="row">
+        <div class="row mt-2">
+            <div class="col-lg-12 mb-2 d-block d-md-none text-center">
+                <div class="row g-2">
+                    <!-- Botón con dropdown -->
+                    <div class="col-6">
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-sm dropdown-toggle w-100"
+                                    data-bs-toggle="dropdown" aria-expanded="false" id="dropdownButton">
+                                Ordenar por
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Costo: Alto a Bajo</a></li>
+                                <li><a class="dropdown-item" href="#">Costo: Bajo a Alto</a></li>
+                                <li><a class="dropdown-item" href="#">Opiniones: Mejor a Peor</a></li>
+                                <li><a class="dropdown-item" href="#">Opiniones: Peor a Mejor</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Botón que abre el modal -->
+                    <div class="col-6">
+                        <button type="button" class="btn btn-sm w-100" data-bs-toggle="modal"
+                                data-bs-target="#miModal">
+                            Abrir Modal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
 
         <!-- ASIDE con filtros -->
-        <aside class="col-md-3 mb-4">
+        <aside class="col-md-3 mb-4 d-none d-md-block">
           <div class="filters p-3 border rounded" style="min-height: 400px;">
             <h5 class="fw-bold mb-3">Filtros</h5>
 
@@ -135,43 +158,141 @@
           </div>
         </aside>
 
-        <!-- LISTA DE PRODUCTOS -->
-        <div class="col-md-9">
-          <div class="row" id="product-list-container">
+            <!-- LISTA DE PRODUCTOS -->
+            <div class="col-md-9">
+                <div class="row" id="product-list-container">
 
-            <!-- esto se rellena en el js -->
+                    <!-- esto se rellena en el js -->
 
-          </div>
+                </div>
+            </div>
+
         </div>
-
-      </div>
     </div>
-  </main>
+</main>
 
 
-
-
-  <footer class="text-muted">
+<footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
-      </p>
+        <p class="float-end">
+            <a href="#">Volver arriba</a>
+        </p>
+        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+        </p>
     </div>
-  </footer>
-  <div id="spinner-wrapper">
+</footer>
+<div id="spinner-wrapper">
     <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
-  </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/nav.js"></script>
+</div>
+
+
+<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <!-- Botón cerrar a la izquierda -->
+                <button type="button" class="btnExit" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <i class="bi bi-caret-left-fill"></i>
+                </button>
+
+                <!-- Título centrado -->
+                <h5 class="modal-title mx-auto" id="miModalLabel">Filtros</h5>
+            </div>
+
+            <div class="modal-body">
+                <!-- Precio -->
+                <h6 class="fw-bold mt-3">Precio</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="precio200">
+                    <label class="form-check-label" for="precio200">Inferior a $200</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="precio500">
+                    <label class="form-check-label" for="precio500">Inferior a $500</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="precio1000">
+                    <label class="form-check-label" for="precio1000">Inferior a $1000</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="precio3000">
+                    <label class="form-check-label" for="precio3000">Inferior a $3000</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="precioSup3000">
+                    <label class="form-check-label" for="precioSup3000">Superior a $3000</label>
+                </div>
+
+                <!-- Ofertas -->
+                <h6 class="fw-bold mt-3">Ofertas</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="descuentos">
+                    <label class="form-check-label" for="descuentos">Todos los descuentos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ofertasdia">
+                    <label class="form-check-label" for="ofertasdia">Ofertas del día</label>
+                </div>
+
+                <!-- Opiniones -->
+                <h6 class="fw-bold mt-3">Opiniones de usuarios</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="op5">
+                    <label class="form-check-label" for="op5">5 estrellas</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="op4">
+                    <label class="form-check-label" for="op4">4 estrellas</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="reseñas">
+                    <label class="form-check-label" for="reseñas">Muchas reseñas</label>
+                </div>
+
+                <!-- Color -->
+                <h6 class="fw-bold mt-3">Color</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rojo">
+                    <label class="form-check-label" for="rojo">Rojo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="azul">
+                    <label class="form-check-label" for="azul">Azul</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="verde">
+                    <label class="form-check-label" for="verde">Verde</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rosa">
+                    <label class="form-check-label" for="rosa">Rosa</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="negro">
+                    <label class="form-check-label" for="negro">Negro</label>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn w-100 text-center" data-bs-dismiss="modal">Aplicar filtros</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/init.js"></script>
+<script src="js/products.js"></script>
+<script src="js/nav.js"></script>
 </body>
 
 </html>

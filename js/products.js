@@ -1,15 +1,14 @@
-let allProducts = [];
-let currentProducts = [];
+let products = [];
 
 // ---- Render ----
 function showProductsList(lista) {
-  const cont = document.getElementById("product-list-container");
-  if (!cont) return;
+    const cont = document.getElementById("product-list-container");
+    if (!cont) return;
 
-  let html = "";
-  for (const p of lista) {
-    html += `
-      <div class="col-md-4 mb-4">
+    let html = "";
+    for (const p of lista) {
+        html += `
+      <div class="col-12 col-sm-6 col-md-4 mb-4">
         <div class="product-card">
           <img src="${p.image}" alt="Producto" class="product-image">
           <h5 class="fw-bold">${p.name}</h5>
@@ -18,8 +17,8 @@ function showProductsList(lista) {
           <p class="sold">${p.soldCount} vendidos</p>
         </div>
       </div>`;
-  }
-  cont.innerHTML = html || `<p class="text-muted">No hay productos que coincidan con los filtros.</p>`;
+    }
+    cont.innerHTML = html || `<p class="text-muted">No hay productos que coincidan con los filtros.</p>`;
 }
 
 // ---- Helpers ----
@@ -113,38 +112,49 @@ function limpiarFiltros() {
   showProductsList(currentProducts);
 }
 
+const dropdownItems = document.querySelectorAll('.dropdown-item');
+const dropdownButton = document.getElementById('dropdownButton');
+
+dropdownItems.forEach(item => {
+    item.addEventListener('click', function (e) {
+        e.preventDefault(); // evita que el enlace navegue
+        dropdownButton.textContent = this.textContent;
+    });
+});
+
+
 // ---- Inicio ----
 document.addEventListener("DOMContentLoaded", function () {
-  const catID = localStorage.getItem("catID");
-  const url = catID
-    ? `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
-    : `https://japceibal.github.io/emercado-api/cats_products/101.json`;
+    const catID = localStorage.getItem("catID");
+    const url = catID
+        ? `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
+        : `https://japceibal.github.io/emercado-api/cats_products/101.json`;
 
-  getJSONData(url).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      allProducts = resultObj.data.products || [];
-      // Primera carga: mostrar por relevancia
-      currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
-      showProductsList(currentProducts);
-    }
-  });
+    getJSONData(url).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            allProducts = resultObj.data.products || [];
+            // Primera carga: mostrar por relevancia
+            currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
+            showProductsList(currentProducts);
+        }
+    });
 
-  // Botones
-  const btnAplicar = getEl("aplicar-filtros");
-  if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
+    // Botones
+    const btnAplicar = getEl("aplicar-filtros");
+    if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
 
-  const btnLimpiar = getEl("limpiar-filtros");
-  if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
+    const btnLimpiar = getEl("limpiar-filtros");
+    if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
 
-  // Aplicar automáticamente al cambiar el orden o escribir min/max (Enter)
-  const orderEl = getEl("ordenar");
-  if (orderEl) orderEl.addEventListener("change", aplicarFiltros);
+    // Aplicar automáticamente al cambiar el orden o escribir min/max (Enter)
+    const orderEl = getEl("ordenar");
+    if (orderEl) orderEl.addEventListener("change", aplicarFiltros);
 
-  const minEl = getEl("precio-min");
-  const maxEl = getEl("precio-max");
-  [minEl, maxEl].forEach(el => {
-    if (!el) return;
-    el.addEventListener("keydown", e => { if (e.key === "Enter") aplicarFiltros(); });
-    el.addEventListener("blur", aplicarFiltros);
-  });
+    const minEl = getEl("precio-min");
+    const maxEl = getEl("precio-max");
+    [minEl, maxEl].forEach(el => {
+        if (!el) return;
+        el.addEventListener("keydown", e => { if (e.key === "Enter") aplicarFiltros(); });
+        el.addEventListener("blur", aplicarFiltros);
+    });
 });
