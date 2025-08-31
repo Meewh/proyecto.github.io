@@ -17,11 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
             bienvenida.textContent = "Iniciar sesión";
             userMenu.innerHTML = `
               <li style="padding: 8px 12px; cursor: pointer;"><a href="login.html">Login</a></li>
+              <li style="padding: 8px 12px; cursor: pointer;"><a href="registro.html">Crear cuenta</a></li>
             `;
         }
     } else {
         // user logueado
-        bienvenida.textContent = "Bienvenido, " + usuario;
+        bienvenida.textContent = usuario;
         userMenu.innerHTML = `
           <li style="padding: 8px 12px; cursor: pointer;"><a href="my-profile.html">Mi Perfil</a></li>
           <li style="padding: 8px 12px; cursor: pointer;">
@@ -33,10 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let abierto = false; //abre y cierra menu
     userMenuBtn.addEventListener("click", () => {
-        abierto = !abierto;
-        userMenu.style.display = abierto ? "block" : "none";
-        flecha.textContent = abierto ? "▲" : "▼";
-    });
+    abierto = !abierto;
+    userMenu.style.display = abierto ? "block" : "none";
+    
+    // Remover clases existentes y agregar la nueva
+    flecha.classList.remove("bi-caret-down-fill", "bi-caret-up-fill");
+    flecha.classList.add(abierto ? "bi-caret-up-fill" : "bi-caret-down-fill");
+});
 
 
     userMenu.addEventListener("click", (e) => { //cierra sesion y recarga

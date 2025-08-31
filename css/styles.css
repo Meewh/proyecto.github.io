@@ -203,6 +203,14 @@ a.custom-card:hover {
   border-radius: 8px;
 }
 
+#flecha {
+  transition: transform 0.3s ease;
+}
+
+#flecha.bi-arrow-up {
+  transform: rotate(180deg);
+}
+
 /* MikanBot */
 #chatbot-btn img {
   width: 40px;
@@ -334,3 +342,4 @@ a.custom-card:hover {
 #chatbot-input button:hover {
   background: #cc7a00;
 }
+
