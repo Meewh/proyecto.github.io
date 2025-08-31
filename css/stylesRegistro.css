@@ -38,13 +38,25 @@ main {
     color: #ffffff;
     border-radius: 20px;
     display: flex;
-    flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
     gap: 40px;
     width: 900px;
     padding: 40px;
     box-sizing: border-box;
+    max-width: 900px;   /*  en desktop */
+    width: 100%;    /*  ocupa todo en pantallas chicas */
+}
+
+/*para que disminuya la letra en ipohne*/
+@media (max-width: 575px) {
+    .form-left h2 {
+        font-size: 22px;
+    }
+
+    .btn-ingresar {
+        font-size: 18px;
+    }
 }
 
 .logo {
@@ -159,8 +171,8 @@ button {
     color: #f09100;
     border: none;
     border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 18px;
+    padding: 6px 20px;
+    font-size: 22px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;

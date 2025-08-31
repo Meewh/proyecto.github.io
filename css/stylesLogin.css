@@ -5,6 +5,14 @@ body {
     padding: 0;
 }
 
+/* evita desbordes */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     background: #ffffff;
@@ -26,24 +34,35 @@ main {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    padding: 40px 0;
+    align-items: flex-start;
+    padding: 16px 0;
     /* centra el card en la página */
 }
 
+.logo-header {
+    width: 48px;
+    height: auto;
+    border-radius: 4px;
+}
+/*para que el responsive mantenga la estetica*/
 .login-container {
     background: #F09100;
     color: #ffffff;
     border-radius: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 40px;
-    width: 900px;
     padding: 40px;
     box-sizing: border-box;
+    max-width: 900px; /*  en desktop */
+    width: 100%; /*  ocupa todo en pantallas chicas */
+}
+/*para que disminuya la letra en ipohne*/
+@media (max-width: 575px) {
+    .form-left h2 {
+        font-size: 22px;
+    }
+
+    .btn-ingresar {
+        font-size: 18px;
+    }
 }
 
 .form-left {
@@ -82,6 +101,7 @@ main {
 .input-group {
     position: relative;
     margin: 20px 0;
+    
 }
 
 .input-group input {
