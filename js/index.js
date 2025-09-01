@@ -51,14 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-        document.addEventListener("click", (e) => { //si clickea fuera del menu se cierra igual
-        if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
-            userMenu.style.display = "none";
-            flecha.textContent = "▼";
-            abierto = false;
-        }
-    });
-
     // Carga de categorías y creación de cards
 const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
     const categoriesContainer = document.getElementById("categories-container");

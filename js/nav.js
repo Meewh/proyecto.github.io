@@ -26,26 +26,21 @@ function inicializarNavbar() {
     `;
     }
 
-    let abierto = false;
+    let abierto = false; //abre y cierra menu
     userMenuBtn.addEventListener("click", () => {
-        abierto = !abierto;
-        userMenu.style.display = abierto ? "block" : "none";
-        flecha.textContent = abierto ? "▲" : "▼";
-    });
+    abierto = !abierto;
+    userMenu.style.display = abierto ? "block" : "none";
+    
+    // Remover clases existentes y agregar la nueva
+    flecha.classList.remove("bi-caret-down-fill", "bi-caret-up-fill");
+    flecha.classList.add(abierto ? "bi-caret-up-fill" : "bi-caret-down-fill");
+});
 
-    userMenu.addEventListener("click", (e) => {
+    userMenu.addEventListener("click", (e) => { //cierra sesion y recarga
         if (e.target && e.target.id === "logoutBtn") {
             localStorage.removeItem("usuario");
             localStorage.removeItem("logueado");
             location.reload();
-        }
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
-            userMenu.style.display = "none";
-            flecha.textContent = "▼";
-            abierto = false;
         }
     });
 
