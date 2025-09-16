@@ -11,6 +11,24 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/product-info.css">
+
+
+  <style>
+    .custom-indicators button {
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      border-radius: 50%;
+      border: none;
+      background-color: #ccc;
+    }
+
+    .custom-indicators .active {
+      background-color: #f7941d;
+      /* color cuando está activo */
+    }
+  </style>
 </head>
 
 <body>
@@ -19,12 +37,149 @@
   </nav>
 
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div id="product" class="d-flex flex-column">
+      <div class="container product-section">
+
+        <!-- parte mobile y tablet -->
+
+        <div id="carouselExampleIndicators" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
+          <!-- Carrusel -->
+          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active main-image">
+                <img src="img/car1.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item main-image">
+                <img src="img/car2.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item main-image">
+                <img src="img/car3.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
+
+          <!-- Indicadores en un div aparte -->
+          <div class="custom-indicators text-center mt-3">
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+          </div>
+        </div>
+
+        <!-- parte escritorio -->
+
+        <div class="row d-none d-md-flex">
+          <!-- Imagenes secundarias -->
+          <div class="col-md-2 secundary-images">
+            <img src="img/car1.jpg" alt="">
+            <img src="img/car1.jpg" alt="">
+            <img src="img/car1.jpg" alt="" id="last-image">
+          </div>
+
+          <!-- Imagen principal -->
+          <div class="col-md-6 main-image">
+            <img src="img/car1.jpg" alt="">
+          </div>
+
+          <!-- Información del producto -->
+          <div class="col-md-4">
+            <span class="category-badge">Vehículos</span>
+            <h3 class="mt-2">Chebrolet Onix Joy</h3>
+            <small class="text-muted">105 vendidos</small>
+            <p class="mt-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p class="price">U$D 24,900</p>
+            <button class="btn btn-cart"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div id="interes">
+
+        <div class="container mb-5">
+          <h5 class="mb-4">Quizás te interese</h5>
+          <div class="row g-3">
+            <!-- Card ejemplo -->
+            <div class="col-md-3">
+              <div class="card recommend-card h-100 p-2">
+                <img src="https://via.placeholder.com/300x200.png?text=Producto" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h6 class="card-title">Combo De Teclado ...</h6>
+                  <p class="card-text small text-muted">Lorem ipsum dolor sit amet consectetur...</p>
+                  <p class="recommend-price">U$D 2,499.95</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Copias -->
+            <div class="col-md-3">
+              <div class="card recommend-card h-100 p-2">
+                <img src="https://via.placeholder.com/300x200.png?text=Producto" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h6 class="card-title">Combo De Teclado ...</h6>
+                  <p class="card-text small text-muted">Lorem ipsum dolor sit amet consectetur...</p>
+                  <p class="recommend-price">U$D 2,499.95</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card recommend-card h-100 p-2">
+                <img src="https://via.placeholder.com/300x200.png?text=Producto" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h6 class="card-title">Combo De Teclado ...</h6>
+                  <p class="card-text small text-muted">Lorem ipsum dolor sit amet consectetur...</p>
+                  <p class="recommend-price">U$D 2,499.95</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card recommend-card h-100 p-2">
+                <img src="https://via.placeholder.com/300x200.png?text=Producto" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h6 class="card-title">Combo De Teclado ...</h6>
+                  <p class="card-text small text-muted">Lorem ipsum dolor sit amet consectetur...</p>
+                  <p class="recommend-price">U$D 2,499.95</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- te puede interesar -->
+      </div>
   </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
