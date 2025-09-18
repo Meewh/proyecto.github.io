@@ -71,14 +71,21 @@
 }
 
 .btnExit {
-    background: none;     /* sin fondo */
-    border: none;         /* sin borde */
-    padding: 0;           /* sin espacio extra */
-    margin: 0;            /* sin margen */
-    cursor: pointer;      /* que se vea como botón clickeable */
+    background: none;
+    /* sin fondo */
+    border: none;
+    /* sin borde */
+    padding: 0;
+    /* sin espacio extra */
+    margin: 0;
+    /* sin margen */
+    cursor: pointer;
+    /* que se vea como botón clickeable */
 }
 
 .btnExit i {
-    font-size: 2.5rem;    /* tamaño de la flecha */
-    color: orange;        /* color de la flecha */
+    font-size: 2.5rem;
+    /* tamaño de la flecha */
+    color: orange;
+    /* color de la flecha */
 }

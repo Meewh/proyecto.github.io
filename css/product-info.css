@@ -83,15 +83,15 @@ body {
 }
 
 .custom-indicators button {
-      width: 12px;
-      height: 12px;
-      margin: 0 5px;
-      border-radius: 50%;
-      border: none;
-      background-color: #ccc;
-    }
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ccc;
+}
 
-    .custom-indicators .active {
-      background-color: #f7941d;
-      /* color cuando está activo */
-    }
+.custom-indicators .active {
+    background-color: #f7941d;
+    /* color cuando está activo */
+}
