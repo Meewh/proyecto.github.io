@@ -1,8 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // insertar datos del producto
-    fetch("https://japceibal.github.io/emercado-api/products/50922.json")
-        .then(response => response.json())
+
+    let localStorageProduct = localStorage.getItem("producto");
+
+    fetch(`https://japceibal.github.io/emercado-api/products/${localStorageProduct}.json`)
+        .then(response => {
+            if (!response.ok) {
+                console.log("La API no devolvió datos");
+                product.innerHTML = `<div class="d-flex justify-content-center align-items-center"><h1>Error al cargar los datos</h1></div>`
+            }
+            return response.json();
+        })
         .then(data => {
 
             let product = document.getElementById("product");
@@ -120,4 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             });
         })
+
+
+
 });
