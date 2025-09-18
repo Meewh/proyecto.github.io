@@ -1,20 +1,22 @@
+/* ===== Body ===== */
 body {
     background-color: #f8f9fa;
 }
 
-/* Contenedor principal */
+/* ===== Contenedor principal ===== */
 .product-section {
     border-radius: 10px;
     padding: 20px;
     margin: 30px auto;
 }
 
+/* ===== Imágenes secundarias ===== */
 .secundary-images {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-left: 0%;
+    padding-left: 0;
 }
 
 .secundary-images img {
@@ -28,15 +30,16 @@ body {
 }
 
 .secundary-images #last-image {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .secundary-images img:hover {
     border-color: #f7941d;
 }
 
+/* ===== Imagen principal ===== */
 .main-image {
-    padding: 0%;
+    padding: 0;
 }
 
 .main-image img {
@@ -45,6 +48,7 @@ body {
     border-radius: 8px;
 }
 
+/* ===== Categoría y precio ===== */
 .category-badge {
     background-color: #f7941d;
     color: #fff;
@@ -59,6 +63,7 @@ body {
     color: #f7941d;
 }
 
+/* ===== Botón carrito ===== */
 .btn-cart {
     background-color: #f7941d;
     border: none;
@@ -66,7 +71,7 @@ body {
     font-weight: 500;
 }
 
-/* Cards recomendados */
+/* ===== Cards recomendados ===== */
 .recommend-card {
     border: 1px solid #f7941d33;
     border-radius: 10px;
@@ -82,6 +87,7 @@ body {
     font-weight: bold;
 }
 
+/* ===== Indicadores carrusel ===== */
 .custom-indicators button {
     width: 12px;
     height: 12px;
@@ -93,5 +99,5 @@ body {
 
 .custom-indicators .active {
     background-color: #f7941d;
-    /* color cuando está activo */
+    /* activo */
 }
