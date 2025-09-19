@@ -1,15 +1,16 @@
+
 let products = [];
 
 // ---- Render ----
 function showProductsList(lista) {
-    const cont = document.getElementById("product-list-container");
-    if (!cont) return;
+  const cont = document.getElementById("product-list-container");
+  if (!cont) return;
 
-    let html = "";
-    for (const p of lista) {
-        html += `
+  let html = "";
+  for (const p of lista) {
+    html += `
       <div class="col-12 col-sm-6 col-md-4 mb-4">
-        <div class="product-card">
+        <div class="product-card" id="product-${p.id}" style="cursor:pointer;">
           <img src="${p.image}" alt="Producto" class="product-image">
           <h5 class="fw-bold">${p.name}</h5>
           <p class="text-muted">${p.description}</p>
@@ -17,8 +18,19 @@ function showProductsList(lista) {
           <p class="sold">${p.soldCount} vendidos</p>
         </div>
       </div>`;
+  }
+  cont.innerHTML = html || `<p class="text-muted">No hay productos que coincidan con los filtros.</p>`;
+
+  // ---- Asignar evento click a cada producto ----
+  lista.forEach(p => {
+    const prodEl = document.getElementById(`product-${p.id}`);
+    if (prodEl) {
+      prodEl.addEventListener("click", () => {
+        localStorage.setItem("producto", p.id); // Guardar id en localStorage
+        window.location.href = "product-info.html"; // Redirigir a otra página
+      });
     }
-    cont.innerHTML = html || `<p class="text-muted">No hay productos que coincidan con los filtros.</p>`;
+  });
 }
 
 // ---- Helpers ----
@@ -116,15 +128,16 @@ const dropdownItems = document.querySelectorAll('.dropdown-item');
 const dropdownButton = document.getElementById('dropdownButton');
 
 dropdownItems.forEach(item => {
-    item.addEventListener('click', function (e) {
-        e.preventDefault(); // evita que el enlace navegue
-        dropdownButton.textContent = this.textContent;
-    });
+  item.addEventListener('click', function (e) {
+    e.preventDefault(); // evita que el enlace navegue
+    dropdownButton.textContent = this.textContent;
+  });
 });
 
 
 // ---- Inicio ----
 document.addEventListener("DOMContentLoaded", function () {
+
     const catID = localStorage.getItem("catID");
     const url = catID
         ? `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
@@ -138,6 +151,21 @@ document.addEventListener("DOMContentLoaded", function () {
             showProductsList(currentProducts);
         }
     });
+// ---- FILTRO BUSCADOR ----
+    const buscadorEl = getEl("buscador");
+    if (buscadorEl) {
+        buscadorEl.addEventListener("input", function () {
+            const texto = buscadorEl.value.toLowerCase();
+
+            // filtramos desde allProducts para no perder productos al escribir y borrar
+            const filtrados = currentProducts.filter(p => // tomamos en cuenta los ''currentProducts'' para que se aplique los filtros elegidos
+                (p.name && p.name.toLowerCase().includes(texto)) ||
+                (p.description && p.description.toLowerCase().includes(texto))
+            );
+
+            showProductsList(filtrados); 
+        });
+    }
 
     // Botones
     const btnAplicar = getEl("aplicar-filtros");
