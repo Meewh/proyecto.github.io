@@ -1,3 +1,4 @@
+
 let products = [];
 
 // ---- Render ----
@@ -138,6 +139,21 @@ document.addEventListener("DOMContentLoaded", function () {
             showProductsList(currentProducts);
         }
     });
+// ---- FILTRO BUSCADOR ----
+    const buscadorEl = getEl("buscador");
+    if (buscadorEl) {
+        buscadorEl.addEventListener("input", function () {
+            const texto = buscadorEl.value.toLowerCase();
+
+            // filtramos desde allProducts para no perder productos al escribir y borrar
+            const filtrados = currentProducts.filter(p => // tomamos en cuenta los ''currentProducts'' para que se aplique los filtros elegidos
+                (p.name && p.name.toLowerCase().includes(texto)) ||
+                (p.description && p.description.toLowerCase().includes(texto))
+            );
+
+            showProductsList(filtrados); 
+        });
+    }
 
     // Botones
     const btnAplicar = getEl("aplicar-filtros");

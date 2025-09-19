@@ -65,6 +65,7 @@
         </div>
     </div>
 </nav>
+ 
 
 
 <main class="pb-5">
@@ -72,6 +73,9 @@
         <div class="row mt-2">
             <div class="col-lg-12 mb-2 d-block d-md-none text-center">
                 <div class="row g-2">
+                    <div class="col-md-9">
+
+                    </div>
                     <!-- Botón con dropdown -->
                     <div class="col-6">
                         <div class="btn-group w-100">
@@ -157,7 +161,17 @@
             </div>
           </div>
         </aside>
-
+        <div class="col-md-9">
+        
+            <!-- BUSCADOR -->
+            <div class="mb-3">
+                <input type="search" id="buscador" class="form-control" placeholder="Buscar productos...">
+            </div>
+        
+            <div class="row" id="product-list-container">
+                <!-- Esto se rellena con JS -->
+            </div>
+        </div>
             <!-- LISTA DE PRODUCTOS -->
             <div class="col-md-9">
                 <div class="row" id="product-list-container">
