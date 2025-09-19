@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
             .then(resp => resp.json())
             .then(productData => {
-                renderProduct(productData);          
-                setupCarousel();                     
-                setupImageSwitch();                  
-                loadRelatedProducts(productData);    
-                
+                renderProduct(productData);
+                setupCarousel();
+                setupImageSwitch();
+                loadRelatedProducts(productData);
+
                 allComments = generateMockComments();
                 renderCommentsPage();
                 addSortSelector();
@@ -39,32 +39,75 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===== Render producto principal con cantidad =====
     function renderProduct(data) {
         const imgs = data.images || [data.image];
-        productContainer.innerHTML = `
-            <div class="container product-section p-1">
-                <div class="row d-none d-md-flex">
-                    <div class="col-md-2 secundary-images">
-                        ${imgs.slice(1,4).map((img, idx) => `<img src="${img}" alt="" ${idx===2?'id="last-image"':''}>`).join('')}
+        productContainer.innerHTML = `<div class="container product-section p-1">
+            <!-- Carrusel mobile/tablet -->
+            <div id="carouselExampleIndicators" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
+                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                    <span class="category-badge">${data.category}</span>
+                    <div class="d-flex align-items-end mb-1">
+                        <h3 class="mt-2 fw-bold">${data.name}</h3>
+                        <small class="text-muted">${data.soldCount} vendidos</small>
                     </div>
-                    <div class="col-md-6 main-image">
-                        <img src="${imgs[0]}" alt="">
+                    <div class="carousel-inner">
+                        ${imgs.map((img, idx) => `
+                            <div class="carousel-item ${idx === 0 ? 'active' : ''} main-image">
+                                <img src="${img}" class="d-block w-100" alt="...">
+                            </div>`).join('')}
                     </div>
-                    <div class="col-md-4">
-                        <span class="category-badge">${data.category}</span>
-                        <div class="d-flex align-items-end">
-                            <h3 class="mt-2 fw-bold">${data.name}</h3>
-                            <small class="text-muted">${data.soldCount} vendidos</small>
-                        </div>
-                        <p class="mt-2">${data.description}</p>
-                        <div class="d-flex justify-content-between align-items-baseline mb-3">
-                            <p class="price">${data.currency} ${data.cost}</p>
-                            <div>
-                                <input type="number" id="cart-quantity" min="1" value="1" style="width:60px;">
-                                <button class="btn btn-cart ms-2"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
-                            </div>
-                        </div>
+
+                    <!-- Controles -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+
+                <!-- Indicadores -->
+                <div class="custom-indicators text-center mt-3">
+                    ${imgs.map((_, idx) => `
+                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>
+                    `).join('')}
+                </div>
+
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p class="price">${data.currency} ${data.cost}</p>
+                        <button class="btn btn-cart ms-4"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
+                    </div>
+                    <p class="mt-2">${data.description}</p>
+                </div>
+            </div>
+
+            <!-- Vista escritorio -->
+            <div class="row d-none d-md-flex">
+                <div class="col-md-2 secundary-images">
+                    <img src="${imgs[1]}" alt="">
+                    <img src="${imgs[2]}" alt="">
+                    <img src="${imgs[3]}" alt="" id="last-image">
+                </div>
+
+                <div class="col-md-6 main-image">
+                    <img src="${imgs[0]}" alt="">
+                </div>
+
+                <div class="col-md-4">
+                    <span class="category-badge">${data.category}</span>
+                    <div class="d-flex align-items-end">
+                        <h3 class="mt-2 fw-bold">${data.name}</h3>
+                        <small class="text-muted">${data.soldCount} vendidos</small>
+                    </div>
+                    <p class="mt-2">${data.description}</p>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p class="price">${data.currency} ${data.cost}</p>
+                        <button class="btn btn-cart ms-4"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
     }
 
     // ===== Carrusel mobile =====
@@ -129,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Categoria a ID =====
     function getCategoryId(name) {
-        switch(name){
+        switch (name) {
             case "Autos": return 101;
             case "Juguetes": return 102;
             case "Muebles": return 103;
@@ -146,9 +189,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===== Mock comments (25 comentarios random estilo Souls) =====
     function generateMockComments() {
         const users = [
-            "Solaire", "Siegmeyer", "Andre", "Gwynevere", "Lautrec", 
-            "Patches", "Oscar", "Laurentius", "Logan", "Priscilla", 
-            "Havel", "Kirk", "Gough", "Gwyn", "Gwyndolin", 
+            "Solaire", "Siegmeyer", "Andre", "Gwynevere", "Lautrec",
+            "Patches", "Oscar", "Laurentius", "Logan", "Priscilla",
+            "Havel", "Kirk", "Gough", "Gwyn", "Gwyndolin",
             "Smough", "Firekeeper", "Quelana", "Ashen One", "Greirat",
             "Yuria", "Ornstein", "Horace", "Eileen", "Artorias"
         ];
@@ -193,15 +236,15 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const comments = [];
-        for(let i = 0; i < 25; i++){
-            const score = Math.floor(Math.random()*5)+1; // 1 a 5
-            const user = users[Math.floor(Math.random()*users.length)];
+        for (let i = 0; i < 25; i++) {
+            const score = Math.floor(Math.random() * 5) + 1; // 1 a 5
+            const user = users[Math.floor(Math.random() * users.length)];
             const textOptions = commentsByScore[score];
-            const description = textOptions[Math.floor(Math.random()*textOptions.length)];
+            const description = textOptions[Math.floor(Math.random() * textOptions.length)];
             const TWO_YEARS_MS = 2 * 365 * 24 * 60 * 60 * 1000; // milisegundos en 2 años
             const date = new Date(Date.now() - Math.floor(Math.random() * TWO_YEARS_MS));
-            const formattedDate = date.toISOString().slice(0,19).replace("T"," ");
-            comments.push({user, score, description, date: formattedDate});
+            const formattedDate = date.toISOString().slice(0, 19).replace("T", " ");
+            comments.push({ user, score, description, date: formattedDate });
         }
 
         return comments;
@@ -209,18 +252,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Render comentarios paginados con estrellas doradas =====
     function renderCommentsPage() {
-        const start = (currentCommentsPage-1)*COMMENTS_PER_PAGE;
+        const start = (currentCommentsPage - 1) * COMMENTS_PER_PAGE;
         const end = start + COMMENTS_PER_PAGE;
 
         let sortedComments = [...allComments];
-        if(currentSort === "fecha") sortedComments.sort((a,b)=> new Date(b.date) - new Date(a.date));
-        else if(currentSort === "puntaje") sortedComments.sort((a,b)=> b.score - a.score);
+        if (currentSort === "fecha") sortedComments.sort((a, b) => new Date(b.date) - new Date(a.date));
+        else if (currentSort === "puntaje") sortedComments.sort((a, b) => b.score - a.score);
 
-        const commentsToShow = sortedComments.slice(start,end);
+        const commentsToShow = sortedComments.slice(start, end);
         const container = document.getElementById("reviews-list");
 
         container.innerHTML = commentsToShow.map(c => {
-            const stars = Array.from({length:5}, (_,i)=> i < c.score ? '★' : '☆').join('');
+            const stars = Array.from({ length: 5 }, (_, i) => i < c.score ? '★' : '☆').join('');
             return `
                 <div class="border p-2 mb-2 rounded">
                     <strong>${c.user}</strong> - <span style="color:#FFD700; font-size:1rem;">${stars}</span><br>
@@ -232,18 +275,18 @@ document.addEventListener("DOMContentLoaded", () => {
         // ===== Paginación =====
         const totalPages = Math.ceil(allComments.length / COMMENTS_PER_PAGE);
         let pagEl = document.getElementById("reviews-pagination");
-        if(!pagEl){
+        if (!pagEl) {
             pagEl = document.createElement("div");
             pagEl.id = "reviews-pagination";
-            pagEl.classList.add("d-flex","gap-2","mb-3");
+            pagEl.classList.add("d-flex", "gap-2", "mb-3");
             container.parentElement.insertBefore(pagEl, container.nextSibling);
         }
         pagEl.innerHTML = "";
-        for(let i=1;i<=totalPages;i++){
+        for (let i = 1; i <= totalPages; i++) {
             const btn = document.createElement("button");
-            btn.className = "btn btn-sm " + (i===currentCommentsPage?"btn-warning":"btn-outline-secondary");
+            btn.className = "btn btn-sm " + (i === currentCommentsPage ? "btn-warning" : "btn-outline-secondary");
             btn.textContent = i;
-            btn.addEventListener("click",()=>{currentCommentsPage=i; renderCommentsPage();});
+            btn.addEventListener("click", () => { currentCommentsPage = i; renderCommentsPage(); });
             pagEl.appendChild(btn);
         }
     }
@@ -252,18 +295,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function addSortSelector() {
         const container = document.getElementById("reviews-list");
         const selectId = "sort-comments";
-        if(document.getElementById(selectId)) return;
+        if (document.getElementById(selectId)) return;
 
         const select = document.createElement("select");
         select.id = selectId;
-        select.classList.add("form-select","form-select-sm","mb-2");
+        select.classList.add("form-select", "form-select-sm", "mb-2");
         select.innerHTML = `
             <option value="fecha">Ordenar por fecha</option>
             <option value="puntaje">Ordenar por puntaje</option>
         `;
         container.parentElement.insertBefore(select, container);
 
-        select.addEventListener("change",(e)=>{
+        select.addEventListener("change", (e) => {
             currentSort = e.target.value;
             renderCommentsPage();
         });
@@ -272,25 +315,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===== Formulario agregar comentario =====
     function setupCommentForm() {
         const form = document.getElementById("review-form");
-        if(!form) return;
-        form.addEventListener("submit",(e)=>{
+        if (!form) return;
+        form.addEventListener("submit", (e) => {
             e.preventDefault();
             const user = localStorage.getItem("usuario") || "Usuario";
             const desc = document.getElementById("review-text").value.trim();
             const score = parseInt(document.getElementById("review-score").value);
-            const date = new Date().toISOString().slice(0,19).replace("T"," ");
-            if(desc){
-                allComments.push({user, score, description:desc, date});
-                document.getElementById("review-text").value="";
+            const date = new Date().toISOString().slice(0, 19).replace("T", " ");
+            if (desc) {
+                allComments.push({ user, score, description: desc, date });
+                document.getElementById("review-text").value = "";
                 document.getElementById("review-score").value = 5;
-                currentCommentsPage = Math.ceil(allComments.length/COMMENTS_PER_PAGE);
+                currentCommentsPage = Math.ceil(allComments.length / COMMENTS_PER_PAGE);
                 renderCommentsPage();
             }
         });
     }
 
     // ===== Inicializar =====
-    if(localStorageProduct){
+    if (localStorageProduct) {
         loadProduct(localStorageProduct);
     } else {
         productContainer.innerHTML = `<div class="d-flex justify-content-center align-items-center"><h1>No hay producto seleccionado</h1></div>`;
