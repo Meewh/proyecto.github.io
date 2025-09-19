@@ -43,6 +43,7 @@
                                     <li><a class="dropdown-item" href="#">Opiniones: Peor a Mejor</a></li>
                                 </ul>
                             </div>
+
                         </div>
 
                         <!-- Botón que abre el modal -->
@@ -110,17 +111,27 @@
                             <input type="checkbox" id="stock" value="en-stock"> <label for="stock">En stock</label>
                         </div>
 
-                        <!-- Botones -->
-                        <div class="d-grid gap-2">
-                            <button id="aplicar-filtros" class="btn btn-primary">Aplicar</button>
-                            <button id="limpiar-filtros" class="btn btn-secondary">Limpiar</button>
-                        </div>
-                    </div>
-                </aside>
-
-                <!-- LISTA DE PRODUCTOS -->
-                <div class="col-md-9">
-                    <div class="row" id="product-list-container">
+            <!-- Botones -->
+            <div class="d-grid gap-2">
+              <button id="aplicar-filtros" class="btn btn-primary">Aplicar</button>
+              <button id="limpiar-filtros" class="btn btn-secondary">Limpiar</button>
+            </div>
+          </div>
+        </aside>
+        <div class="col-md-9">
+        
+            <!-- BUSCADOR -->
+            <div class="mb-3">
+                <input type="search" id="buscador" class="form-control" placeholder="Buscar productos...">
+            </div>
+        
+            <div class="row" id="product-list-container">
+                <!-- Esto se rellena con JS -->
+            </div>
+        </div>
+            <!-- LISTA DE PRODUCTOS -->
+            <div class="col-md-9">
+                <div class="row" id="product-list-container">
 
                         <!-- esto se rellena en el js -->
 

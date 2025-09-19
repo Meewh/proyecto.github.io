@@ -1,3 +1,4 @@
+
 let products = [];
 
 // ---- Render ----
@@ -136,36 +137,52 @@ dropdownItems.forEach(item => {
 
 // ---- Inicio ----
 document.addEventListener("DOMContentLoaded", function () {
-  const catID = localStorage.getItem("catID");
-  const url = catID
-    ? `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
-    : `https://japceibal.github.io/emercado-api/cats_products/101.json`;
 
-  getJSONData(url).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      allProducts = resultObj.data.products || [];
-      // Primera carga: mostrar por relevancia
-      currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
-      showProductsList(currentProducts);
+    const catID = localStorage.getItem("catID");
+    const url = catID
+        ? `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
+        : `https://japceibal.github.io/emercado-api/cats_products/101.json`;
+
+    getJSONData(url).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            allProducts = resultObj.data.products || [];
+            // Primera carga: mostrar por relevancia
+            currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
+            showProductsList(currentProducts);
+        }
+    });
+// ---- FILTRO BUSCADOR ----
+    const buscadorEl = getEl("buscador");
+    if (buscadorEl) {
+        buscadorEl.addEventListener("input", function () {
+            const texto = buscadorEl.value.toLowerCase();
+
+            // filtramos desde allProducts para no perder productos al escribir y borrar
+            const filtrados = currentProducts.filter(p => // tomamos en cuenta los ''currentProducts'' para que se aplique los filtros elegidos
+                (p.name && p.name.toLowerCase().includes(texto)) ||
+                (p.description && p.description.toLowerCase().includes(texto))
+            );
+
+            showProductsList(filtrados); 
+        });
     }
-  });
 
-  // Botones
-  const btnAplicar = getEl("aplicar-filtros");
-  if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
+    // Botones
+    const btnAplicar = getEl("aplicar-filtros");
+    if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
 
-  const btnLimpiar = getEl("limpiar-filtros");
-  if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
+    const btnLimpiar = getEl("limpiar-filtros");
+    if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
 
-  // Aplicar automáticamente al cambiar el orden o escribir min/max (Enter)
-  const orderEl = getEl("ordenar");
-  if (orderEl) orderEl.addEventListener("change", aplicarFiltros);
+    // Aplicar automáticamente al cambiar el orden o escribir min/max (Enter)
+    const orderEl = getEl("ordenar");
+    if (orderEl) orderEl.addEventListener("change", aplicarFiltros);
 
-  const minEl = getEl("precio-min");
-  const maxEl = getEl("precio-max");
-  [minEl, maxEl].forEach(el => {
-    if (!el) return;
-    el.addEventListener("keydown", e => { if (e.key === "Enter") aplicarFiltros(); });
-    el.addEventListener("blur", aplicarFiltros);
-  });
+    const minEl = getEl("precio-min");
+    const maxEl = getEl("precio-max");
+    [minEl, maxEl].forEach(el => {
+        if (!el) return;
+        el.addEventListener("keydown", e => { if (e.key === "Enter") aplicarFiltros(); });
+        el.addEventListener("blur", aplicarFiltros);
+    });
 });
