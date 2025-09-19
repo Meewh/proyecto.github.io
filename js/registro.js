@@ -1,3 +1,8 @@
+document.getElementById("btnVolver").addEventListener("click", function(){
+    //pagina de registro
+    window.location.href = "login.html";
+});
+
 console.log('registro.js cargado'); // escribe un mensaje en la consola del navegador (inspeccionar elemento) 
 // y comprueba que el archivo js cargo
 
