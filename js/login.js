@@ -13,7 +13,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
         // guarda sesion
         localStorage.setItem("usuario", usuario);
         localStorage.setItem("logueado", "true");
-
+    
         // redirigir al inicio
         window.location.href = "index.html";
     } else {
