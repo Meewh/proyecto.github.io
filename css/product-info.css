@@ -101,3 +101,40 @@ body {
     background-color: #f7941d;
     /* activo */
 }
+
+/*ENTREGA 4 EDICIONES*/
+/* Calificaciones */
+#ratings-section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.avg-big {
+    color: #222;
+}
+
+.avg-big>div:first-child {
+    color: #f7941d;
+}
+
+.stars i {
+    color: #f7941d;
+}
+
+#comments-list-container h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.comment-item .small {
+    color: #999;
+}
+
+#rate-form-container .bi {
+    color: #f7941d;
+}
+
+#rate-form-container .btn-warning {
+    background-color: #f7941d;
+    border: none;
+}
