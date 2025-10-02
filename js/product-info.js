@@ -19,10 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 setupImageSwitch();
                 loadRelatedProducts(productData);
 
-                allComments = generateMockComments();
-                renderCommentsPage();
-                addSortSelector();
-                setupCommentForm();
+                generateMockComments(productId).then(comments => {
+                    allComments = comments;
+                    renderCommentsPage();
+                    addSortSelector();
+                    setupCommentForm();
+                });
+
+
 
                 // ===== Ocultar filtro blanco =====
                 const spinner = document.getElementById("spinner-wrapper");
@@ -186,69 +190,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ===== Mock comments (25 comentarios random estilo Souls) =====
-    function generateMockComments() {
-        const users = [
-            "Solaire", "Siegmeyer", "Andre", "Gwynevere", "Lautrec",
-            "Patches", "Oscar", "Laurentius", "Logan", "Priscilla",
-            "Havel", "Kirk", "Gough", "Gwyn", "Gwyndolin",
-            "Smough", "Firekeeper", "Quelana", "Ashen One", "Greirat",
-            "Yuria", "Ornstein", "Horace", "Eileen", "Artorias"
-        ];
+    // ===== Fetch a la api para rellenar la lista de comentarios =====
+    function generateMockComments(productId) {
+        return fetch(PRODUCT_INFO_COMMENTS_URL + productId + EXT_TYPE)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("http error " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.map(comment => {
+                    const { score, user, description, dateTime } = comment;
 
-        const commentsByScore = {
-            1: [
-                "El producto está peor que pasear por Blighttown.",
-                "Más inútil que mi espada rota en el tutorial de Undead Parish.",
-                "Esperaba algo mejor, esto es puro sufrimiento.",
-                "No volveré a comprar, igual que nunca vuelvo a matar a un Dragón Antiguo sin ayuda.",
-                "Defectuoso y decepcionante, ni Andre podría arreglarlo."
-            ],
-            2: [
-                "No es terrible, pero esperaba algo más épico.",
-                "Cumple parcialmente, aunque me recuerda a las trampas de Patches.",
-                "Aceptable, pero podría ser mejor; como un jefe opcional sin loot.",
-                "Regular, nada memorable; más bien aburrido.",
-                "Producto decente, aunque no me hizo sentir como frente a Gwyn."
-            ],
-            3: [
-                "Está correcto, como atravesar la Capilla de Andre sin morir.",
-                "Cumple su función, ni épico ni horrible.",
-                "Normal, nada especial, como un NPC de relleno.",
-                "Satisfecho pero se puede mejorar, como un cofre en Darkroot Garden.",
-                "Producto decente, como un combate contra un enemigo común."
-            ],
-            4: [
-                "Muy buen producto, casi digno de una hoguera.",
-                "Me gustó bastante, como conseguir el anillo de Havel.",
-                "Volvería a comprarlo, como cuando resucitas en Firelink.",
-                "Excelente relación calidad-precio, casi legendario.",
-                "Recomendado, como un milagro bien ejecutado."
-            ],
-            5: [
-                "Excelente producto, superó mis expectativas más oscuras.",
-                "Superó mis expectativas, como derrotar a Ornstein y Smough solo.",
-                "Totalmente recomendable, me siento invencible como Solaire.",
-                "Me encantó, me hace sentir como si encontrara un atajo secreto.",
-                "Volvería a comprar sin dudar, como abrazar la luz en Anor Londo.",
-                "Praise the Sun!"
-            ]
-        };
+                    let formattedDate = dateTime; // usar la que trae la API
+                    const date = new Date(dateTime);
+                    if (!isNaN(date)) {
+                        // solo si es válida la formateo
+                        formattedDate = date.toISOString().slice(0, 19).replace("T", " ");
+                    }
 
-        const comments = [];
-        for (let i = 0; i < 25; i++) {
-            const score = Math.floor(Math.random() * 5) + 1; // 1 a 5
-            const user = users[Math.floor(Math.random() * users.length)];
-            const textOptions = commentsByScore[score];
-            const description = textOptions[Math.floor(Math.random() * textOptions.length)];
-            const TWO_YEARS_MS = 2 * 365 * 24 * 60 * 60 * 1000; // milisegundos en 2 años
-            const date = new Date(Date.now() - Math.floor(Math.random() * TWO_YEARS_MS));
-            const formattedDate = date.toISOString().slice(0, 19).replace("T", " ");
-            comments.push({ user, score, description, date: formattedDate });
-        }
-
-        return comments;
+                    return { user, score, description, date: formattedDate };
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                return [];
+            });
     }
+
 
     // ===== Render comentarios paginados con estrellas doradas =====
     function renderCommentsPage() {
