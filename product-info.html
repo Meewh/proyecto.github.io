@@ -2,67 +2,59 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
 
-  <!-- Fuentes e iconos -->
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
-  <!-- Estilos -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link href="css/product-info.css" rel="stylesheet">
-  <link href="css/products.css" rel="stylesheet">
 </head>
 
 <body>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg p-1" id="navbar">
-  </nav>
-
-  <main>
-    <!-- Producto principal -->
-    <div id="product" class="d-flex flex-column">
-      <!-- Seccion calificaciones -->
-      <section id="ratings-section" class="container mt-5">
-        <div class="row">
-          <!-- Promedio y estrellas grandes -->
-          <div class="col-md-4 text-center" id="avg-rating-container"></div>
-      
-          <!-- Lista de opiniones -->
-          <div class="col-md-5" id="comments-list-container"></div>
-      
-          <!-- Formulario para calificar -->
-          <div class="col-md-3" id="rate-form-container"></div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Productos relacionados -->
-    <div>
-      <div class="container mb-5">
-        <h5 class="mb-4">Quizás te interese</h5>
-        <div class="row g-3" id="interes">
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav w-100 justify-content-between">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="categories.html">Categorías</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sell.html">Vender</a>
+          </li>
+          <li class="nav-item">
+          </li>
+        </ul>
       </div>
     </div>
-
+  </nav>
+  <main>
+    <!--clasificaciones place holder, donde js va inyectar las info mediante api de ceibal-->
+    <section id="ratings-section" class="container-mt5">
+      <div class="row">
+        <div class="col-md-4 text-center" id="avg-rating-container"></div> <!--aqui se inyecta el promedio de las estrellas-->
+        <div class="col-md-5" id="comments-list-container"></div><!--aqui se inyecta la lista de comentarios-->
+        <div class="col-md-3" id="rate-form-container"></div> <!--aqui se inyecta el formulario para calificar-->
+      </div>
+    </section>
   </main>
-
-  <!-- Footer -->
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end"><a href="#">Volver arriba</a></p>
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
       </p>
     </div>
   </footer>
-
-  <!-- Spinner -->
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -71,13 +63,9 @@
       <div></div>
     </div>
   </div>
-
-  <!-- Scripts -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/product-info.js"></script>
-  <script src="js/nav.js"></script>
-
 </body>
 
 </html>
