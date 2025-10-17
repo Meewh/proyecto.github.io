@@ -53,21 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
     </div>
     `
-
-  loadTheme()
-
-
-  const theme = document.getElementById("theme");
-  const logo = document.getElementById("logo")
   const userMenuBtn = document.getElementById("userMenuBtn");
   const userMenu = document.getElementById("userMenu");
   const bienvenida = document.getElementById("bienvenida");
   const flecha = document.getElementById("flecha");
   const usuario = localStorage.getItem("usuario");
   const logueado = localStorage.getItem("logueado");
-
-
-
 
 
   if (logueado !== "true" || !usuario) {
@@ -111,34 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
-  theme.addEventListener("click", () => {
-
-    if (localStorage.getItem("dark") == "false") {
-      localStorage.setItem("dark", "true");
-      loadTheme();
-
-    } else if (localStorage.getItem("dark") == "true") {
-      localStorage.setItem("dark", "false");
-      loadTheme();
-
-    } else {
-      localStorage.setItem("dark", "true")
-      loadTheme();
-
-    }
-
-  })
-
 });
 
-
-function loadTheme() {
-  if (localStorage.getItem("dark") == "true") {
-    logo.src = "img/logoDark.png";
-  } else if (localStorage.getItem("dark") == "false") {
-    logo.src = "img/Logo.png";
-  }
-}
 
 

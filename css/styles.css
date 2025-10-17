@@ -354,5 +354,69 @@ a.custom-card:hover {
 
 .navbar.dark {
   background-color: #FFB74D;
+}
+
+.navbar.dark .nav-link {
   color: #2B2B2B;
+}
+
+body.dark {
+  background-color: #2B2B2B;
+  color: #ffffff;
+}
+
+.album.dark {
+  background-color: #2B2B2B;
+}
+
+#categories-container.dark .card {
+  background-color: #2B2B2B;
+  border: 2px solid #FFB74D;
+  border-radius: .25rem;
+}
+
+#y-mucho-mas a {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+  border: 2px solid #FFB74D;
+}
+
+
+.jumbotron.dark {
+  height: 50vh;
+  padding: 5em inherit;
+  margin-bottom: 0;
+  background-color: #53C0FB;
+  background: url('../img/dark_cover_back.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: black;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .jumbotron.dark {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.jumbotron.dark p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading.dark {
+  font-weight: 300;
+}
+
+.jumbotron.dark .container {
+  max-width: 40rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  text-shadow: 1px 1px 2px grey;
+}
+
+.jumbotron.dark .lead {
+  font-size: 38px;
 }
