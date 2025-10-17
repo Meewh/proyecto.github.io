@@ -230,7 +230,7 @@ a.custom-card:hover {
   background: #ffffff;
   border: 1px solid #ddd;
   border-radius: 15px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   font-family: Arial, sans-serif;
   z-index: 9999;
@@ -238,7 +238,8 @@ a.custom-card:hover {
 }
 
 #chatbot-box.open {
-  display: flex; /* cuando tenga la clase "open", se abre */
+  display: flex;
+  /* cuando tenga la clase "open", se abre */
 }
 
 #chatbot-btn {
@@ -267,9 +268,12 @@ a.custom-card:hover {
 
 #chatbot-header .sub-header {
   display: block;
-  font-size: 14px;      /* letra más pequeña */
-  font-weight: normal;   /* letra más clara */
-  color: #dddddd;        /* gris más claro */
+  font-size: 14px;
+  /* letra más pequeña */
+  font-weight: normal;
+  /* letra más clara */
+  color: #dddddd;
+  /* gris más claro */
 }
 
 /* Área de mensajes */
@@ -277,7 +281,7 @@ a.custom-card:hover {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-   max-height: 300px;
+  max-height: 300px;
   font-size: 14px;
   color: #333;
 }
@@ -343,3 +347,12 @@ a.custom-card:hover {
   background: #cc7a00;
 }
 
+
+
+
+/* ==========================dark mode============================ */
+
+.navbar.dark {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+}
