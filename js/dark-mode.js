@@ -26,6 +26,35 @@ function applyDarkMode() {
     const yMuchoMas = document.getElementById("y-mucho-mas");
     if (yMuchoMas) yMuchoMas.classList.toggle("dark", dark);
 
+    const aToZ = document.getElementById("aToZ");
+    if (aToZ) aToZ.classList.toggle("dark", dark);
+    if (aToZ) aToZ.classList.toggle("btn-light", !dark);
+
+    const zToA = document.getElementById("zToA");
+    if (zToA) zToA.classList.toggle("dark", dark);
+    if (zToA) zToA.classList.toggle("btn-light", !dark);
+
+    const ventas = document.getElementById("ventas");
+    if (ventas) ventas.classList.toggle("dark", dark);
+    if (ventas) ventas.classList.toggle("btn-light", !dark);
+
+    const rangeFilterCount = document.getElementById("rangeFilterCount");
+    if (rangeFilterCount) rangeFilterCount.classList.toggle("dark", dark);
+    if (rangeFilterCount) rangeFilterCount.classList.toggle("btn-light", !dark);
+
+    const rangeFilterCountMax = document.getElementById("rangeFilterCountMax");
+    if (rangeFilterCountMax) rangeFilterCountMax.classList.toggle("dark", dark);
+    if (rangeFilterCountMax) rangeFilterCountMax.classList.toggle("btn-light", !dark);
+
+    const rangeFilterCountMin = document.getElementById("rangeFilterCountMin");
+    if (rangeFilterCountMin) rangeFilterCountMin.classList.toggle("dark", dark);
+    if (rangeFilterCountMin) rangeFilterCountMin.classList.toggle("btn-light", !dark);
+
+    const catListContainer = document.getElementById("cat-list-container");
+    if (catListContainer) catListContainer.classList.toggle("dark", dark);
+
+
+
 
 
 

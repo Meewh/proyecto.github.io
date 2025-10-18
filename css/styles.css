@@ -352,6 +352,49 @@ a.custom-card:hover {
 
 /* ==========================dark mode============================ */
 
+#cat-list-container.dark .list-group-item {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+#cat-list-container.dark .list-group-item .img-thumbnail {
+  background-color: #2B2B2B;
+  border: #2B2B2B;
+}
+
+#rangeFilterCountMin.dark {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#rangeFilterCountMax.dark {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#rangeFilterCount.dark {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+#aToZ.dark {
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+#zToA.dark {
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+#ventas.dark {
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+
 .navbar.dark {
   background-color: #FFB74D;
 }
@@ -375,10 +418,16 @@ body.dark {
   border-radius: .25rem;
 }
 
-#y-mucho-mas a {
+#y-mucho-mas.dark a {
   background-color: #2B2B2B;
   color: #FFFFFF;
   border: 2px solid #FFB74D;
+}
+
+#y-mucho-mas a {
+  background-color: #FFFFFF;
+  color: #2B2B2B;
+  border: 2px solid #2B2B2B;
 }
 
 
