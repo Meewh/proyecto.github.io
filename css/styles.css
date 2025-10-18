@@ -348,9 +348,115 @@ a.custom-card:hover {
 }
 
 
-
-
 /* ==========================dark mode============================ */
+
+
+#miModal.dark .modal-content .modal-footer button {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+}
+
+#miModal.dark .modal-content .btnExit i {
+  color: #FFB74D;
+}
+
+#miModal.dark .modal-content {
+  background-color: #2B2B2B;
+}
+
+#movile-produtcs.dark .dropdown-menu {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+}
+
+
+#movile-produtcs.dark .btn {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+}
+
+#reviews.dark #sort-comments {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#reviews.dark #reviews-list .border {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#reviews.dark #reviews-pagination .btn {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+}
+
+#reviews.dark .review-form-wrap {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#reviews.dark .review-form-wrap #review-text {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#reviews.dark .review-form-wrap #review-score {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#reviews.dark .review-form-wrap #review-form .btn {
+  color: #2B2B2B;
+  background-color: #FFB74D;
+}
+
+#interes.dark .product-card {
+  background-color: #2B2B2B;
+  border: 2px solid #FFB74D;
+}
+
+#interes.dark .product-card .price {
+  color: #FFB74D;
+}
+
+#mobile-vista.dark .price {
+  color: #FFB74D;
+}
+
+#mobile-vista.dark .btn {
+  color: #2B2B2B;
+  background-color: #FFB74D;
+}
+
+#carouselExample.dark .category-badge {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  padding: 3px 8px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+
+#desktop-vista.dark .category-badge {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  padding: 3px 8px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+#desktop-vista.dark .price {
+  color: #FFB74D;
+}
+
+#desktop-vista.dark .btn {
+  color: #2B2B2B;
+  background-color: #FFB74D;
+}
 
 #product-list-container.dark .product-card {
   border-color: #FFB74D;

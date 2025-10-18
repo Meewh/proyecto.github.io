@@ -62,6 +62,26 @@ function applyDarkMode() {
     const productListContainer = document.getElementById("product-list-container");
     if (productListContainer) productListContainer.classList.toggle("dark", dark);
 
+    const desktopVista = document.getElementById("desktop-vista");
+    if (desktopVista) desktopVista.classList.toggle("dark", dark);
+
+    const mobileVista = document.getElementById("mobile-vista");
+    if (mobileVista) mobileVista.classList.toggle("dark", dark);
+
+    const carouselExample = document.getElementById("carouselExample");
+    if (carouselExample) carouselExample.classList.toggle("dark", dark);
+
+    const interes = document.getElementById("interes");
+    if (interes) interes.classList.toggle("dark", dark);
+
+    const reviews = document.getElementById("reviews");
+    if (reviews) reviews.classList.toggle("dark", dark);
+
+    const movileProdutcs = document.getElementById("movile-produtcs");
+    if (movileProdutcs) movileProdutcs.classList.toggle("dark", dark);
+
+    const miModal = document.getElementById("miModal");
+    if (miModal) miModal.classList.toggle("dark", dark);
 
 
     const dropdownLinks = document.querySelectorAll(".navbar .dropdown-menu a");
