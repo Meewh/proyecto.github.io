@@ -53,8 +53,14 @@ function applyDarkMode() {
     const catListContainer = document.getElementById("cat-list-container");
     if (catListContainer) catListContainer.classList.toggle("dark", dark);
 
+    const aside = document.getElementById("aside");
+    if (aside) aside.classList.toggle("dark", dark);
 
+    const buscador = document.getElementById("buscador");
+    if (buscador) buscador.classList.toggle("dark", dark);
 
+    const productListContainer = document.getElementById("product-list-container");
+    if (productListContainer) productListContainer.classList.toggle("dark", dark);
 
 
 

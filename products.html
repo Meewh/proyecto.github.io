@@ -59,7 +59,7 @@
 
                 <!-- ASIDE con filtros -->
                 <aside class="col-md-3 mb-4 d-none d-md-block">
-                    <div class="filters p-3 border rounded" style="min-height: 400px;">
+                    <div class="filters p-3 rounded" style="min-height: 400px;" id="aside">
                         <h5 class="fw-bold mb-3">Filtros</h5>
 
                         <!-- Condición, filtro de nuevo, reacondicionado o usado-->
@@ -111,27 +111,27 @@
                             <input type="checkbox" id="stock" value="en-stock"> <label for="stock">En stock</label>
                         </div>
 
-            <!-- Botones -->
-            <div class="d-grid gap-2">
-              <button id="aplicar-filtros" class="btn btn-primary">Aplicar</button>
-              <button id="limpiar-filtros" class="btn btn-secondary">Limpiar</button>
-            </div>
-          </div>
-        </aside>
-        <div class="col-md-9">
-        
-            <!-- Barra Buscadora, tiene en cuenta los filtros -->
-            <div class="mb-3">
-                <input type="search" id="buscador" class="form-control" placeholder="Buscar productos...">
-            </div>
-        
-            <div class="row" id="product-list-container">
-                <!-- Esto se rellena con JS -->
-            </div>
-        </div>
-            <!-- LISTA DE PRODUCTOS -->
-            <div class="col-md-9">
-                <div class="row" id="product-list-container">
+                        <!-- Botones -->
+                        <div class="d-grid gap-2">
+                            <button id="aplicar-filtros" class="btn btn-primary">Aplicar</button>
+                            <button id="limpiar-filtros" class="btn btn-secondary">Limpiar</button>
+                        </div>
+                    </div>
+                </aside>
+                <div class="col-md-9">
+
+                    <!-- Barra Buscadora, tiene en cuenta los filtros -->
+                    <div class="mb-3">
+                        <input type="search" id="buscador" class="form-control" placeholder="Buscar productos...">
+                    </div>
+
+                    <div class="row" id="product-list-container">
+                        <!-- Esto se rellena con JS -->
+                    </div>
+                </div>
+                <!-- LISTA DE PRODUCTOS -->
+                <div class="col-md-9">
+                    <div class="row" id="product-list-container">
 
                         <!-- esto se rellena en el js -->
 
@@ -265,6 +265,7 @@
     <script src="js/init.js"></script>
     <script src="js/products.js"></script>
     <script src="js/nav.js"></script>
+    <script src="js/dark-mode.js"></script>
 </body>
 
 </html>

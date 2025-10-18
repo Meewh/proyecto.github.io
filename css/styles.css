@@ -352,10 +352,46 @@ a.custom-card:hover {
 
 /* ==========================dark mode============================ */
 
+#product-list-container.dark .product-card {
+  border-color: #FFB74D;
+}
+
+#product-list-container.dark .product-card .price {
+  color: #FFB74D;
+}
+
+#buscador.dark {
+  background-color: #2B2B2B;
+  border: 2px solid #FFB74D;
+  color: #FFFFFF;
+}
+
+#aside.dark {
+  background-color: #2B2B2B;
+  border: 2px solid #FFB74D;
+}
+
+#aside.dark .form-control {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#aside.dark .form-select {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#aside.dark .btn {
+  background-color: #FFB74D;
+  color: #2B2B2B;
+  border-color: #2B2B2B;
+}
+
 #cat-list-container.dark .list-group-item {
   background-color: #2B2B2B;
   color: #FFFFFF;
-  border-color: #FFFFFF;
+  border: 2px solid #FFB74D;
+  margin-bottom: 0.5%;
 }
 
 #cat-list-container.dark .list-group-item .img-thumbnail {
@@ -366,34 +402,35 @@ a.custom-card:hover {
 #rangeFilterCountMin.dark {
   background-color: #2B2B2B;
   color: #FFFFFF;
+  border: 2px solid #FFB74D;
 }
 
 #rangeFilterCountMax.dark {
   background-color: #2B2B2B;
   color: #FFFFFF;
+  border: 2px solid #FFB74D;
 }
 
 #rangeFilterCount.dark {
   background-color: #2B2B2B;
   color: #FFFFFF;
-  border-color: #FFFFFF;
+  border: 2px solid #FFB74D;
 }
 
 #aToZ.dark {
   color: #FFFFFF;
-  border-color: #FFFFFF;
+  border: 2px solid #FFB74D;
 }
 
 #zToA.dark {
   color: #FFFFFF;
-  border-color: #FFFFFF;
+  border: 2px solid #FFB74D;
 }
 
 #ventas.dark {
   color: #FFFFFF;
-  border-color: #FFFFFF;
+  border: 2px solid #FFB74D;
 }
-
 
 .navbar.dark {
   background-color: #FFB74D;
