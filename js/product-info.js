@@ -82,8 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p class="price">${data.currency} ${data.cost}</p>
                         <button class="btn btn-cart ms-4"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
                     </div>
-                    <div class="my-1">${renderStars(comment.score)}</div>
-                    <div class="text-muted">${comment.description}</div>
+                    <p class="mt-2">${data.description}</p>
                 </div>
             </div>
 

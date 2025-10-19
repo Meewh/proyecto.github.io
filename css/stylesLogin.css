@@ -26,7 +26,6 @@ header {
     padding: 10px;
     font-size: 20px;
     font-weight: bold;
-    display: flex;
     align-items: center;
 }
 
@@ -210,6 +209,12 @@ footer {
     text-align: center;
 }
 
+header #theme {
+    color: #ffffff;
+    font-size: medium;
+    font-weight: normal;
+}
+
 /* registrate de forma centrada */
 .link-registro {
     font-weight: bold;
@@ -251,4 +256,68 @@ footer {
     color: #ffffff;
 
     text-decoration: none;
+}
+
+
+/* ----------------dark mode----------------- */
+
+header.dark {
+    background: #FFB74D;
+    color: #2B2B2B;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    align-items: center;
+}
+
+header.dark span {
+    color: #2B2B2B;
+}
+
+header.dark #theme {
+    color: #2B2B2B;
+    font-size: medium;
+    font-weight: normal;
+}
+
+body.dark {
+    background-color: #2B2B2B;
+}
+
+#login-container.dark {
+    background-color: #FFB74D;
+}
+
+#login-container.dark label {
+    background-color: #FFB74D;
+    color: #2B2B2B;
+}
+
+#login-container.dark h2 {
+    color: #2B2B2B;
+}
+
+#login-container.dark p {
+    color: #2B2B2B;
+}
+
+#login-container.dark a {
+    color: #2B2B2B;
+}
+
+#login-container.dark input {
+    border-color: #2B2B2B;
+    color: #2B2B2B;
+}
+
+#login-container.dark button {
+    background-color: #FFB74D;
+    color: #2B2B2B;
+    border: 1px solid #2B2B2B;
+}
+
+#login-container.dark button:hover {
+    background: #2B2B2B;
+    color: #FFB74D;
+    border: 1px solid #2B2B2B;
 }

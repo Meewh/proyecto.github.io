@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </ul>
         <div class="nav-item justify-content-left">
           <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
-          </div>
+        </div>
       </div>
     </div>
     `
