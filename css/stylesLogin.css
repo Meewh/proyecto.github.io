@@ -39,11 +39,21 @@ main {
     /* centra el card en la página */
 }
 
+footer {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
 .logo-header {
     width: 48px;
     height: auto;
     border-radius: 4px;
 }
+
 /*para que el responsive mantenga la estetica*/
 .login-container {
     background: #F09100;
@@ -51,9 +61,12 @@ main {
     border-radius: 20px;
     padding: 40px;
     box-sizing: border-box;
-    max-width: 900px; /*  en desktop */
-    width: 100%; /*  ocupa todo en pantallas chicas */
+    max-width: 900px;
+    /*  en desktop */
+    width: 100%;
+    /*  ocupa todo en pantallas chicas */
 }
+
 /*para que disminuya la letra en ipohne*/
 @media (max-width: 575px) {
     .form-left h2 {
@@ -101,7 +114,7 @@ main {
 .input-group {
     position: relative;
     margin: 20px 0;
-    
+
 }
 
 .input-group input {
@@ -210,6 +223,7 @@ footer {
 .link-registro:hover {
     text-decoration: underline;
 }
+
 .link-registro,
 .link-registro:visited,
 .link-registro:hover,
@@ -217,6 +231,7 @@ footer {
     color: #ffffff;
 
 }
+
 /*fin*/
 
 /* para hacer que el boton inicio quede bonito y no se vuelva azul y subrayando al ponerl el mouse*/
