@@ -3,9 +3,9 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
-.perfil-card {
+#foto_perfil {
     background-color: #fffdfb;
-    border: 2px solid #f7c5a8;
+    border: 2px solid #F09100;
     border-radius: 15px;
     max-width: 900px;
 }
@@ -28,28 +28,28 @@ body {
 }
 
 .editar-foto-btn:hover {
-    background-color: #f7c5a8;
+    background-color: #F09100;
     color: white;
 }
 
 .text-warning {
-    color: #f7a88e !important;
+    color: #F09100 !important;
 }
 
 .btn-warning {
-    background-color: #f7c5a8;
+    background-color: #F09100;
     border: none;
 }
 
 .btn-warning:hover {
-    background-color: #f7a88e;
+    background-color: #F09100;
 }
 
 .form-control {
-    border-color: #f7c5a8;
+    border-color: #F09100;
 }
 
 .form-control:focus {
-    border-color: #f7a88e;
+    border-color: #F09100;
     box-shadow: 0 0 0 0.2rem rgba(247, 168, 142, 0.25);
 }

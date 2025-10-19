@@ -83,6 +83,10 @@ function applyDarkMode() {
     const miModal = document.getElementById("miModal");
     if (miModal) miModal.classList.toggle("dark", dark);
 
+    const tarjetaPerfil = document.getElementById("tarjeta-perfil");
+    if (tarjetaPerfil) tarjetaPerfil.classList.toggle("dark", dark);
+
+
 
     const dropdownLinks = document.querySelectorAll(".navbar .dropdown-menu a");
     dropdownLinks.forEach(link => {
