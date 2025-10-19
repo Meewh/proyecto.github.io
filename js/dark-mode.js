@@ -83,6 +83,21 @@ function applyDarkMode() {
     const miModal = document.getElementById("miModal");
     if (miModal) miModal.classList.toggle("dark", dark);
 
+    const tarjetaPerfil = document.getElementById("tarjeta-perfil");
+    if (tarjetaPerfil) tarjetaPerfil.classList.toggle("dark", dark);
+
+    const logoLogin = document.getElementById("logoLogin");
+    if (logoLogin) logoLogin.src = dark ? "img/logoDark.png" : "img/Logo.png";
+
+    const logoNavLogin = document.getElementById("logoNavLogin");
+    if (logoNavLogin) logoNavLogin.src = dark ? "img/logoDark.png" : "img/Logo.png";
+
+    const header = document.getElementById("header");
+    if (header) header.classList.toggle("dark", dark);
+
+    const loginContainer = document.getElementById("login-container");
+    if (loginContainer) loginContainer.classList.toggle("dark", dark);
+
 
     const dropdownLinks = document.querySelectorAll(".navbar .dropdown-menu a");
     dropdownLinks.forEach(link => {

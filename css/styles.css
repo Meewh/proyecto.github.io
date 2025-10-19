@@ -350,6 +350,39 @@ a.custom-card:hover {
 
 /* ==========================dark mode============================ */
 
+#tarjeta-perfil.dark #foto_perfil {
+  background-color: #fffdfb;
+  border: 2px solid #FFB74D;
+  border-radius: 15px;
+  max-width: 900px;
+}
+
+#tarjeta-perfil.dark .editar-foto-btn:hover {
+  background-color: #FFB74D;
+  color: white;
+}
+
+#tarjeta-perfil.dark .text-warning {
+  color: #FFB74D !important;
+}
+
+#tarjeta-perfil.dark .btn-warning {
+  background-color: #FFB74D;
+  border: none;
+}
+
+#tarjeta-perfil.dark .btn-warning:hover {
+  background-color: #FFB74D;
+}
+
+#tarjeta-perfil.dark .form-control {
+  border-color: #FFB74D;
+}
+
+#tarjeta-perfil.dark .form-control:focus {
+  border-color: #FFB74D;
+  box-shadow: 0 0 0 0.2rem rgba(247, 168, 142, 0.25);
+}
 
 #miModal.dark .modal-content .modal-footer button {
   background-color: #FFB74D;

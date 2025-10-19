@@ -1,0 +1,55 @@
+body {
+    background-color: #fff7f4;
+    font-family: "Poppins", sans-serif;
+}
+
+#foto_perfil {
+    background-color: #fffdfb;
+    border: 2px solid #F09100;
+    border-radius: 15px;
+    max-width: 900px;
+}
+
+.perfil-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+}
+
+.editar-foto-btn {
+    bottom: 10px;
+    right: 25%;
+    transform: translateX(50%);
+    border-radius: 50%;
+    padding: 6px 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+.editar-foto-btn:hover {
+    background-color: #F09100;
+    color: white;
+}
+
+.text-warning {
+    color: #F09100 !important;
+}
+
+.btn-warning {
+    background-color: #F09100;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #F09100;
+}
+
+.form-control {
+    border-color: #F09100;
+}
+
+.form-control:focus {
+    border-color: #F09100;
+    box-shadow: 0 0 0 0.2rem rgba(247, 168, 142, 0.25);
+}

@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="55edbd5d-ed13-4f94-90ed-e03ecd8215ec" name="Changes" comment="change: adaptar filtros para aparecer y desaparecer, no funcionan los filtros del boton">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/product-info.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/product-info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-info.html" beforeDir="false" afterPath="$PROJECT_DIR$/product-info.html" afterDir="false" />
     </list>
+    <list id="0bd82655-533a-4cf1-bad0-e88cc8cd39ff" name="Changes by Laburing" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,25 +46,38 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JavaScript Debug.product-info.html.executor": "Run",
     "JavaScript Debug.products.html.executor": "Run",
+    "Node.js.product-info.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "products-responsive",
+    "git-widget-placeholder": "Suany",
+    "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "T:/proyectos/jap/entrega2/proyecto.github.io",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.products.html">
+    <configuration name="product-info.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/proyecto.github.io/product-info.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="products.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/proyecto.github.io/products.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="product-info.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/js/product-info.js" working-dir="$PROJECT_DIR$/js">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.product-info.html" />
+        <item itemvalue="Node.js.product-info.js" />
         <item itemvalue="JavaScript Debug.products.html" />
       </list>
     </recent_temporary>
@@ -70,7 +85,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.112" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-WS-252.26199.162" />
       </set>
     </attachedChunks>
   </component>
@@ -85,6 +100,7 @@
       <workItem from="1756467759742" duration="12000" />
       <workItem from="1756467773852" duration="11016000" />
       <workItem from="1756668324505" duration="1108000" />
+      <workItem from="1759334876020" duration="5344000" />
     </task>
     <task id="LOCAL-00001" summary="Crear rama responsive">
       <option name="closed" value="true" />
