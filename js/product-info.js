@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     `).join('')}
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-4" id="mobile-vista">
                     <div class="d-flex justify-content-between align-items-baseline">
                         <p class="price">${data.currency} ${data.cost}</p>
                         <button class="btn btn-cart ms-4"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
 
             <!-- Vista escritorio -->
-            <div class="row d-none d-md-flex">
+            <div class="row d-none d-md-flex" id="desktop-vista">
                 <div class="col-md-2 secundary-images">
                     <img src="${imgs[1]}" alt="">
                     <img src="${imgs[2]}" alt="">
