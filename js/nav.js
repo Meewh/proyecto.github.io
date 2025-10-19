@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="form-left"> <!-- esto va a la izquierda -->
       <img src="img/Logo.png" alt="Logo" class="logo" id="logo">
     </div>
-    <div class="container" id="navbar" style="margin-right: 0px; padding-right: 0px;">
+    <div class="container" id="navbar">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -45,12 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
               <!-- guarda temporalmente todo en el cache de la pag -->
             </ul>
           </li>
+          
         </ul>
-
-      </div>
-    </div>
-    <div class="nav-item justify-content-left">
+        <div class="nav-item justify-content-left">
           <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
+          </div>
+      </div>
     </div>
     `
   const userMenuBtn = document.getElementById("userMenuBtn");
