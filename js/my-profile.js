@@ -1,3 +1,4 @@
+
 let recortador;
 const botonEditarPerfil = document.getElementById("boton_editar_perfil");
 const botonGuardar = document.getElementById("boton_guardar");
@@ -10,7 +11,18 @@ const imagenRecorte = document.getElementById("imagen_recorte");
 const botonGuardarRecorte = document.getElementById("boton_guardar_recorte");
 //sirven para guardar las referencias a los elementos del HTML//
 
-//  cargar datos guardados 
+//  cargar datos guardados del login
+window.addEventListener("DOMContentLoaded", () => {
+  const usuario = localStorage.getItem("usuario"); // obtiene el usuario logueado
+  const logueado = localStorage.getItem("logueado");
+
+  // Si hay usuario logueado, lo muestra en el campo de correo
+  if (logueado === "true" && usuario) {
+    document.getElementById("correo_texto").textContent = usuario;
+    document.getElementById("correo_entrada").value = usuario;
+  }
+});
+//carga datos guardados de los campos input al editar
 window.addEventListener("DOMContentLoaded", () => {
   const datos = JSON.parse(localStorage.getItem("datosUsuario")); //Busca los datos guardados en el navegador (localStorage)
   if (datos) {
