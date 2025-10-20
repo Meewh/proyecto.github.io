@@ -40,52 +40,61 @@
   </nav>
   <!-- Cropper.js: libreria que permite recortar imagenes-->
   <div class="contenedor-perfil container my-5">
-    <div class="tarjeta-perfil mx-auto p-4 shadow-sm"> <!--mx-auto: centra el contenido-->
+    <div class="tarjeta-perfil mx-auto p-4 shadow-sm">
       <div class="row align-items-center g-4" id="tarjeta-perfil">
+  
         <!-- Imagen del perfil -->
         <div class="col-12 col-md-4 text-center position-relative">
-          <img id="foto_perfil" src="https://i.imgur.com/tU0Tg8P.png" class="imagen-perfil rounded-circle"
-            alt="Foto de perfil" />
-          <input type="file" id="seleccionar_foto" accept="image/*" hidden />
-          <!--permite elegir una imagen, pero esta oculto.-->
-          <button id="boton_editar_foto" class="btn btn-light border position-absolute boton-editar-foto">
-            <i class="bi bi-pencil"></i>
-          </button>
+          <div class="contenedor-imagen position-relative mx-auto">
+            <img id="foto_perfil" src="https://i.imgur.com/tU0Tg8P.png" class="perfil-img" alt="Foto de perfil" />
+            <input type="file" id="seleccionar_foto" accept="image/*" hidden />
+            <button id="boton_editar_foto" class="btn btn-light border boton-editar-foto">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
         </div>
-
-        <!-- informacion del usuario -->
-        <div class="col-12 col-md-8">
+  
+        <!-- Información del usuario -->
+        <div class="col-12 col-md-8 datos-perfil">
           <div class="text-end mb-3">
             <a href="#" id="boton_editar_perfil" class="text-warning text-decoration-none fw-semibold">
               <i class="bi bi-pencil-square me-1"></i>Editar perfil
             </a>
           </div>
-
-          <!-- campos -->
+  
+          <!-- Campos -->
           <div class="campo mb-3">
-            <h6 class="text-warning"><i class="bi bi-person-circle me-2"></i>Nombre</h6>
+            <h6 class="text-warning">
+              <i class="bi bi-person-circle me-2"></i>Nombre
+            </h6>
             <p id="nombre_texto" class="m-0">Tu nombre</p>
             <input id="nombre_entrada" class="form-control d-none" type="text" />
           </div>
-
+  
           <div class="campo mb-3">
-            <h6 class="text-warning"><i class="bi bi-person-badge me-2"></i>Apellido</h6>
+            <h6 class="text-warning">
+              <i class="bi bi-person-badge me-2"></i>Apellido
+            </h6>
             <p id="apellido_texto" class="m-0">Tu apellido</p>
             <input id="apellido_entrada" class="form-control d-none" type="text" />
           </div>
-
+  
           <div class="campo mb-3">
-            <h6 class="text-warning"><i class="bi bi-envelope me-2"></i>Correo electrónico</h6>
+            <h6 class="text-warning">
+              <i class="bi bi-envelope me-2"></i>Correo electrónico
+            </h6>
             <p id="correo_texto" class="m-0">tu_correo@gmail.com</p>
             <input id="correo_entrada" class="form-control d-none" type="email" />
           </div>
-
+  
           <div class="campo mb-4">
-            <h6 class="text-warning"><i class="bi bi-telephone me-2"></i>Teléfono</h6>
+            <h6 class="text-warning">
+              <i class="bi bi-telephone me-2"></i>Teléfono
+            </h6>
             <p id="telefono_texto" class="m-0">099 123 456</p>
             <input id="telefono_entrada" class="form-control d-none" type="text" />
           </div>
-
+  
           <button id="boton_guardar" class="btn btn-warning text-white fw-semibold d-none">
             <i class="bi bi-check2-circle me-1"></i>Guardar cambios
           </button>

@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   userMenu.addEventListener("click", (e) => { //cierra sesion y recarga
     if (e.target && e.target.id === "logoutBtn") {
-      localStorage.removeItem("usuario");
-      localStorage.removeItem("logueado");
+      //elimina todo lo guardado, incluyendo los datos del perfil
+      localStorage.clear();
       location.reload();
     }
   });
