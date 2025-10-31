@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#cart-container {
+  border-radius: 40px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+
+}
+
+#checkout-button {
+  background-color: #F09100;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100px !important;
+  height: 40px !important;
+  align-items: center;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+

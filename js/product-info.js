@@ -312,3 +312,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+/*document.addEventListener("click", (e) => {
+  const button = e.target.closest(".btn-cart");
+  if (button) {
+    // Ejemplo: guardar el producto en el carrito local
+    const productId = localStorage.getItem("producto");
+    if (productId) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (!cart.includes(productId)) {
+        cart.push(productId);
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+    }
+
+    // Redirigir al carrito
+    window.location.href = "cart.html";
+  }
+}); */
+
+// === AGREGAR PRODUCTO AL CARRITO ===
+document.addEventListener("click", async (e) => {
+    const button = e.target.closest(".btn-cart");
+    if (!button) return;
+
+    const productId = localStorage.getItem("producto");
+    if (!productId) return;
+
+    try {
+        const resp = await fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`);
+        const data = await resp.json();
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const existing = cart.find(p => p.id === data.id);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({
+                id: data.id,
+                name: data.name,
+                cost: data.cost,
+                currency: data.currency,
+                image: data.images[0],
+                quantity: 1
+            });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "cart.html";
+    } catch (err) {
+        console.error("Error al agregar al carrito:", err);
+    }
+});
+
+
+

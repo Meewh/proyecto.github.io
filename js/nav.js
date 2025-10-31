@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.getElementById("navbar");
 
   nav.innerHTML = `
+  
     <div class="form-left"> <!-- esto va a la izquierda -->
       <img src="img/Logo.png" alt="Logo" class="logo" id="logo">
     </div>
@@ -22,10 +23,20 @@ document.addEventListener("DOMContentLoaded", () => {
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
+
+          <li class="nav-item">
+      <a class="nav-link position-relative" href="cart.html" id="cart-link">
+        <i class="bi bi-cart3 fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count" style="font-size: 0.7rem;">
+          0
+        </span>
+      </a>
+    </li>
           <li class="nav-item dropdown" style="position: relative;">
             <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
 
               <span id="bienvenida">Iniciar sesión</span> <span id="flecha" class="bi bi-caret-down-fill"></span>
+
 
             </button>
             <ul id="userMenu" style="
@@ -45,12 +56,16 @@ document.addEventListener("DOMContentLoaded", () => {
               <!-- guarda temporalmente todo en el cache de la pag -->
             </ul>
           </li>
+
+          
           
         </ul>
         <div class="nav-item justify-content-left">
           <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
         </div>
       </div>
+
+
     </div>
     `
   const userMenuBtn = document.getElementById("userMenuBtn");
