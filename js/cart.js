@@ -20,7 +20,6 @@ function disminuirCantidad(index) {
     productos[index].quantity -= 1;
     localStorage.removeItem("cart");
     localStorage.setItem("cart", JSON.stringify(productos));
-    console.log(productos[index].quantity);
   }
   dibujarProductos();
   actualizarSubtotal();
@@ -31,7 +30,6 @@ function aumentarCantidad(index) {
   productos[index].quantity += 1;
   localStorage.removeItem("cart");
   localStorage.setItem("cart", JSON.stringify(productos));
-  console.log(productos[index].quantity);
 
   dibujarProductos();
   actualizarSubtotal();

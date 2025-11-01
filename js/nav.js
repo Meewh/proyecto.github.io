@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const nav = document.getElementById("navbar");
+  const productos = JSON.parse(localStorage.getItem("cart") || []);
 
   nav.innerHTML = `
   
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <a class="nav-link position-relative" href="cart.html" id="cart-link">
         <i class="bi bi-cart3 fs-5"></i>
         <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-warning" id="cart-count" style="font-size: 0.7rem;">
-          0
+          ${productos.length}
         </span>
       </a>
         <div class="nav-item justify-content-left">
