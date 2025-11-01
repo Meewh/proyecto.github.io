@@ -35,6 +35,16 @@ function aumentarCantidad(index) {
   actualizarSubtotal();
 }
 
+function eliminarProducto(index) {
+  const productos = JSON.parse(localStorage.getItem("cart") || []);
+  productos.splice(index, 1);
+  localStorage.removeItem("cart");
+  localStorage.setItem("cart", JSON.stringify(productos));
+
+  dibujarProductos();
+  actualizarSubtotal();
+}
+
 function dibujarProductos() {
   const cartContainer = document.getElementById("cart-container");
 
@@ -57,6 +67,7 @@ function dibujarProductos() {
           <th class="text-center">Cantidad</th>
           <th class="text-end">Precio</th>
           <th class="text-end">Total</th>
+          <th class="text-end"></th>
         </tr>
       </thead>
       <tbody>
@@ -74,6 +85,9 @@ function dibujarProductos() {
         </td>
         <td class="text-end">${p.currency} ${p.cost}</td>
         <td class="text-end fw-semibold">${p.currency} ${total}</td>
+        <td class="text-center">
+        <button onclick="eliminarProducto(${index})" id="delete-button" class="button">  <i class="fa-solid fa-trash"></i> </button>
+        </td>
       </tr>`;
   });
 
