@@ -645,3 +645,20 @@ body.dark {
 .jumbotron.dark .lead {
   font-size: 38px;
 }
+
+th {
+  font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+  background: transparent;
+}
+
+th,
+td {
+  border: none;
+  background: transparent;
+  padding: 4px 8px;
+  text-align: left;
+}

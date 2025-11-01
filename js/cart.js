@@ -6,15 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   if (cart.length === 0) {
     cartContainer.innerHTML = `
-      <div class="alert alert-secondary text-center p-4">
-        No hay productos en el carrito.
-      </div>`;
+      <tr class="alert alert-secondary text-center p-4">
+        <td class="text-center">No hay productos en el carrito.</td>
+      </tr>`;
     subtotalElem.textContent = "$U 0";
     return;
   }
 
   let tabla = `
-    <table class="table align-middle border shadow-sm">
+    <table class="tabla-productos table align-middle shadow-sm">
       <thead class="table-light">
         <tr>
           <th>Producto</th>
@@ -44,55 +44,55 @@ document.addEventListener("DOMContentLoaded", function () {
   subtotalElem.textContent = `${cart[0].currency} ${subtotal}`;
 });
 
-  //  id: productData.id,
-  //         name: productData.name,
-  //         cost: productData.cost,
-  //         currency: productData.currency,
-  //         image: productData.images[0],
-  //         quantity: 1
+//  id: productData.id,
+//         name: productData.name,
+//         cost: productData.cost,
+//         currency: productData.currency,
+//         image: productData.images[0],
+//         quantity: 1
 
-  tabla += `</tbody></table>`;
-  cartContainer.innerHTML = tabla;
+tabla += `</tbody></table>`;
+cartContainer.innerHTML = tabla;
 
-  // Actualizar totales globales
-  function actualizarSubtotal() {
-    const productos = JSON.parse(localStorage.getItem("cart")) || [];
-    const subtotal = productos.reduce((acc, p) => acc + p.costo * p.cantidad, 0);
-    document.getElementById("subtotal").textContent = `$U ${subtotal}`;
+// Actualizar totales globales
+function actualizarSubtotal() {
+  const productos = JSON.parse(localStorage.getItem("cart")) || [];
+  const subtotal = productos.reduce((acc, p) => acc + p.costo * p.cantidad, 0);
+  document.getElementById("subtotal").textContent = `$U ${subtotal}`;
+}
+actualizarSubtotal();
+
+// Escuchar eventos de los botones y inputs
+cartContainer.addEventListener("click", (e) => {
+  const btn = e.target;
+  const index = btn.dataset.index;
+  if (index === undefined) return;
+
+  if (btn.dataset.action === "sumar") {
+    productos[index].cantidad++;
+  } else if (btn.dataset.action === "restar" && productos[index].cantidad > 1) {
+    productos[index].cantidad--;
   }
+
+  // Actualizar UI
+  const input = cartContainer.querySelector(`input[data-index="${index}"]`);
+  input.value = productos[index].cantidad;
+  document.getElementById(`total-${index}`).textContent = `$U ${productos[index].costo * productos[index].cantidad}`;
   actualizarSubtotal();
+  localStorage.setItem("productos", JSON.stringify(productos));
+});
 
-  // Escuchar eventos de los botones y inputs
-  cartContainer.addEventListener("click", (e) => {
-    const btn = e.target;
-    const index = btn.dataset.index;
-    if (index === undefined) return;
-
-    if (btn.dataset.action === "sumar") {
-      productos[index].cantidad++;
-    } else if (btn.dataset.action === "restar" && productos[index].cantidad > 1) {
-      productos[index].cantidad--;
-    }
-
-    // Actualizar UI
-    const input = cartContainer.querySelector(`input[data-index="${index}"]`);
-    input.value = productos[index].cantidad;
+// Si se edita manualmente la cantidad
+cartContainer.addEventListener("input", (e) => {
+  if (e.target.matches("input[type='number']")) {
+    const index = e.target.dataset.index;
+    const nuevaCantidad = Math.max(1, parseInt(e.target.value) || 1);
+    productos[index].cantidad = nuevaCantidad;
     document.getElementById(`total-${index}`).textContent = `$U ${productos[index].costo * productos[index].cantidad}`;
     actualizarSubtotal();
-    localStorage.setItem("productos", JSON.stringify(productos));
-  });
-
-  // Si se edita manualmente la cantidad
-  cartContainer.addEventListener("input", (e) => {
-    if (e.target.matches("input[type='number']")) {
-      const index = e.target.dataset.index;
-      const nuevaCantidad = Math.max(1, parseInt(e.target.value) || 1);
-      productos[index].cantidad = nuevaCantidad;
-      document.getElementById(`total-${index}`).textContent = `$U ${productos[index].costo * productos[index].cantidad}`;
-      actualizarSubtotal();
-      localStorage.setItem("cart", JSON.stringify(productos));
-    }
-  });
+    localStorage.setItem("cart", JSON.stringify(productos));
+  }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const cartContainer = document.getElementById("cart-items");

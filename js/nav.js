@@ -23,15 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-
-          <li class="nav-item">
-      <a class="nav-link position-relative" href="cart.html" id="cart-link">
-        <i class="bi bi-cart3 fs-5"></i>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count" style="font-size: 0.7rem;">
-          0
-        </span>
-      </a>
-    </li>
           <li class="nav-item dropdown" style="position: relative;">
             <button id="userMenuBtn" class="nav-link" style="background:none;border:none;cursor:pointer;">
 
@@ -60,6 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
           
           
         </ul>
+        <a class="nav-link position-relative" href="cart.html" id="cart-link">
+        <i class="bi bi-cart3 fs-5"></i>
+        <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-warning" id="cart-count" style="font-size: 0.7rem;">
+          0
+        </span>
+      </a>
         <div class="nav-item justify-content-left">
           <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
         </div>
