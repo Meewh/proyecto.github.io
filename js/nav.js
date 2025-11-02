@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const nav = document.getElementById("navbar");
-  const productos = JSON.parse(localStorage.getItem("cart") || []);
+  if (localStorage.getItem("cart") === null) {
+    localStorage.setItem("cart", [])
+  }
+  const productos = JSON.parse(localStorage.getItem("cart") || "[]");
 
   nav.innerHTML = `
   

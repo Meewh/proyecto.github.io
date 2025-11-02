@@ -8,25 +8,30 @@ document.addEventListener("DOMContentLoaded", function () {
 // Actualizar totales globales
 function actualizarSubtotal() {
   const subtotalElem = document.getElementById("subtotal");
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cart = JSON.parse(localStorage.getItem("cart")) || "[]";
+  if (cart.length > 0) {
+    const subtotal = cart.reduce((acc, p) => acc + p.cost * p.quantity, 0);
+    subtotalElem.textContent = `${cart[0].currency} ${subtotal}`;
+  } else {
+    subtotalElem.textContent = 0;
+  }
 
-  const subtotal = cart.reduce((acc, p) => acc + p.cost * p.quantity, 0);
-  subtotalElem.textContent = `${cart[0].currency} ${subtotal}`;
 }
 
 function disminuirCantidad(index) {
-  const productos = JSON.parse(localStorage.getItem("cart") || []);
+  const productos = JSON.parse(localStorage.getItem("cart") || "[]");
   if (productos[index].quantity > 1) {
     productos[index].quantity -= 1;
     localStorage.removeItem("cart");
     localStorage.setItem("cart", JSON.stringify(productos));
   }
+
   dibujarProductos();
   actualizarSubtotal();
 }
 
 function aumentarCantidad(index) {
-  const productos = JSON.parse(localStorage.getItem("cart") || []);
+  const productos = JSON.parse(localStorage.getItem("cart") || "[]");
   productos[index].quantity += 1;
   localStorage.removeItem("cart");
   localStorage.setItem("cart", JSON.stringify(productos));
@@ -36,7 +41,7 @@ function aumentarCantidad(index) {
 }
 
 function eliminarProducto(index) {
-  const productos = JSON.parse(localStorage.getItem("cart") || []);
+  const productos = JSON.parse(localStorage.getItem("cart") || "[]");
   productos.splice(index, 1);
   localStorage.removeItem("cart");
   localStorage.setItem("cart", JSON.stringify(productos));
@@ -55,6 +60,7 @@ function dibujarProductos() {
       <tr class="alert alert-secondary text-center p-4">
         <td class="text-center">No hay productos en el carrito.</td>
       </tr>`;
+    const subtotalElem = document.getElementById("subtotal");
     subtotalElem.textContent = "$U 0";
     return;
   }

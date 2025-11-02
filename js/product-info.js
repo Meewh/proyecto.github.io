@@ -343,7 +343,7 @@ document.addEventListener("click", async (e) => {
         const resp = await fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`);
         const data = await resp.json();
 
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
         const existing = cart.find(p => p.id === data.id);
         if (existing) {
