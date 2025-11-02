@@ -1,8 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const nav = document.getElementById("navbar");
+  if (localStorage.getItem("cart") === null) {
+    localStorage.setItem("cart", [])
+  }
+  const productos = JSON.parse(localStorage.getItem("cart") || "[]");
 
   nav.innerHTML = `
+  
     <div class="form-left"> <!-- esto va a la izquierda -->
       <img src="img/Logo.png" alt="Logo" class="logo" id="logo">
     </div>
@@ -27,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               <span id="bienvenida">Iniciar sesión</span> <span id="flecha" class="bi bi-caret-down-fill"></span>
 
+
             </button>
             <ul id="userMenu" style="
                 display: none;
@@ -45,12 +51,22 @@ document.addEventListener("DOMContentLoaded", () => {
               <!-- guarda temporalmente todo en el cache de la pag -->
             </ul>
           </li>
+
+          
           
         </ul>
+        <a class="nav-link position-relative" href="cart.html" id="cart-link">
+        <i class="bi bi-cart3 fs-5"></i>
+        <span class="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-warning" id="cart-count" style="font-size: 0.7rem;">
+          ${productos.length}
+        </span>
+      </a>
         <div class="nav-item justify-content-left">
           <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
         </div>
       </div>
+
+
     </div>
     `
   const userMenuBtn = document.getElementById("userMenuBtn");
