@@ -15,65 +15,171 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg p-1" id="navbar">
+  <nav class="navbar navbar-expand-lg p-1" id="navbar"></nav>
 
-  </nav>
   <main>
     <div class="container py-5">
       <h2 class="mb-4">Mi carrito</h2>
       <div class="row">
 
-        <!-- 🛒 Carrito -->
+        <!-- CARRITO + DIRECCIÓN -->
         <div class="col-lg-8 mb-4">
+          
+          <!-- CARRITO -->
           <div id="cart-container" class="table-responsive"></div>
-        </div>
 
-        <!-- 💰 Resumen -->
-        <div class="col-lg-4">
-          <div class="card p-3 mb-3">
-            <h6 class="text-muted">Subtotal</h6>
-            <p id="subtotal" class="fs-5 fw-bold">$U 0</p>
-            <h6 class="text-muted">Gastos del envío</h6>
-            <p class="fw-bold text-success">Gratis</p>
-            <button id="checkout-button" class="btn btn-warning w-100 rounded-pill fw-semibold">Pagar</button>
+          <!-- DIRECCIÓN DE ENVÍO -->
+          <div class="card p-4 mt-4">
+            <h5>Dirección de envío</h5>
+            <form id="shipping-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Departamento</label>
+                  <input type="text" class="form-control" id="dept" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Localidad</label>
+                  <input type="text" class="form-control" id="localidad" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Calle</label>
+                  <input type="text" class="form-control" id="calle" required>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Número</label>
+                  <input type="text" class="form-control" id="numero" required>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Esquina</label>
+                  <input type="text" class="form-control" id="esquina">
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="save-address">
+                  <label class="form-check-label" for="save-address">
+                    Guardar como dirección predeterminada
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Usar esta dirección de envío</button>
+            </form>
           </div>
 
-          <div class="card p-3" class="contenedor">
-            <h6 class="text-muted">Ingresa tu cupón de descuento</h6>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Código">
-              <button class="btn btn-outline-dark">Aplicar</button>
+          <!-- TIPO DE ENVÍO -->
+          <div id="shipping-options" class="card p-4 mt-3 d-none">
+            <h5>Tipo de envío</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="shipping" id="premium" value="0.15">
+              <label class="form-check-label" for="premium">
+                Premium 2 a 5 días (15%)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="shipping" id="express" value="0.07">
+              <label class="form-check-label" for="express">
+                Express 5 a 8 días (7%)
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="shipping" id="standard" value="0.05" checked>
+              <label class="form-check-label" for="standard">
+                Standard 12 a 15 días (5%)
+              </label>
             </div>
           </div>
         </div>
 
+        <!-- RESUMEN -->
+        <div class="col-lg-4">
+          <div class="card p-3 mb-3">
+            <h6 class="text-muted">Subtotal</h6>
+            <div id="subtotal" class="fs-5 fw-bold">UYU 0</div>
+            <h6 class="text-muted">Gastos del envío</h6>
+            <p id="shipping-cost" class="fw-bold text-muted">Indefinido</p>
+
+<!-- Envuelve en un div -->
+            <div id="checkout-wrapper" class="d-inline-block w-100" 
+              data-bs-toggle="tooltip" 
+              data-bs-placement="top"
+              title="Rellenar todos los campos y seleccionar método de envío para proceder">
+              <button 
+                id="checkout-button" 
+                class="btn btn-secondary w-100 rounded-pill fw-semibold" 
+                disabled>
+                Pagar
+              </button>
+            </div>
+          </div>
+
+          <div class="card p-3">
+            <h6 class="text-muted">Ingresa tu cupón de descuento</h6>
+            <div class="input-group mb-2">
+              <input type="text" id="coupon-input" class="form-control" placeholder="Código">
+              <button id="apply-coupon" class="btn btn-outline-dark">Aplicar</button>
+            </div>
+            <p id="coupon-message" class="text-success small d-none"></p>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
+  <!-- MODAL DE PAGO -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title">Forma de pago</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="list-group" id="payment-methods">
+                <label class="list-group-item">
+                  <input class="form-check-input me-2" type="radio" name="payment" value="redes" id="redes">
+                  Efectivo por redes de cobranza (Abitab, Redpagos)
+                </label>
+                <label class="list-group-item">
+                  <input class="form-check-input me-2" type="radio" name="payment" value="tarjeta" id="tarjeta">
+                  Tarjeta de crédito/débito
+                </label>
+                <label class="list-group-item">
+                  <input class="form-check-input me-2" type="radio" name="payment" value="transferencia" id="transferencia">
+                  Transferencia bancaria
+                </label>
+              </div>
+            </div>
+            <div class="col-12 mt-3" id="payment-form-container"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" id="confirm-payment">Confirmar pago</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
-      </p>
+      <p class="float-end"><a href="#">Volver arriba</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>
+
+  <!-- SCRIPTS -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/dark-mode.js"></script>
+
 </body>
 
 </html>
