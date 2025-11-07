@@ -445,12 +445,15 @@ function eliminarProducto(i) {
 
 function dibujarProductos() {
   const container = document.getElementById("cart-container");
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (cart.length === 0) {
-    container.innerHTML = `<div class="alert alert-secondary text-center p-4">No hay productos en el carrito.</div>`;
+  if (localStorage.getItem("cart") == "") {
+    console.log("alo")
+    container.innerHTML = `<div class="alert-secondary text-center p-4">No hay productos en el carrito.</div>`;
     return;
   }
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 
   let tabla = `
     <table class="tabla-productos table align-middle shadow-sm">
