@@ -5,6 +5,7 @@ let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
+let searchTerm = ""; // Nueva variable para el término de búsqueda
 
 function sortCategories(criteria, array) {
     let result = [];
@@ -40,35 +41,73 @@ function setCatID(id) {
 }
 
 function showCategoriesList() {
+    let html = `
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  `;
 
-    let htmlContentToAppend = "";
-    for (let i = 0; i < currentCategoriesArray.length; i++) {
-        let category = currentCategoriesArray[i];
+    let filteredCount = 0;
 
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))) {
+    for (let category of currentCategoriesArray) {
+        // Filtro por rango de productos
+        let passesCountFilter = (
+            (minCount === undefined || parseInt(category.productCount) >= minCount) &&
+            (maxCount === undefined || parseInt(category.productCount) <= maxCount)
+        );
 
-            htmlContentToAppend += `
-            <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${category.imgSrc}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${category.name}</h4>
-                            <small class="text-muted">${category.productCount} artículos</small>
-                        </div>
-                        <p class="mb-1">${category.description}</p>
-                    </div>
-                </div>
-            </div>
-            `
+        // Filtro por búsqueda (nombre o descripción)
+        let passesSearchFilter = true;
+        if (searchTerm !== "") {
+            const search = searchTerm.toLowerCase();
+            const nameMatch = category.name.toLowerCase().includes(search);
+            const descMatch = category.description.toLowerCase().includes(search);
+            passesSearchFilter = nameMatch || descMatch;
         }
 
-        document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+        // Solo mostrar si pasa ambos filtros
+        if (passesCountFilter && passesSearchFilter) {
+            filteredCount++;
+            html += `
+        <div 
+          onclick="setCatID(${category.id})"
+          class="cursor-pointer bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+        >
+          <div class="relative">
+            <img 
+              src="${category.imgSrc}" 
+              alt="${category.description}"
+              class="w-full aspect-[4/3] object-cover"
+            >
+            <div class="absolute bottom-2 right-2 bg-[#f1e7f3] text-[#190d1b] text-xs font-bold px-2 py-1 rounded">
+              ${category.productCount} productos
+            </div>
+          </div>
+
+          <div class="p-4">
+            <h3 class="font-bold text-lg mb-1">${category.name}</h3>
+            <p class="text-sm text-muted-light dark:text-muted-dark h-12">
+              ${category.description}
+            </p>
+          </div>
+        </div>
+      `;
+        }
     }
+
+    html += `</div>`;
+
+    // Mostrar mensaje si no hay resultados
+    if (filteredCount === 0) {
+        html = `
+        <div class="text-center py-12">
+          <i class="bi bi-search text-6xl text-muted-light dark:text-muted-dark mb-4"></i>
+          <p class="text-xl text-muted-light dark:text-muted-dark">No se encontraron categorías que coincidan con tu búsqueda</p>
+        </div>
+        `;
+    }
+
+    document.getElementById("cat-list-container").innerHTML = html;
 }
+
 
 function sortAndShowCategories(sortCriteria, categoriesArray) {
     currentSortCriteria = sortCriteria;
@@ -93,6 +132,12 @@ document.addEventListener("DOMContentLoaded", function (e) {
             showCategoriesList()
             //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
         }
+    });
+
+    // Event listener para la búsqueda
+    document.getElementById("searchInput").addEventListener("input", function (e) {
+        searchTerm = e.target.value;
+        showCategoriesList();
     });
 
     document.getElementById("sortAsc").addEventListener("click", function () {

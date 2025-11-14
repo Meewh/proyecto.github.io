@@ -9,10 +9,6 @@
   font-weight: bold;
 }
 
-nav a {
-  text-decoration: none;
-}
-
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
@@ -187,15 +183,6 @@ a.custom-card:hover {
 
 .checked {
   color: orange;
-}
-
-.navbar {
-  background-color: #F09100;
-  color: #ffffff;
-}
-
-.navbar-nav .nav-link {
-  color: #ffffff;
 }
 
 .logo {
@@ -569,14 +556,6 @@ a.custom-card:hover {
 #ventas.dark {
   color: #FFFFFF;
   border: 2px solid #FFB74D;
-}
-
-.navbar.dark {
-  background-color: #FFB74D;
-}
-
-.navbar.dark .nav-link {
-  color: #2B2B2B;
 }
 
 body.dark {
