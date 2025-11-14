@@ -185,8 +185,9 @@ async function actualizarSubtotal() {
   subtotalElem.innerHTML = html;
 
   if (costoEnvioUYU > 0) {
-    shippingCostElem.textContent = `UYU ${Math.round(costoEnvioUYU).toLocaleString('es-UY')}`;
-    shippingCostElem.className = "fw-bold text-success";
+    let total = costoEnvioUYU + subtotalUYU;
+    shippingCostElem.textContent = `UYU ${Math.round(total).toLocaleString('es-UY')}`;
+    shippingCostElem.className = "fw-bold text-success fs-4";
   } else {
     shippingCostElem.textContent = "Indefinido";
     shippingCostElem.className = "fw-bold text-muted";

@@ -24,7 +24,7 @@
 
         <!-- CARRITO + DIRECCIÓN -->
         <div class="col-lg-8 mb-4">
-          
+
           <!-- CARRITO -->
           <div id="cart-container" class="table-responsive"></div>
 
@@ -93,20 +93,13 @@
         <!-- RESUMEN -->
         <div class="col-lg-4">
           <div class="card p-3 mb-3">
-            <h6 class="text-muted">Subtotal</h6>
             <div id="subtotal" class="fs-5 fw-bold">UYU 0</div>
-            <h6 class="text-muted">Gastos del envío</h6>
+            <p class="text- fw-bold mb-1">Total</p>
             <p id="shipping-cost" class="fw-bold text-muted">Indefinido</p>
-
-<!-- Envuelve en un div -->
-            <div id="checkout-wrapper" class="d-inline-block w-100" 
-              data-bs-toggle="tooltip" 
-              data-bs-placement="top"
+            <!-- Envuelve en un div -->
+            <div id="checkout-wrapper" class="d-inline-block w-100" data-bs-toggle="tooltip" data-bs-placement="top"
               title="Rellenar todos los campos y seleccionar método de envío para proceder">
-              <button 
-                id="checkout-button" 
-                class="btn btn-secondary w-100 rounded-pill fw-semibold" 
-                disabled>
+              <button id="checkout-button" class="btn btn-secondary w-100 rounded-pill fw-semibold" disabled>
                 Pagar
               </button>
             </div>
@@ -146,7 +139,8 @@
                   Tarjeta de crédito/débito
                 </label>
                 <label class="list-group-item">
-                  <input class="form-check-input me-2" type="radio" name="payment" value="transferencia" id="transferencia">
+                  <input class="form-check-input me-2" type="radio" name="payment" value="transferencia"
+                    id="transferencia">
                   Transferencia bancaria
                 </label>
               </div>
@@ -165,12 +159,18 @@
   <footer class="text-muted">
     <div class="container">
       <p class="float-end"><a href="#">Volver arriba</a></p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
 
   <div id="spinner-wrapper">
-    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 
   <!-- SCRIPTS -->
