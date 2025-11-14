@@ -4,216 +4,271 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
+  <title>eMercado - Carrito de Compras</title>
+
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <link href="css/cartStyles.css" rel="stylesheet">
-  <!-- GOOGLE FONTS - MATERIAL SYMBOLS -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
   <!-- TAILWIND -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- CONFIG OPCIONAL DE TAILWIND (si la usás) -->
   <script>
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
           colors: {
-            primary: "#6366f1",
+            primary: "#f1e7f3",
+            accent: "#190d1b",
             "surface-light": "#ffffff",
-            "surface-dark": "#1e1e1e",
-            "background-light": "#f3f4f6",
-            "background-dark": "#111827",
-            "contrast-light": "#111",
-            "contrast-dark": "#fff",
-            "muted-light": "#6b7280",
-            "muted-dark": "#9ca3af",
+            "surface-dark": "#21162d",
+            "background-light": "#f7f6f8",
+            "background-dark": "#191022",
+            "border-light": "#f2f0f4",
+            "border-dark": "#322340",
+            "text-light-primary": "#141118",
+            "text-light-secondary": "#756189",
+            "text-dark-primary": "#f7f6f8",
+            "text-dark-secondary": "#a89cb9",
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "Raleway", "sans-serif"],
           },
         },
       },
     };
   </script>
 
-  <!-- TUS ESTILOS (si los tenés, como styles.css o dark-mode.css) -->
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/dark-mode.css">
-
 </head>
 
-<body>
-  <nav class="navbar display-none p-1" id="navbar" style="padding: 0%; display: block;">
+<body
+  class="bg-background-light dark:bg-background-dark font-display text-text-light-primary dark:text-text-dark-primary">
+  <nav class="navbar p-1" id="navbar" style="padding: 0%; display: block;"></nav>
 
+  <main class="container mx-auto px-4 py-8 md:py-12">
+    <!-- Page Heading -->
+    <div class="mb-8 md:mb-12">
+      <h2
+        class="text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl text-accent dark:text-text-dark-primary">
+        Mi Carrito</h2>
+    </div>
 
-    <main>
-      <div class="container py-5">
-        <h2 class="mb-4">Mi carrito</h2>
-        <div class="row">
+    <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 xl:gap-12">
+      <!-- Left Column: Cart Items -->
+      <div class="lg:col-span-2">
+        <!-- Section Header -->
+        <h3 class="text-2xl font-bold leading-tight tracking-[-0.015em] mb-4 text-accent dark:text-text-dark-primary">
+          Artículos en tu carrito</h3>
 
-          <!-- CARRITO + DIRECCIÓN -->
-          <div class="col-lg-8 mb-4">
-
-            <!-- CARRITO -->
-            <div id="cart-container" class="table-responsive"></div>
-
-            <!-- DIRECCIÓN DE ENVÍO -->
-            <div id="direction-container" class="card p-4 mt-4">
-              <h5>Dirección de envío</h5>
-              <form id="shipping-form">
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="form-label">Departamento</label>
-                    <input type="text" class="form-control" id="dept" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-label">Localidad</label>
-                    <input type="text" class="form-control" id="localidad" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-label">Calle</label>
-                    <input type="text" class="form-control" id="calle" required>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Número</label>
-                    <input type="text" class="form-control" id="numero" required>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label">Esquina</label>
-                    <input type="text" class="form-control" id="esquina">
-                  </div>
-                </div>
-                <div class="mt-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="save-address">
-                    <label class="form-check-label" for="save-address">
-                      Guardar como dirección predeterminada
-                    </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Usar esta dirección de envío</button>
-              </form>
-            </div>
-
-            <!-- TIPO DE ENVÍO -->
-            <div id="shipping-options" class="card p-4 mt-3 d-none">
-              <h5>Tipo de envío</h5>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="shipping" id="premium" value="0.15">
-                <label class="form-check-label" for="premium">
-                  Premium 2 a 5 días (15%)
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="shipping" id="express" value="0.07">
-                <label class="form-check-label" for="express">
-                  Express 5 a 8 días (7%)
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="shipping" id="standard" value="0.05" checked>
-                <label class="form-check-label" for="standard">
-                  Standard 12 a 15 días (5%)
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- RESUMEN -->
-          <div class="col-lg-4">
-            <div id="cart-pay-card" class="card p-3 mb-3">
-              <div id="subtotal" class="fs-5 fw-bold">UYU 0</div>
-              <p class="text- fw-bold mb-1">Total</p>
-              <p id="shipping-cost" class="fw-bold text-muted">Indefinido</p>
-              <!-- Envuelve en un div -->
-              <div id="checkout-wrapper" class="d-inline-block w-100" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="Rellenar todos los campos y seleccionar método de envío para proceder">
-                <button id="checkout-button" class="btn btn-secondary w-100 rounded-pill fw-semibold" disabled>
-                  Pagar
-                </button>
-              </div>
-            </div>
-
-            <div id="coupon-input-card" class="card p-3">
-              <h6 class="text-muted">Ingresa tu cupón de descuento</h6>
-              <div class="input-group mb-2">
-                <input type="text" id="coupon-input" class="form-control" placeholder="Código">
-                <button id="apply-coupon" class="btn btn-outline-dark">Aplicar</button>
-              </div>
-              <p id="coupon-message" class="text-success small d-none"></p>
-            </div>
-          </div>
+        <div class="flex flex-col gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-4" id="cart-container">
+          <!-- Los productos se cargan aquí dinámicamente -->
         </div>
       </div>
-    </main>
 
-    <!-- MODAL DE PAGO -->
-    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div id="payment-modal" class="modal-content">
-          <div class="modal-header text-dark">
-            <h5 class="modal-title">Forma de pago</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row g-3">
-              <div class="col-12">
-                <div class="list-group" id="payment-methods">
-                  <label class="list-group-item">
-                    <input class="form-check-input me-2" type="radio" name="payment" value="redes" id="redes">
-                    Efectivo por redes de cobranza (Abitab, Redpagos)
-                  </label>
-                  <label class="list-group-item">
-                    <input class="form-check-input me-2" type="radio" name="payment" value="tarjeta" id="tarjeta">
-                    Tarjeta de crédito/débito
-                  </label>
-                  <label class="list-group-item">
-                    <input class="form-check-input me-2" type="radio" name="payment" value="transferencia"
-                      id="transferencia">
-                    Transferencia bancaria
-                  </label>
-                </div>
+      <!-- Right Column: Summary & Forms -->
+      <div class="lg:col-span-1 mt-8 lg:mt-0">
+        <div class="sticky top-24 flex flex-col gap-6">
+
+          <!-- Shipping Address -->
+          <div class="flex flex-col gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-5">
+            <h3 class="text-lg font-bold text-accent dark:text-text-dark-primary">Dirección de Envío</h3>
+            <form id="shipping-form">
+              <div class="grid grid-cols-2 gap-3">
+                <input id="dept"
+                  class="col-span-2 rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:border-primary focus:ring-primary/50"
+                  placeholder="Departamento" type="text" required />
+                <input id="localidad"
+                  class="col-span-2 rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:border-primary focus:ring-primary/50"
+                  placeholder="Localidad" type="text" required />
+                <input id="calle"
+                  class="col-span-2 sm:col-span-1 rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:border-primary focus:ring-primary/50"
+                  placeholder="Calle" type="text" required />
+                <input id="numero"
+                  class="col-span-2 sm:col-span-1 rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:border-primary focus:ring-primary/50"
+                  placeholder="Número" type="text" required />
+                <input id="esquina"
+                  class="col-span-2 rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:border-primary focus:ring-primary/50"
+                  placeholder="Esquina (opcional)" type="text" />
               </div>
-              <div class="col-12 mt-3" id="payment-form-container"></div>
+              <div class="mt-3">
+                <label class="flex items-center gap-2 cursor-pointer text-sm text-accent dark:text-text-dark-primary">
+                  <input type="checkbox" id="save-address" class="rounded accent-primary">
+                  <span>Guardar como dirección predeterminada</span>
+                </label>
+              </div>
+              <button type="submit"
+                class="mt-4 w-full flex items-center justify-center rounded-xl h-10 px-4 bg-primary text-accent font-bold text-sm hover:bg-primary/90 transition-colors">
+                Usar esta dirección
+              </button>
+            </form>
+          </div>
+
+          <!-- Shipping Options -->
+          <div id="shipping-options" class="hidden flex-col gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-5">
+            <h3 class="text-lg font-bold text-accent dark:text-text-dark-primary">Tipo de Envío</h3>
+            <div class="flex flex-col gap-3">
+              <label
+                class="flex cursor-pointer items-center justify-between rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10 text-accent dark:text-text-dark-primary">
+                <div>
+                  <p class="font-semibold text-sm">Premium (2-5 días)</p>
+                  <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">+15%</p>
+                </div>
+                <input class="form-radio text-primary focus:ring-primary/50 accent-accent dark:accent-primary"
+                  name="shipping" type="radio" value="0.15" id="premium" />
+              </label>
+              <label
+                class="flex cursor-pointer items-center justify-between rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10 text-accent dark:text-text-dark-primary">
+                <div>
+                  <p class="font-semibold text-sm">Express (5-8 días)</p>
+                  <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">+7%</p>
+                </div>
+                <input class="form-radio text-primary focus:ring-primary/50 accent-accent dark:accent-primary"
+                  name="shipping" type="radio" value="0.07" id="express" />
+              </label>
+              <label
+                class="flex cursor-pointer items-center justify-between rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10 text-accent dark:text-text-dark-primary">
+                <div>
+                  <p class="font-semibold text-sm">Standard (12-15 días)</p>
+                  <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">+5%</p>
+                </div>
+                <input checked class="form-radio text-primary focus:ring-primary/50 accent-accent dark:accent-primary"
+                  name="shipping" type="radio" value="0.05" id="standard" />
+              </label>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn" id="confirm-payment">Confirmar pago</button>
+
+          <!-- Coupon -->
+          <div class="flex flex-col gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-5">
+            <h3 class="text-lg font-bold text-accent dark:text-text-dark-primary">Cupón de Descuento</h3>
+            <div class="flex gap-2">
+              <input id="coupon-input"
+                class="flex-1 rounded-md border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:border-primary focus:ring-primary/50"
+                placeholder="Código" type="text" />
+              <button id="apply-coupon"
+                class="px-4 py-2 rounded-md bg-primary text-accent font-bold text-sm hover:bg-primary/90 transition-colors">
+                Aplicar
+              </button>
+            </div>
+            <p id="coupon-message" class="text-sm hidden"></p>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="flex flex-col gap-3 rounded-xl bg-surface-light dark:bg-surface-dark p-5">
+            <h3 class="text-lg font-bold mb-1 text-accent dark:text-text-dark-primary">Resumen del Pedido</h3>
+            <div id="subtotal" class="text-text-light-secondary dark:text-text-dark-secondary">
+              <p class="text-sm mb-1">Subtotal</p>
+              <p class="text-2xl font-bold text-accent dark:text-text-dark-primary">UYU 0</p>
+            </div>
+            <div class="flex justify-between text-sm text-text-light-secondary dark:text-text-dark-secondary">
+              <p>Costo de Envío</p>
+              <p id="shipping-cost" class="font-medium text-accent dark:text-text-dark-primary">Indefinido</p>
+            </div>
+            <hr class="border-border-light dark:border-border-dark my-2" />
+            <button id="checkout-button" disabled
+              class="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-accent/20 dark:bg-text-dark-secondary/20 text-accent/50 dark:text-text-dark-secondary gap-2 text-base font-bold leading-normal tracking-[0.015em] transition-colors disabled:cursor-not-allowed">
+              Continuar con la Compra
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </main>
 
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-end"><a href="#">Volver arriba</a></p>
-        <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
-        </p>
+  <!-- MODAL DE PAGO -->
+  <div id="payment-modal-backdrop" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-surface-light dark:bg-surface-dark rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div
+        class="sticky top-0 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark p-4 flex items-center justify-between">
+        <h3 class="text-xl font-bold text-accent dark:text-text-dark-primary">Forma de pago</h3>
+        <button id="close-modal"
+          class="flex h-10 w-10 items-center justify-center rounded-full hover:bg-background-light dark:hover:bg-background-dark transition-colors">
+          <span class="material-symbols-outlined text-accent dark:text-text-dark-primary">close</span>
+        </button>
       </div>
-    </footer>
 
-    <div id="spinner-wrapper">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div class="p-6">
+        <div class="flex flex-col gap-3 mb-6">
+          <label
+            class="flex cursor-pointer items-center justify-between rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+            <span class="text-sm font-medium text-accent dark:text-text-dark-primary">Efectivo por redes de cobranza
+              (Abitab, Redpagos)</span>
+            <input class="form-radio text-primary focus:ring-primary/50 accent-accent dark:accent-primary" type="radio"
+              name="payment" value="redes" id="redes" checked>
+          </label>
+          <label
+            class="flex cursor-pointer items-center justify-between rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+            <span class="text-sm font-medium text-accent dark:text-text-dark-primary">Tarjeta de crédito/débito</span>
+            <input class="form-radio text-primary focus:ring-primary/50 accent-accent dark:accent-primary" type="radio"
+              name="payment" value="tarjeta" id="tarjeta">
+          </label>
+          <label
+            class="flex cursor-pointer items-center justify-between rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+            <span class="text-sm font-medium text-accent dark:text-text-dark-primary">Transferencia bancaria</span>
+            <input class="form-radio text-primary focus:ring-primary/50 accent-accent dark:accent-primary" type="radio"
+              name="payment" value="transferencia" id="transferencia">
+          </label>
+        </div>
+
+        <div id="payment-form-container" class="mb-6"></div>
+      </div>
+
+      <div
+        class="sticky bottom-0 bg-surface-light dark:bg-surface-dark border-t border-border-light dark:border-border-dark p-4 flex gap-3">
+        <button id="cancel-payment"
+          class="flex-1 px-4 py-3 rounded-xl border border-border-light dark:border-border-dark text-accent dark:text-text-dark-primary font-bold hover:bg-background-light dark:hover:bg-background-dark transition-colors">
+          Cancelar
+        </button>
+        <button id="confirm-payment"
+          class="flex-1 px-4 py-3 rounded-xl bg-primary text-accent font-bold hover:bg-primary/90 transition-colors">
+          Confirmar pago
+        </button>
       </div>
     </div>
+  </div>
 
-    <!-- SCRIPTS -->
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/nav.js"></script>
-    <script src="js/dark-mode.js"></script>
+  <footer class="text-text-light-secondary dark:text-text-dark-secondary py-8 mt-12">
+    <div class="container mx-auto px-4">
+      <p class="float-end">
+        <a href="#" class="hover:text-primary transition-colors">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+          class="hover:text-primary transition-colors">Jovenes a Programar</a></p>
+    </div>
+  </footer>
 
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <script src="js/init.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/dark-mode.js"></script>
 </body>
 
 </html>
