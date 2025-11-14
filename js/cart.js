@@ -458,7 +458,7 @@ function dibujarProductos() {
 
   let tabla = `
     <table class="tabla-productos table align-middle shadow-sm">
-      <thead class="table-light">
+      <thead id="product-table-head" class="table-light">
         <tr>
           <th>Producto</th>
           <th class="text-center">Cantidad</th>

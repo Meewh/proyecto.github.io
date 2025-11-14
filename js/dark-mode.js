@@ -98,6 +98,33 @@ function applyDarkMode() {
     const loginContainer = document.getElementById("login-container");
     if (loginContainer) loginContainer.classList.toggle("dark", dark);
 
+    const cartPayCard = document.getElementById("cart-pay-card");
+    if (cartPayCard) cartPayCard.classList.toggle("dark", dark);
+
+    const checkoutButton = document.getElementById("checkout-button");
+    if (checkoutButton) checkoutButton.classList.toggle("dark", dark);
+
+    const couponInputCard = document.getElementById("coupon-input-card");
+    if (couponInputCard) couponInputCard.classList.toggle("dark", dark);
+
+    const applyCoupon = document.getElementById("apply-coupon");
+    if (applyCoupon) applyCoupon.classList.toggle("btn-outline-dark", !dark);
+    if (applyCoupon) applyCoupon.classList.toggle("btn-outline-light", dark);
+
+    const directionContainer = document.getElementById("direction-container");
+    if (directionContainer) directionContainer.classList.toggle("dark", dark);
+
+    const shippingOptions = document.getElementById("shipping-options");
+    if (shippingOptions) shippingOptions.classList.toggle("dark", dark);
+
+    const cartContainer = document.getElementById("cart-container");
+    if (cartContainer) cartContainer.classList.toggle("dark", dark);
+
+    const productTableHead = document.getElementById("product-table-head");
+    if (productTableHead) productTableHead.classList.toggle("table-light", !dark);
+    if (productTableHead) productTableHead.classList.toggle("table-dark", dark);
+
+
 
     const dropdownLinks = document.querySelectorAll(".navbar .dropdown-menu a");
     dropdownLinks.forEach(link => {
