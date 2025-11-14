@@ -73,6 +73,20 @@
   pointer-events: none;
 }
 
+#payment-modal .modal-header {
+  background-color: #F09100;
+}
+
+#payment-modal .modal-header h5 {
+  color: #FFFFFF;
+}
+
+#payment-modal .modal-footer .btn {
+  background-color: #F09100;
+  color: #FFFFFF;
+}
+
+
 /* modo oscuro */
 
 #cart-pay-card.dark {
@@ -83,6 +97,7 @@
 
 #checkout-button.dark {
   background-color: #FFB74D;
+  color: #2B2B2B;
 }
 
 #coupon-input-card.dark {
@@ -112,4 +127,37 @@
 
 #cart-container.dark td {
   color: #FFFFFF;
+}
+
+#payment-modal.dark .modal-header {
+  background-color: #FFB74D;
+  border-bottom-width: 0px;
+}
+
+#payment-modal.dark .modal-header h5 {
+  color: #2B2B2B;
+}
+
+#payment-modal.dark .modal-body {
+  background-color: #2B2B2B;
+}
+
+#payment-modal.dark .list-group-item {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+#payment-modal.dark .card {
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+#payment-modal.dark .modal-footer {
+  background-color: #2B2B2B;
+}
+
+#payment-modal.dark .modal-footer .btn {
+  background-color: #FFB74D;
+  color: #2B2B2B;
 }

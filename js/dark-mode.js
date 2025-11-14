@@ -124,7 +124,8 @@ function applyDarkMode() {
     if (productTableHead) productTableHead.classList.toggle("table-light", !dark);
     if (productTableHead) productTableHead.classList.toggle("table-dark", dark);
 
-
+    const paymentModal = document.getElementById("payment-modal");
+    if (paymentModal) paymentModal.classList.toggle("dark", dark);
 
     const dropdownLinks = document.querySelectorAll(".navbar .dropdown-menu a");
     dropdownLinks.forEach(link => {
