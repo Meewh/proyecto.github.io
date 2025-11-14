@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
     mostrarOpcionesEnvio();
     mostrarCheckDireccion();
     verificarBotonPagar();
+    // Abrir automáticamente si hay dirección guardada
+    const addressContent = document.getElementById("address-content");
+    const addressIcon = document.getElementById("address-icon");
+    if (addressContent) addressContent.classList.remove("hidden");
+    if (addressIcon) addressIcon.style.transform = "rotate(180deg)";
   }
 });
 
@@ -54,6 +59,25 @@ function inicializarEventos() {
   });
 
   document.getElementById("confirm-payment").addEventListener("click", confirmarPago);
+
+  // Toggle dirección
+  const addressToggle = document.getElementById("address-toggle");
+  const addressContent = document.getElementById("address-content");
+  const addressIcon = document.getElementById("address-icon");
+
+  if (addressToggle && addressContent && addressIcon) {
+    addressToggle.addEventListener("click", () => {
+      const isHidden = addressContent.classList.contains("hidden");
+
+      if (isHidden) {
+        addressContent.classList.remove("hidden");
+        addressIcon.style.transform = "rotate(180deg)";
+      } else {
+        addressContent.classList.add("hidden");
+        addressIcon.style.transform = "rotate(0deg)";
+      }
+    });
+  }
 
   // Inicializar formulario de pago por defecto
   mostrarFormularioPago("redes");
@@ -399,6 +423,11 @@ function confirmarPago() {
   dibujarProductos();
   actualizarSubtotal();
   verificarBotonPagar();
+
+  // Actualizar contador del carrito en el nav
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 // ============================================================
@@ -412,6 +441,10 @@ function disminuirCantidad(i) {
   }
   dibujarProductos();
   actualizarSubtotal();
+
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 function aumentarCantidad(i) {
@@ -420,6 +453,10 @@ function aumentarCantidad(i) {
   localStorage.setItem("cart", JSON.stringify(cart));
   dibujarProductos();
   actualizarSubtotal();
+
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 function eliminarProducto(i) {
@@ -429,6 +466,10 @@ function eliminarProducto(i) {
   dibujarProductos();
   actualizarSubtotal();
   verificarBotonPagar();
+
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 function dibujarProductos() {
