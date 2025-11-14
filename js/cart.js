@@ -456,9 +456,12 @@ function dibujarProductos() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 
+
+  let tableMode = darkModeTable();
+
   let tabla = `
     <table class="tabla-productos table align-middle shadow-sm">
-      <thead id="product-table-head" class="table-light">
+      <thead id="product-table-head" class="${tableMode}">
         <tr>
           <th>Producto</th>
           <th class="text-center">Cantidad</th>
@@ -491,4 +494,17 @@ function dibujarProductos() {
 
   tabla += `</tbody></table>`;
   container.innerHTML = tabla;
+
 }
+
+function darkModeTable() {
+  let mode = localStorage.getItem("dark");
+  if (mode == "true") {
+    tableMode = "table-dark";
+    console.log(tableMode)
+  } else {
+    tableMode = "table-light";
+    console.log(tableMode)
+  }
+  return tableMode;
+};
