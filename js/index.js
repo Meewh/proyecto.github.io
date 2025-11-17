@@ -24,79 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setInterval(siguienteSlide, 5000);
     }
 
-    /* =====================================================================================
-       BÚSQUEDA
-    ===================================================================================== */
-    const searchToggle = document.getElementById('search-toggle');
-    const searchContainer = document.getElementById('search-container');
-    const searchInput = document.getElementById('search-input');
-
-    if (searchToggle && searchContainer && searchInput) {
-        searchToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const expanded = searchContainer.classList.contains('expanded');
-
-            if (!expanded) {
-                searchContainer.classList.add('expanded');
-                setTimeout(() => searchInput.focus(), 400);
-            } else if (searchInput.value === "") {
-                searchContainer.classList.remove('expanded');
-            }
-        });
-
-        searchInput.addEventListener('blur', () => {
-            if (searchInput.value === "") {
-                setTimeout(() => searchContainer.classList.remove('expanded'), 200);
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!searchContainer.contains(e.target) && searchInput.value === "") {
-                searchContainer.classList.remove('expanded');
-            }
-        });
-    }
-
-    /* =====================================================================================
-       MODO OSCURO
-    ===================================================================================== */
-    const darkModeBtn = document.getElementById('dark-mode-btn');
-    if (darkModeBtn) {
-        darkModeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            const icon = darkModeBtn.querySelector('.material-symbols-outlined');
-            icon.textContent = document.body.classList.contains('dark') ? "light_mode" : "dark_mode";
-        });
-    }
-
-    /* =====================================================================================
-       FAVORITOS (HEADER)
-    ===================================================================================== */
-    const favBtn = document.getElementById('fav-btn');
-    const favIcon = document.getElementById('fav-icon');
-    if (favBtn && favIcon) {
-        let favActive = false;
-        favBtn.addEventListener('click', () => {
-            favActive = !favActive;
-            favIcon.textContent = favActive ? "favorite" : "favorite_border";
-        });
-    }
-
-    /* =====================================================================================
-       PERFIL (HEADER)
-    ===================================================================================== */
-    const profileBtn = document.getElementById('profile-btn');
-    const profileMenu = document.getElementById('profile-menu');
-
-    if (profileBtn && profileMenu) {
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            profileMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', () => profileMenu.classList.remove('active'));
-    }
-
+    
     /* =====================================================================================
        API HELPERS
     ===================================================================================== */
@@ -164,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 `).join("");
 
-
         } catch (error) {
             console.error("Error cargando categorías:", error);
             container.innerHTML = `<p class="text-red-500">Error cargando categorías.</p>`;
@@ -172,8 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     cargarCategorias();
-
-
 
     /* =====================================================================================
        TOP 4 MÁS VENDIDOS

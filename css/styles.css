@@ -215,6 +215,7 @@ body {
   padding: 0 5px;
 }
 
+
 .profile-btn {
   display: flex;
   align-items: center;
@@ -265,6 +266,9 @@ body {
 .profile-menu button:hover {
   background: rgba(0, 0, 0, 0.04);
 }
+
+
+
 
 /* NAVEGACIÓN MÓVIL */
 .nav-mobile {

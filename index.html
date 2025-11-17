@@ -14,7 +14,7 @@
 
   <!-- Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-
+  <script src="js/nav.js" defer></script>
   <!-- TAILWIND -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
@@ -38,53 +38,121 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="bg-page-light text-page-text font-display"> <!-- ░░ NAV DESKTOP ░░ -->
+<body>
   <nav class="nav-desktop">
     <div class="nav-inner">
-      <div class="nav-left"> <a href="index.html" class="brand"> <img src="" alt="Logo" class="brand-logo">
-          <span>eMercado</span> </a>
-        <div class="nav-links"> <a href="index.html">Inicio</a> <a href="categories.html">Categorías</a> <a
-            href="help.html">Ayuda</a> <a href="about.html">Sobre Nosotros</a> </div>
+      <div class="nav-left">
+        <a href="index.html" class="brand">
+          <img src="" alt="Logo" class="brand-logo">
+          <span>eMercado</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">Inicio</a>
+          <a href="categories.html">Categorías</a>
+          <a href="help.html">Ayuda</a>
+          <a href="about.html">Sobre Nosotros</a>
+        </div>
       </div>
-      <div class="nav-right"> <!-- Buscador -->
-        <div class="search-container" id="search-container"> <button class="search-toggle" id="search-toggle"
-            aria-label="Buscar"> <span class="material-symbols-outlined">search</span> </button>
-          <div class="search-input-wrapper"> <input type="search" id="search-input" placeholder="Buscar productos..."
-              aria-label="Buscar productos"> </div>
-        </div> <!-- Accesibilidad --> <button class="icon-btn" id="accessibility-btn"> <span
-            class="material-symbols-outlined">accessibility</span> </button> <!-- Modo oscuro --> <button
-          class="icon-btn" id="dark-mode-btn"> <span class="material-symbols-outlined">dark_mode</span> </button>
-        <!-- Favoritos --> <button class="icon-btn" id="fav-btn"> <span class="material-symbols-outlined"
-            id="fav-icon">favorite_border</span> </button> <!-- Carrito --> <button class="icon-btn"> <span
-            class="material-symbols-outlined">shopping_cart</span> <span class="badge" id="cart-count">0</span>
-        </button> <!-- Perfil -->
-        <div style="position: relative;"> <button class="profile-btn" id="profile-btn"> <span
-              class="material-symbols-outlined">person</span> <span id="user-name">Mi Perfil</span> <span
-              class="material-symbols-outlined" style="font-size: 18px;">expand_more</span> </button>
+      <div class="nav-right">
+        <!-- Buscador -->
+        <div class="search-container" id="search-container">
+          <button class="search-toggle" id="search-toggle" aria-label="Buscar">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+          <div class="search-input-wrapper">
+            <input type="search" id="search-input" placeholder="Buscar productos..." aria-label="Buscar productos">
+          </div>
+        </div>
+  
+        <!-- Carrito -->
+        <button class="icon-btn" id="cart-btn">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span class="badge" id="cart-count">0</span>
+        </button>
+  
+        <!-- Notificaciones -->
+        <button class="icon-btn" id="notifications-btn">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+  
+        <!-- Perfil -->
+        <div style="position: relative;">
+          <button class="profile-btn" id="profile-btn">
+            <span class="material-symbols-outlined">person</span>
+            <span id="user-name">Mi Perfil</span>
+            <span class="material-symbols-outlined" style="font-size: 18px;">expand_more</span>
+          </button>
           <ul class="profile-menu" id="profile-menu">
-            <li><a href="my-profile.html">Mi Perfil</a></li>
-            <li><a href="config.html">Configuración</a></li>
-            <li><button id="logout-btn">Cerrar sesión</button></li>
+            <!-- Menú no logueado -->
+            <li id="login-link" style="display: none;"><a href="login.html">Iniciar sesión</a></li>
+            <li id="signup-link" style="display: none;"><a href="signup.html">Registrarse</a></li>
+  
+            <!-- Menú logueado -->
+            <li id="my-profile-link" style="display: none;"><a href="my-profile.html">Mi Perfil</a></li>
+            <li id="settings-link" style="display: none;"><a href="config.html">Configuración</a></li>
+            <li id="accessibility-link" style="display: none;"><a href="accessibility.html">Accesbilidad</a></li>
+            <li id="logout-link" style="display: none;">
+              <button id="logout-btn">Cerrar sesión</button>
+            </li>
           </ul>
         </div>
       </div>
     </div>
+  </nav>
+
+
+
+
+
   </nav> <!-- ░░ NAV MÓVIL ░░ -->
   <nav class="nav-mobile">
-    <div class="nav-mobile-top"> <a href="#" class="brand"> <img src="" alt="Logo" class="brand-logo">
-        <span>eMercado</span> </a>
-      <div style="display: flex; gap: 8px;"> <button class="icon-btn" id="mobile-search-btn"> <span
-            class="material-symbols-outlined">search</span> </button> <button class="icon-btn"> <span
-            class="material-symbols-outlined">help</span> </button> <button class="icon-btn"> <span
-            class="material-symbols-outlined">info</span> </button> </div>
+    <div class="nav-mobile-top">
+      <a href="#" class="brand">
+        <img src="" alt="Logo" class="brand-logo">
+        <span>eMercado</span>
+      </a>
+      <div style="display: flex; gap: 8px;">
+        <button class="icon-btn" id="mobile-search-btn">
+          <span class="material-symbols-outlined">search</span>
+        </button>
+        <button class="icon-btn">
+          <span class="material-symbols-outlined">help</span>
+        </button>
+        <button class="icon-btn">
+          <span class="material-symbols-outlined">info</span>
+        </button>
+      </div>
     </div>
-    <div class="nav-mobile-bottom"> <button class="icon-btn"> <span class="material-symbols-outlined">home</span> Inicio
-      </button> <button class="icon-btn"> <span class="material-symbols-outlined">category</span> Categorías </button>
-      <button class="icon-btn"> <span class="material-symbols-outlined">shopping_cart</span> Carrito </button> <button
-        class="icon-btn"> <span class="material-symbols-outlined">favorite_border</span> Favoritos </button> <button
-        class="icon-btn"> <span class="material-symbols-outlined">person</span> Perfil </button>
+    <div class="nav-mobile-bottom">
+      <button class="icon-btn">
+        <span class="material-symbols-outlined">home</span> Inicio
+      </button>
+      <button class="icon-btn">
+        <span class="material-symbols-outlined">category</span> Categorías
+      </button>
+
+      <!-- Carrito (antes de notificaciones) -->
+      <button class="icon-btn">
+        <span class="material-symbols-outlined">shopping_cart</span> Carrito
+      </button>
+
+      <!-- Favoritos solo si el usuario está logueado -->
+      <button class="icon-btn" id="mobile-fav-btn" style="display: none;">
+        <span class="material-symbols-outlined">favorite_border</span> Favoritos
+      </button>
+
+      <!-- Notificaciones -->
+      <button class="icon-btn" id="mobile-notifications-btn">
+        <span class="material-symbols-outlined">notifications</span> Notificaciones
+      </button>
+
+      <!-- Perfil -->
+      <button class="icon-btn" id="mobile-profile-btn">
+        <span class="material-symbols-outlined">person</span> Perfil
+      </button>
     </div>
   </nav>
+
 
 
   <!-- HERO -->
@@ -130,24 +198,9 @@
     </div>
   </footer>
 
-  <!-- MikanBot -->
-  <button id="chatbot-btn"><img src="img/MikanClosed.png" alt="Chat" /></button>
-
-
-  <div id="chatbot-box">
-    <div id="chatbot-header">
-      Mikan Asistente<br>
-      <span class="sub-header">Preguntas frecuentes</span>
-    </div>
-    <div id="chatbot-messages"></div>
-    <div id="chatbot-input">
-      <input type="text" placeholder="Escribe tu mensaje...">
-      <button>Enviar</button>
-    </div>
-  </div>
+  
 
   <!-- SCRIPTS -->
-  <script src="js/nav.js" defer></script>
   <script src="js/index.js" defer></script>
   <script src="js/mikan.js"></script>
   <script src="js/dark-mode.js"></script>
