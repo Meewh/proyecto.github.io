@@ -41,20 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const imgs = data.images || [data.image];
 
         galleryContainer.innerHTML = `
-            <div class="flex flex-col gap-4">
-                <!-- Imagen principal -->
-                <div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden aspect-square">
-                    <img id="main-image" src="${imgs[0]}" alt="${data.name}" class="w-full h-full object-cover">
-                </div>
-                
-                <!-- Thumbnails -->
-                <div class="grid grid-cols-4 gap-3">
-                    ${imgs.map((img, idx) => `
-                        <button class="thumbnail ${idx === 0 ? 'thumbnail-active' : ''} border-2 border-border-light dark:border-border-dark rounded-lg overflow-hidden aspect-square hover:border-primary transition-colors" data-index="${idx}">
-                            <img src="${img}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
-                        </button>
-                    `).join('')}
-                </div>
+            <div class="main-image-container">
+                <img id="main-image" src="${imgs[0]}" alt="${data.name}">
+            </div>
+            <div class="thumbnails">
+                ${imgs.map((img, idx) => `
+                    <button class="thumbnail ${idx === 0 ? 'thumbnail-active' : ''}" data-index="${idx}">
+                        <img src="${img}" alt="Thumbnail ${idx + 1}">
+                    </button>
+                `).join('')}
             </div>
         `;
 
@@ -69,99 +64,65 @@ document.addEventListener("DOMContentLoaded", () => {
                 thumb.classList.add('thumbnail-active');
             });
         });
+
+        // Update breadcrumb
+        const breadcrumbCategory = document.getElementById('breadcrumb-category');
+        const breadcrumbProduct = document.getElementById('breadcrumb-product');
+        if (breadcrumbCategory) breadcrumbCategory.textContent = data.category;
+        if (breadcrumbProduct) breadcrumbProduct.textContent = data.name;
     }
 
     // ===== Render información del producto =====
     function renderProductInfo(data) {
         productInfoContainer.innerHTML = `
-            <div class="flex flex-col gap-6">
-                <!-- Badge de categoría -->
-                <div class="inline-flex items-center gap-2">
-                    <span class="px-3 py-1 rounded-full bg-primary/20 text-accent dark:text-text-dark-primary text-sm font-semibold">
-                        ${data.category}
-                    </span>
-                    <span class="text-sm text-text-light-secondary dark:text-text-dark-secondary">
-                        ${data.soldCount} vendidos
-                    </span>
+            <div>
+                <span class="category-badge">${data.category}</span>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h1 class="product-name mb-0">${data.name}</h1>
+                    <button class="btn-favorite" aria-label="Agregar a favoritos">
+                        <span class="material-symbols-outlined">favorite_border</span>
+                    </button>
                 </div>
-
-                <!-- Nombre del producto -->
-                <h1 class="text-3xl lg:text-4xl font-black text-accent dark:text-text-dark-primary leading-tight">
-                    ${data.name}
-                </h1>
-
-                <!-- Descripción -->
-                <p class="text-text-light-secondary dark:text-text-dark-secondary leading-relaxed">
-                    ${data.description}
-                </p>
-
-                <!-- Precio -->
-                <div class="flex items-baseline gap-2">
-                    <span class="text-sm text-text-light-secondary dark:text-text-dark-secondary font-medium">Precio</span>
-                    <span class="text-5xl font-extrabold text-accent dark:text-text-dark-primary">
-                        ${data.currency} ${data.cost}
-                    </span>
-                </div>
-
-                <!-- Cantidad y botón -->
-                <div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-6">
-                    <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-                        <!-- Selector de cantidad -->
-                        <div class="flex items-center gap-3">
-                            <label class="text-sm font-medium text-accent dark:text-text-dark-primary">Cantidad:</label>
-                            <div class="flex items-center border border-border-light dark:border-border-dark rounded-lg overflow-hidden">
-                                <button id="qty-minus" class="px-4 py-2 bg-background-light dark:bg-background-dark hover:bg-primary/10 transition-colors">
-                                    <span class="material-symbols-outlined text-xl">remove</span>
-                                </button>
-                                <input type="number" id="cart-quantity" value="1" min="1" 
-                                    class="w-16 text-center border-x border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary font-bold [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none">
-                                <button id="qty-plus" class="px-4 py-2 bg-background-light dark:bg-background-dark hover:bg-primary/10 transition-colors">
-                                    <span class="material-symbols-outlined text-xl">add</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Botón agregar al carrito -->
-                        <button class="btn-cart flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-accent font-bold hover:bg-primary/90 transition-colors">
-                            <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                            Agregar al Carrito
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Características adicionales -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-background-light dark:bg-background-dark">
-                        <span class="material-symbols-outlined text-2xl text-primary">local_shipping</span>
-                        <div>
-                            <p class="text-sm font-semibold text-accent dark:text-text-dark-primary">Envío gratis</p>
-                            <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">En compras +$1000</p>
+                <p class="product-description">${data.description}</p>
+                <div class="product-price">${data.currency} ${data.cost}</div>
+            </div>
+            <!-- Cantidad y botón -->
+            <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6">
+                <div class="d-flex flex-row align-items-center gap-4">
+                    <div class="quantity-selector">
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-btn" id="qty-minus">−</button>
+                            <span class="quantity-value" id="cart-quantity">1</span>
+                            <button type="button" class="quantity-btn" id="qty-plus">+</button>
                         </div>
                     </div>
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-background-light dark:bg-background-dark">
-                        <span class="material-symbols-outlined text-2xl text-primary">verified</span>
-                        <div>
-                            <p class="text-sm font-semibold text-accent dark:text-text-dark-primary">Garantía</p>
-                            <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">12 meses</p>
-                        </div>
-                    </div>
+
+                    <button class="btn-add-cart" id="add-to-cart-btn">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        Agregar al Carrito
+                    </button>
                 </div>
             </div>
         `;
 
         // Setup quantity controls
-        const qtyInput = document.getElementById('cart-quantity');
+        let quantity = 1;
+        const qtyDisplay = document.getElementById('cart-quantity');
         const qtyMinus = document.getElementById('qty-minus');
         const qtyPlus = document.getElementById('qty-plus');
 
         qtyMinus.addEventListener('click', () => {
-            if (qtyInput.value > 1) {
-                qtyInput.value = parseInt(qtyInput.value) - 1;
+            if (quantity > 1) {
+                quantity--;
+                qtyDisplay.textContent = quantity;
+                currentQuantity = quantity;
             }
         });
 
         qtyPlus.addEventListener('click', () => {
-            qtyInput.value = parseInt(qtyInput.value) + 1;
+            quantity++;
+            qtyDisplay.textContent = quantity;
+            currentQuantity = quantity;
         });
     }
 
@@ -177,23 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 for (const p of data.products) {
                     if (p.id !== productData.id) {
                         html += `
-                            <div class="bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark hover:shadow-lg transition-shadow duration-300 cursor-pointer" id="product-${p.id}">
-                                <div class="aspect-square overflow-hidden">
-                                    <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-4">
-                                    <h3 class="font-bold text-lg mb-1 text-accent dark:text-text-dark-primary line-clamp-1">${p.name}</h3>
-                                    <p class="text-sm text-text-light-secondary dark:text-text-dark-secondary mb-2 line-clamp-2">${p.description}</p>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-lg font-extrabold text-accent dark:text-text-dark-primary">${p.currency} ${p.cost}</span>
-                                        <span class="text-xs text-text-light-secondary dark:text-text-dark-secondary">${p.soldCount} vendidos</span>
-                                    </div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <div class="product-card" id="product-${p.id}">
+                                    <img src="${p.image}" alt="${p.name}">
+                                    <h5>${p.name}</h5>
+                                    <p>${p.description}</p>
+                                    <div class="price">${p.currency} ${p.cost}</div>
+                                    <small>${p.soldCount} vendidos</small>
                                 </div>
                             </div>
                         `;
                     }
                 }
-                interesContainer.innerHTML = html || `<p class="text-text-light-secondary dark:text-text-dark-secondary col-span-full text-center">No hay productos relacionados.</p>`;
+                interesContainer.innerHTML = html || `<p class="text-center col-12">No hay productos relacionados.</p>`;
 
                 data.products.forEach(p => {
                     const prodEl = document.getElementById(`product-${p.id}`);
@@ -257,24 +214,60 @@ document.addEventListener("DOMContentLoaded", () => {
         const commentsToShow = sortedComments.slice(start, end);
         const container = document.getElementById("reviews-list");
 
+        // Calcular promedio de calificaciones redondeando a .0 o .5 hacia abajo
+        let avgRating = 0;
+        if (allComments.length > 0) {
+            const rawAvg = allComments.reduce((sum, c) => sum + c.score, 0) / allComments.length;
+            avgRating = Math.floor(rawAvg * 2) / 2; // Redondea a .0 o .5 hacia abajo
+        }
+        const totalReviews = allComments.length;
+
+        // Función para generar estrellas (sólo llenas o vacías, consistentes con otras páginas)
+        const generateStars = (rating) => {
+            const full = Math.floor(rating);
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= full) starsHTML += '<span class="star star-full">★</span>';
+                else starsHTML += '<span class="star star-empty">★</span>';
+            }
+            return starsHTML;
+        };
+
         if (commentsToShow.length === 0) {
-            container.innerHTML = `<p class="text-center text-text-light-secondary dark:text-text-dark-secondary">No hay comentarios aún.</p>`;
+            container.innerHTML = `
+                <div class="rating-display-box">
+                    <div class="rating-number">${avgRating > 0 ? avgRating.toFixed(1) : '0.0'}</div>
+                    <div class="rating-stars">${generateStars(avgRating)}</div>
+                    <div class="rating-count">Based on ${totalReviews} reviews</div>
+                </div>
+                <p class="text-center text-muted mt-4">No hay comentarios aún.</p>
+            `;
         } else {
-            container.innerHTML = commentsToShow.map(c => {
-                const stars = '⭐'.repeat(c.score);
-                return `
-                    <div class="border border-border-light dark:border-border-dark rounded-lg p-4 bg-background-light dark:bg-background-dark">
-                        <div class="flex items-start justify-between mb-2">
-                            <div>
-                                <p class="font-bold text-accent dark:text-text-dark-primary">${c.user}</p>
-                                <p class="text-sm text-text-light-secondary dark:text-text-dark-secondary">${c.date}</p>
-                            </div>
-                            <span class="text-lg">${stars}</span>
-                        </div>
-                        <p class="text-text-light-primary dark:text-text-dark-primary">${c.description}</p>
+            container.innerHTML = `
+                <div class="reviews-container">
+                    <div class="rating-display-box">
+                        <div class="rating-number">${avgRating.toFixed(1)}</div>
+                        <div class="rating-stars">${generateStars(avgRating)}</div>
+                        <div class="rating-count">Based on ${totalReviews} reviews</div>
                     </div>
-                `;
-            }).join('');
+                    <div class="reviews-items-column">
+                        ${commentsToShow.map(c => {
+                            return `
+                                <div class="review-item-box">
+                                    <div class="review-header">
+                                        <div class="review-user-date">
+                                            <span class="review-user">${c.user}</span>
+                                            <span class="review-date">${c.date}</span>
+                                        </div>
+                                        <div class="review-rating">${generateStars(c.score)}</div>
+                                    </div>
+                                    <p class="review-text">${c.description}</p>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
         }
 
         // Paginación
@@ -284,10 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (totalPages > 1) {
             pagEl.innerHTML = Array.from({ length: totalPages }, (_, i) => i + 1)
                 .map(page => `
-                    <button class="px-4 py-2 rounded-lg font-medium transition-colors ${page === currentCommentsPage
-                        ? 'bg-primary text-accent'
-                        : 'bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-accent dark:text-text-dark-primary hover:bg-primary/10'
-                    }" data-page="${page}">
+                    <button class="${page === currentCommentsPage ? 'active' : ''}" data-page="${page}">
                         ${page}
                     </button>
                 `).join('');
@@ -317,6 +307,42 @@ document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("review-form");
         if (!form) return;
 
+        // Setup custom star control (synchronizes with hidden #review-score)
+        const reviewScoreHidden = document.getElementById('review-score');
+        const starControl = document.getElementById('review-score-control');
+        const starBtns = starControl ? starControl.querySelectorAll('.star-btn') : [];
+
+        function setStars(value) {
+            if (reviewScoreHidden) reviewScoreHidden.value = value;
+            starBtns.forEach(btn => {
+                const v = parseInt(btn.dataset.value, 10) || 0;
+                const span = btn.querySelector('.star');
+                if (!span) return;
+                if (v <= value) {
+                    span.classList.remove('star-empty');
+                    span.classList.add('star-full');
+                    btn.classList.add('selected');
+                    btn.setAttribute('aria-pressed', 'true');
+                } else {
+                    span.classList.remove('star-full');
+                    span.classList.add('star-empty');
+                    btn.classList.remove('selected');
+                    btn.setAttribute('aria-pressed', 'false');
+                }
+            });
+        }
+
+        // initialize with hidden input value or 5
+        const initialScore = reviewScoreHidden ? parseInt(reviewScoreHidden.value, 10) || 5 : 5;
+        setStars(initialScore);
+
+        starBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = parseInt(btn.dataset.value, 10) || 1;
+                setStars(value);
+            });
+        });
+
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const user = JSON.parse(localStorage.getItem("user") || '{}').email?.split('@')[0] || "Usuario";
@@ -340,13 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Agregar al carrito =====
     document.addEventListener("click", async (e) => {
-        const button = e.target.closest(".btn-cart");
+        const button = e.target.closest(".btn-add-cart");
         if (!button) return;
 
         const productId = localStorage.getItem("producto");
         if (!productId) return;
 
-        const quantity = parseInt(document.getElementById("cart-quantity").value) || 1;
+        const quantity = currentQuantity;
 
         try {
             const resp = await fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`);

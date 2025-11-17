@@ -1,10 +1,43 @@
-document.getElementById("btnVolver").addEventListener("click", function(){
-    //pagina de registro
-    window.location.href = "login.html";
+// Toggle password visibility para ambos campos
+const togglePassword1 = document.getElementById("togglePassword1");
+const togglePassword2 = document.getElementById("togglePassword2");
+const passwordInput1 = document.getElementById("pass1");
+const passwordInput2 = document.getElementById("pass2");
+
+if (togglePassword1 && passwordInput1) {
+    togglePassword1.addEventListener("click", function() {
+        const type = passwordInput1.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput1.setAttribute("type", type);
+        this.textContent = type === "password" ? "visibility" : "visibility_off";
+        this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
+    });
+}
+
+if (togglePassword2 && passwordInput2) {
+    togglePassword2.addEventListener("click", function() {
+        const type = passwordInput2.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput2.setAttribute("type", type);
+        this.textContent = type === "password" ? "visibility" : "visibility_off";
+        this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
+    });
+}
+
+// Update theme toggle icon based on dark mode state
+function updateThemeIcon() {
+    const themeButton = document.getElementById("theme");
+    if (themeButton) {
+        const dark = localStorage.getItem("dark") === "true";
+        themeButton.textContent = dark ? "dark_mode" : "light_mode";
+        themeButton.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    }
+}
+
+// Initialize theme icon on page load
+document.addEventListener("DOMContentLoaded", function() {
+    updateThemeIcon();
 });
 
-console.log('registro.js cargado'); // escribe un mensaje en la consola del navegador (inspeccionar elemento) 
-// y comprueba que el archivo js cargo
+console.log('registro.js cargado');
 
 const form = document.getElementById('registroForm');
 const pass1 = document.getElementById('pass1');

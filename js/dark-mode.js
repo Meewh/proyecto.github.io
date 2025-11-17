@@ -92,11 +92,20 @@ function applyDarkMode() {
     const logoNavLogin = document.getElementById("logoNavLogin");
     if (logoNavLogin) logoNavLogin.src = dark ? "img/logoDark.png" : "img/Logo.png";
 
+    const logoNavRegistro = document.getElementById("logoNavRegistro");
+    if (logoNavRegistro) logoNavRegistro.src = dark ? "img/logoDark.png" : "img/Logo.png";
+
     const header = document.getElementById("header");
     if (header) header.classList.toggle("dark", dark);
 
     const loginContainer = document.getElementById("login-container");
     if (loginContainer) loginContainer.classList.toggle("dark", dark);
+
+    const registroContainer = document.querySelector(".registro-container");
+    if (registroContainer) registroContainer.classList.toggle("dark", dark);
+
+    const formRight = document.querySelector(".form-right");
+    if (formRight) formRight.classList.toggle("dark", dark);
 
     const cartPayCard = document.getElementById("cart-pay-card");
     if (cartPayCard) cartPayCard.classList.toggle("dark", dark);

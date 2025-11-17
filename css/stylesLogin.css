@@ -12,30 +12,197 @@ img {
     display: block;
 }
 
+:root {
+    --accent-start: #C084FC; /* gradient start */
+    --accent-end: #A855F7;   /* gradient end */
+    --accent: #A855F7;       /* main accent / button color */
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background: #ffffff;
+    font-family: 'Raleway', Arial, sans-serif;
+    background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
-    background: #F09100;
-    color: #ffffff;
+    background: transparent;
+    color: #1a1a1a;
     padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
     align-items: center;
+    border-bottom: 1px solid var(--accent);
+}
+
+header #theme {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 main {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 16px 0;
-    /* centra el card en la página */
+    align-items: center;
+    padding: 20px;
+}
+
+/* Tarjeta de login */
+.login-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 50px 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+}
+
+.login-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+/* Grupos de formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: #B8B8B8;
+}
+
+.form-group input:focus {
+    border-color: #A855F7;
+}
+
+/* Contenedor de contraseña con ícono */
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 24px;
+    user-select: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+.toggle-password:hover {
+    color: #A855F7;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; /* default styling for material symbols */
+}
+
+.toggle-password:focus {
+    outline: 2px solid rgba(168,85,247,0.25);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Olvidaste tu contraseña */
+.forgot-password-container {
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+.forgot-password {
+    font-size: 14px;
+    color: #A855F7;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Botón ingresar */
+.btn-ingresar {
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.3s;
+    margin-bottom: 15px;
+}
+
+.btn-ingresar:hover {
+    filter: brightness(0.95);
+}
+
+/* Mensaje de error */
+.error {
+    color: #EF4444;
+    font-size: 13px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Contenedor de registro */
+.register-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.register-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.register-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #A855F7;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
 }
 
 footer {
@@ -47,197 +214,22 @@ footer p {
     margin-bottom: .25rem;
 }
 
+/* Responsive */
+@media (max-width: 575px) {
+    .login-card {
+        padding: 40px 25px;
+    }
+    
+    .login-title {
+        font-size: 24px;
+    }
+}
+
 .logo-header {
     width: 48px;
     height: auto;
     border-radius: 4px;
 }
-
-/*para que el responsive mantenga la estetica*/
-.login-container {
-    background: #F09100;
-    color: #ffffff;
-    border-radius: 20px;
-    padding: 40px;
-    box-sizing: border-box;
-    max-width: 900px;
-    /*  en desktop */
-    width: 100%;
-    /*  ocupa todo en pantallas chicas */
-}
-
-/*para que disminuya la letra en ipohne*/
-@media (max-width: 575px) {
-    .form-left h2 {
-        font-size: 22px;
-    }
-
-    .btn-ingresar {
-        font-size: 18px;
-    }
-}
-
-.form-left {
-    flex: 0 0 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.form-left h2 {
-    font-size: 28px;
-    margin-top: 20px;
-}
-
-.logo {
-    width: 200px;
-    border-radius: 8px;
-}
-
-.logo-header {
-    width: 60px;
-    height: auto;
-    margin-right: 10px;
-    border-radius: 4px;
-}
-
-
-.form-right {
-    /* parte derecha del form */
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.input-group {
-    position: relative;
-    margin: 20px 0;
-
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px 10px;
-    border: 1px solid #ffffff;
-    border-radius: 8px;
-    background: transparent;
-    color: #ffffff;
-    font-size: 14px;
-    outline: none;
-}
-
-.input-group label {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: #F09100;
-    padding: 0 5px;
-    font-size: 15px;
-    color: #ffffff;
-}
-
-
-
-
-button {
-    flex: 1;
-    background: #ffffff;
-    color: #f09100;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #d88201;
-    color: #ffffff;
-    border: 1px solid #ffffff;
-}
-
-
-.error {
-    /* error abajo */
-    color: #ffcccc;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
-}
-
-footer {
-    margin-top: auto;
-}
-
-/*ajuste para que quede igual los botones al figma*/
-/* todo */
-.btn-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-/* ingresar boton */
-.btn-ingresar {
-    width: 60%;
-    background: #ffffff;
-    color: #f09100;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 10px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-ingresar:hover {
-    background: #f09100;
-    color: #ffffff;
-    border: 1px solid #ffffff;
-}
-
-/* texto de arriba */
-.registro-text {
-    margin-top: 5px;
-    font-size: 16px;
-    color: #ffffff;
-    text-align: center;
-}
-
-header #theme {
-    color: #ffffff;
-    font-size: medium;
-    font-weight: normal;
-}
-
-/* registrate de forma centrada */
-.link-registro {
-    font-weight: bold;
-    font-size: 18px;
-    color: #ffffff;
-    text-decoration: none;
-    margin-top: -20px;
-    text-align: center;
-}
-
-.link-registro:hover {
-    text-decoration: underline;
-}
-
-.link-registro,
-.link-registro:visited,
-.link-registro:hover,
-.link-registro:active {
-    color: #ffffff;
-
-}
-
-/*fin*/
 
 /* para hacer que el boton inicio quede bonito y no se vuelva azul y subrayando al ponerl el mouse*/
 .header-link {
@@ -254,70 +246,159 @@ header #theme {
 .header-link:hover,
 .header-link:active {
     color: #ffffff;
-
     text-decoration: none;
+}
+
+/* Navbar layout */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: #111827;
+}
+
+.nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-links li a {
+    color: #6B7280;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+    color: #A855F7;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #6B7280;
+    transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    color: #A855F7;
+}
+
+/* Dark mode navbar */
+.navbar.dark {
+    background: transparent;
+}
+
+.navbar.dark .brand-name {
+    color: #ffffff;
+}
+
+.navbar.dark .nav-links li a {
+    color: rgba(255,255,255,0.8);
+}
+
+.navbar.dark .nav-links li a:hover {
+    color: #E879F9;
+}
+
+.navbar.dark .theme-toggle {
+    color: rgba(255,255,255,0.8);
+}
+
+.navbar.dark .theme-toggle:hover {
+    color: #E879F9;
 }
 
 
 /* ----------------dark mode----------------- */
 
-header.dark {
-    background: #FFB74D;
-    color: #2B2B2B;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    align-items: center;
+body.dark {
+    background: linear-gradient(135deg, #0F0A1E 0%, #1A0E2E 100%);
+    /* update css variables for dark mode */
+    --accent-start: #ff67e0;
+    --accent-end: #A855F7;
+    --accent: #E14AFF;
 }
 
-header.dark span {
-    color: #2B2B2B;
+header.dark {
+    background: transparent;
+    color: #ffffff;
 }
 
 header.dark #theme {
-    color: #2B2B2B;
-    font-size: medium;
-    font-weight: normal;
+    color: #E0E0E0;
 }
 
-body.dark {
-    background-color: #2B2B2B;
+.login-card.dark {
+    background-color: #0D1B2A;
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-#login-container.dark {
-    background-color: #FFB74D;
+.login-card.dark .login-title {
+    color: #ffffff;
 }
 
-#login-container.dark label {
-    background-color: #FFB74D;
-    color: #2B2B2B;
+.login-card.dark label {
+    color: rgba(255,255,255,0.9);
 }
 
-#login-container.dark h2 {
-    color: #2B2B2B;
+.login-card.dark input {
+    background-color: rgba(255,255,255,0.03);
+    border-color: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.95);
 }
 
-#login-container.dark p {
-    color: #2B2B2B;
+.login-card.dark input::placeholder {
+    color: rgba(255,255,255,0.45);
 }
 
-#login-container.dark a {
-    color: #2B2B2B;
+.login-card.dark input:focus {
+    border-color: rgba(168,85,247,0.9);
 }
 
-#login-container.dark input {
-    border-color: #2B2B2B;
-    color: #2B2B2B;
+.login-card.dark .forgot-password {
+    color: #E14AFF; /* bright magenta */
 }
 
-#login-container.dark button {
-    background-color: #FFB74D;
-    color: #2B2B2B;
-    border: 1px solid #2B2B2B;
+.login-card.dark .btn-ingresar {
+    background: linear-gradient(90deg, #C084FC 0%, #A855F7 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(168,85,247,0.4);
 }
 
-#login-container.dark button:hover {
-    background: #2B2B2B;
-    color: #FFB74D;
-    border: 1px solid #2B2B2B;
+.login-card.dark .btn-ingresar:hover {
+    background: linear-gradient(90deg, #B47BF0 0%, #9333EA 100%);
+}
+
+.login-card.dark .register-text {
+    color: rgba(255,255,255,0.7);
+}
+
+.login-card.dark .register-link {
+    color: #E14AFF;
+}
+
+.login-card.dark .toggle-password {
+    color: rgba(255,255,255,0.7);
+}
+
+.login-card.dark .toggle-password:hover {
+    color: #E879F9;
 }

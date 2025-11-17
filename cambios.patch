@@ -1,0 +1,3129 @@
+diff --git a/css/product-info.css b/css/product-info.css
+index 95fec60..f267452 100644
+--- a/css/product-info.css
++++ b/css/product-info.css
+@@ -1,166 +1,599 @@
+-/* ===== Body ===== */
+-body {
+-    background-color: #f8f9fa;
+-    font-family: 'Raleway', sans-serif;
++/* ===== CSS Variables ===== */
++:root {
++    --accent-start: #C084FC;
++    --accent-end: #A855F7;
++    --accent: #A855F7;
+ }
+ 
+-/* ===== Contenedor principal ===== */
+-.product-section {
+-    border-radius: 10px;
+-    padding: 20px;
+-    margin: 30px auto;
++html,
++body {
++    height: 100%;
++    margin: 0;
++    padding: 0;
+ }
+ 
+-/* ===== Imágenes secundarias ===== */
+-.secundary-images {
++body {
++    font-family: 'Raleway', Arial, sans-serif;
++    background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
+     display: flex;
+     flex-direction: column;
++    min-height: 100vh;
++}
++
++header {
++    background: transparent;
++    color: #1a1a1a;
++    padding: 10px;
++    font-size: 18px;
+     align-items: center;
+-    justify-content: center;
+-    padding-left: 0;
++    border-bottom: 1px solid var(--accent);
+ }
+ 
+-.secundary-images img {
+-    width: 100%;
+-    height: auto;
+-    object-fit: cover;
+-    margin-bottom: 10px;
+-    border-radius: 6px;
++/* Navbar */
++.navbar {
++    display: flex;
++    align-items: center;
++    justify-content: space-between;
++    gap: 1rem;
++    padding: 0.5rem 1rem;
++}
++
++.theme-toggle {
++    background: transparent;
++    border: none;
++    padding: 4px;
+     cursor: pointer;
+-    border: 2px solid transparent;
+-    transition: border 0.2s ease;
++    font-size: 24px;
++    color: #6B7280;
++    transition: color 0.2s;
++    display: inline-flex;
++    align-items: center;
++    justify-content: center;
+ }
+ 
+-.secundary-images #last-image {
+-    margin-bottom: 0;
++.theme-toggle:hover {
++    color: var(--accent);
++}
++
++.material-symbols-outlined {
++    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+ }
+ 
+-.secundary-images img:hover {
+-    border-color: #f7941d;
++/* Main content */
++main {
++    flex: 1;
+ }
+ 
+-/* ===== Imagen principal ===== */
+-.main-image {
++/* Breadcrumbs */
++.breadcrumb {
++    background: transparent;
+     padding: 0;
++    margin: 0;
++    font-size: 14px;
++}
++
++.breadcrumb-item a {
++    color: #666;
++    text-decoration: none;
++}
++
++.breadcrumb-item a:hover {
++    color: var(--accent);
++}
++
++.breadcrumb-item.active {
++    color: #1a1a1a;
++    font-weight: 500;
++}
++
++/* Gallery */
++#gallery .main-image-container {
++    background: #ffffff;
++    border-radius: 12px;
++    padding: 20px;
++    margin-bottom: 15px;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+ }
+ 
+-.main-image img {
++#gallery .main-image-container img {
+     width: 100%;
+     height: auto;
+     border-radius: 8px;
+     object-fit: cover;
+ }
+ 
+-/* ===== Categoría y precio ===== */
+-.category-badge {
+-    background-color: #f7941d;
+-    color: #fff;
+-    font-size: 0.85rem;
+-    border-radius: 5px;
+-    padding: 3px 8px;
++#gallery .thumbnails {
++    display: grid;
++    grid-template-columns: repeat(4, 1fr);
++    gap: 10px;
++}
++
++#gallery .thumbnail {
++    background: #ffffff;
++    border: 2px solid transparent;
++    border-radius: 8px;
++    padding: 5px;
++    cursor: pointer;
++    transition: all 0.2s;
++    overflow: hidden;
++}
++
++#gallery .thumbnail img {
++    width: 100%;
++    height: 80px;
++    object-fit: cover;
++    border-radius: 4px;
++}
++
++#gallery .thumbnail:hover {
++    border-color: rgba(168, 85, 247, 0.3);
++}
++
++#gallery .thumbnail-active {
++    border-color: var(--accent) !important;
++    border-width: 2px !important;
++}
++
++/* Product Info */
++#product-info .category-badge {
++    background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
++    color: #ffffff;
++    font-size: 12px;
++    font-weight: 600;
++    padding: 5px 12px;
++    border-radius: 20px;
+     display: inline-block;
+-    margin-bottom: 5px;
++    margin-bottom: 10px;
+ }
+ 
+-.price {
+-    font-size: 1.8rem;
+-    font-weight: bold;
+-    color: #f7941d;
++#product-info .product-name {
++    font-size: 32px;
++    font-weight: 700;
++    color: #1a1a1a;
++    line-height: 1.2;
+ }
+ 
+-/* ===== Botón carrito ===== */
+-.btn-cart {
+-    background-color: #f7941d;
+-    border: none;
+-    color: white;
++.btn-favorite {
++    background: transparent;
++    border: 2px solid #E0E0E0;
++    border-radius: 50%;
++    width: 48px;
++    height: 48px;
++    display: flex;
++    align-items: center;
++    justify-content: center;
++    cursor: pointer;
++    transition: all 0.2s;
++    flex-shrink: 0;
++}
++
++.btn-favorite:hover {
++    border-color: var(--accent);
++    background: rgba(168, 85, 247, 0.05);
++}
++
++.btn-favorite .material-symbols-outlined {
++    font-size: 24px;
++    color: #666;
++    transition: color 0.2s;
++}
++
++.btn-favorite:hover .material-symbols-outlined {
++    color: var(--accent);
++}
++
++#product-info .product-description {
++    color: #666;
++    font-size: 15px;
++    line-height: 1.6;
++    margin-bottom: 20px;
++}
++
++#product-info .product-price {
++    font-size: 24px;
++    font-weight: 700;
++    color: black;
++    margin-bottom: 20px;
++}
++
++#product-info .quantity-selector {
++    display: flex;
++    align-items: center;
++    gap: 15px;
++}
++
++#product-info .quantity-label {
++    font-size: 14px;
+     font-weight: 500;
+-    transition: background-color 0.2s ease;
++    color: #1a1a1a;
+ }
+ 
+-.btn-cart:hover {
+-    background-color: #e68500;
++#product-info .quantity-controls {
++    display: flex;
++    align-items: center;
++    border: 1px solid #E0E0E0;
++    border-radius: 8px;
++    overflow: hidden;
++    height: 52px;
++    background-color: #ffffff;
+ }
+ 
+-/* ===== Cards productos recomendados ===== */
+-.product-card {
+-    border: 1px solid #f7941d33;
+-    border-radius: 10px;
+-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+-    padding: 10px;
+-    background-color: #fff;
++#product-info .quantity-btn {
++    background: #ffffff;
++    border: none;
++    margin: 8px 4px;
+     cursor: pointer;
++    font-size: 18px;
++    color: #666;
++    transition: background 0.2s;
++}
++
++#product-info .quantity-btn:hover {
++    background: #f5f5f5;
+ }
+ 
+-.product-card:hover {
+-    transform: translateY(-5px);
+-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
++#product-info .quantity-value {
++    padding: 8px 20px;
++    font-weight: 600;
++    color: #1a1a1a;
+ }
+ 
+-.product-card img {
++#product-info .btn-add-cart {
++    background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
++    color: #ffffff;
++    border: none;
++    border-radius: 8px;
++    padding: 14px 30px;
++    font-size: 16px;
++    font-weight: 600;
++    cursor: pointer;
++    transition: filter 0.3s;
+     width: 100%;
+-    border-radius: 6px;
++    display: flex;
++    align-items: center;
++    justify-content: center;
++    gap: 8px;
++    height: 50px;
++}
++
++#product-info .btn-add-cart:hover {
++    filter: brightness(0.95);
++}
++
++/* Section Titles */
++.section-title {
++    font-size: 24px;
++    font-weight: 700;
++    color: #1a1a1a;
++    margin-bottom: 20px;
++}
++
++/* Related Products */
++#interes .product-card {
++    background: #ffffff;
++    border-radius: 12px;
++    padding: 15px;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
++    transition: transform 0.2s, box-shadow 0.2s;
++    cursor: pointer;
++    height: 100%;
++}
++
++#interes .product-card:hover {
++    transform: translateY(-4px);
++    box-shadow: 0 4px 16px rgba(168, 85, 247, 0.15);
++}
++
++#interes .product-card img {
++    width: 100%;
++    height: 200px;
++    object-fit: cover;
++    border-radius: 8px;
++    margin-bottom: 12px;
++}
++
++#interes .product-card h5 {
++    font-size: 16px;
++    font-weight: 600;
++    color: #1a1a1a;
+     margin-bottom: 8px;
+ }
+ 
+-.product-card h5 {
+-    font-size: 1rem;
+-    font-weight: bold;
+-    margin-bottom: 5px;
++#interes .product-card p {
++    font-size: 14px;
++    color: #666;
++    margin-bottom: 8px;
+ }
+ 
+-.product-card p {
+-    font-size: 0.9rem;
+-    margin-bottom: 3px;
++#interes .product-card .price {
++    font-size: 18px;
++    font-weight: 700;
++    color: var(--accent);
+ }
+ 
+-.product-card .price {
+-    color: #f7941d;
+-    font-weight: bold;
++/* Comments Section */
++.comments-section {
++    padding: 0;
+ }
+ 
+-/* ===== Indicadores carrusel ===== */
+-.custom-indicators button {
+-    width: 12px;
+-    height: 12px;
+-    margin: 0 5px;
+-    border-radius: 50%;
++.form-select {
++    border: 1px solid #E0E0E0;
++    border-radius: 8px;
++    padding: 8px 12px;
++    font-size: 14px;
++    color: #1a1a1a;
++}
++
++.form-select:focus {
++    border-color: var(--accent);
++    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.15);
++}
++
++.reviews-container {
++    display: flex;
++    gap: 30px;
++    align-items: flex-start;
++}
++
++.rating-display-box {
++    background: #ffffff;
++    border-radius: 12px;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
++    text-align: center;
++    padding: 30px 40px;
++    flex-shrink: 0;
++    width: 250px;
++}
++
++.reviews-items-column {
++    flex: 1;
++    display: flex;
++    flex-direction: column;
++    gap: 15px;
++}
++
++.rating-number {
++    font-size: 72px;
++    font-weight: 700;
++    color: #1a1a1a;
++    line-height: 1;
++    margin-bottom: 10px;
++}
++
++.rating-stars {
++    font-size: 24px;
++    margin-bottom: 8px;
++    display: flex;
++    gap: 2px;
++    justify-content: center;
++}
++
++.star {
++    display: inline-block;
++    position: relative;
++    color: #e0e0e0;
++}
++
++.star-full {
++    color: #fbbf24;
++}
++
++.star-half {
++    background: linear-gradient(90deg, #fbbf24 50%, #e0e0e0 50%);
++    -webkit-background-clip: text;
++    -webkit-text-fill-color: transparent;
++    background-clip: text;
++}
++
++.star-empty {
++    color: #e0e0e0;
++}
++
++/* Star input control styling */
++.star-input {
++    display: inline-flex;
++    gap: 8px;
++}
++
++.star-btn {
+     border: none;
+-    background-color: #ccc;
++    background: transparent;
++    padding: 0;
+     cursor: pointer;
+-    transition: background-color 0.2s ease;
+ }
+ 
+-.custom-indicators .active {
+-    background-color: #f7941d;
++.star-btn .star {
++    font-size: 20px;
++}
++
++.star-btn:hover .star,
++.star-btn.selected .star {
++    color: #fbbf24;
++}
++
++.rating-count {
++    font-size: 14px;
++    color: #666;
++}
++
++.review-item-box {
++    background: #ffffff;
++    border-radius: 12px;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
++    padding: 20px 24px;
++    margin-bottom: 15px;
++}
++
++.reviews-items {
++    flex: 1;
++    display: flex;
++    flex-direction: column;
++    gap: 15px;
++}
++
++#reviews-list .review-item {
++    background: transparent;
++    border-bottom: 1px solid #E0E0E0;
++    padding: 0 0 15px 0;
++    margin-bottom: 0;
++}
++
++#reviews-list .review-item:last-child {
++    border-bottom: none;
++}
++
++.review-header {
++    display: flex;
++    justify-content: space-between;
++    align-items: center;
++    margin-bottom: 12px;
++}
++
++.review-user-date {
++    display: flex;
++    align-items: center;
++    gap: 12px;
+ }
+ 
+-/* ===== Comentarios ===== */
+-.reviews .border {
+-    background-color: #fff;
+-    border-color: #f7941d33;
++.review-user {
++    font-weight: 600;
++    font-size: 15px;
++    color: #1a1a1a;
+ }
+ 
+-.review-form-wrap {
+-    background-color: #fff;
++.review-date {
++    font-size: 13px;
++    color: #999;
++}
++
++.review-rating {
++    font-size: 18px;
++    display: flex;
++    gap: 2px;
++}
++
++#reviews-list .review-header {
++    display: flex;
++    justify-content: space-between;
++    align-items: center;
++    margin-bottom: 12px;
++}
++
++.review-header-left {
++    display: flex;
++    align-items: center;
++    gap: 10px;
+ }
+ 
+-/* ===== Botones de navegación related ===== */
+-#related-left,
+-#related-right {
+-    background-color: #f7941d33;
++#reviews-list .review-user {
++    font-weight: 600;
++    color: #1a1a1a;
++    margin-bottom: 0;
++    display: inline-block;
++    font-size: 15px;
++}
++
++#reviews-list .review-date {
++    font-size: 13px;
++    color: #999;
++    display: inline-block;
++}
++
++#reviews-list .review-rating {
++    color: #FFB800;
++    font-size: 16px;
++}
++
++#reviews-list .review-text {
++    color: #666;
++    line-height: 1.6;
++    margin-top: 8px;
++    margin-bottom: 0;
++}
++
++/* Pagination */
++#reviews-pagination button {
++    background: #ffffff;
++    border: 1px solid #E0E0E0;
++    border-radius: 6px;
++    padding: 8px 12px;
++    cursor: pointer;
++    transition: all 0.2s;
++    font-size: 14px;
++    color: #1a1a1a;
++}
++
++#reviews-pagination button:hover:not(:disabled) {
++    background: var(--accent);
++    color: #ffffff;
++    border-color: var(--accent);
++}
++
++#reviews-pagination button.active {
++    background: var(--accent);
++    color: #ffffff;
++    border-color: var(--accent);
++}
++
++#reviews-pagination button:disabled {
++    opacity: 0.5;
++    cursor: not-allowed;
++}
++
++/* Review Form */
++.review-form-section {
++    border-top: 1px solid #E0E0E0;
++    padding-top: 25px;
++    margin-top: 25px;
++}
++
++.form-control,
++.form-select {
++    border: 1px solid #E0E0E0;
++    border-radius: 8px;
++    padding: 12px 15px;
++    font-size: 14px;
++}
++
++.form-control:focus,
++.form-select:focus {
++    border-color: var(--accent);
++    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.15);
++    outline: none;
++}
++
++.form-label {
++    font-size: 14px;
++    font-weight: 500;
++    color: #1a1a1a;
++    margin-bottom: 8px;
++}
++
++.btn-primary {
++    background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
+     border: none;
+-    color: #333;
+-    font-weight: bold;
+-    transition: background-color 0.2s ease;
++    color: #ffffff;
++    padding: 12px 30px;
++    font-weight: 600;
++    border-radius: 8px;
++    transition: filter 0.3s;
++}
++
++.btn-primary:hover {
++    filter: brightness(0.95);
+ }
+ 
+-#related-left:hover,
+-#related-right:hover {
+-    background-color: #f7941d;
+-    color: #fff;
++/* Footer */
++footer {
++    padding-top: 3rem;
++    padding-bottom: 3rem;
+ }
+ 
+-/* ===== Spinner ===== */
++footer p {
++    margin-bottom: .25rem;
++}
++
++/* Spinner */
+ #spinner-wrapper {
+     position: fixed;
+     top: 0;
+@@ -188,10 +621,10 @@ body {
+     width: 51px;
+     height: 51px;
+     margin: 6px;
+-    border: 6px solid #f7941d;
++    border: 6px solid var(--accent);
+     border-radius: 50%;
+     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+-    border-color: #f7941d transparent transparent transparent;
++    border-color: var(--accent) transparent transparent transparent;
+ }
+ 
+ .lds-ring div:nth-child(1) {
+@@ -210,8 +643,324 @@ body {
+     0% {
+         transform: rotate(0deg);
+     }
+-
+     100% {
+         transform: rotate(360deg);
+     }
++}
++
++/* ===== DARK MODE ===== */
++body.dark {
++    background: linear-gradient(135deg, #0F0A1E 0%, #1A0E2E 100%);
++    --accent-start: #ff67e0;
++    --accent-end: #A855F7;
++    --accent: #E14AFF;
++}
++
++header.dark {
++    background: transparent;
++    color: #ffffff;
++}
++
++.navbar.dark .theme-toggle {
++    color: rgba(255,255,255,0.8);
++}
++
++.navbar.dark .theme-toggle:hover {
++    color: #E879F9;
++}
++
++body.dark .breadcrumb-item a {
++    color: rgba(255,255,255,0.7);
++}
++
++body.dark .breadcrumb-item a:hover {
++    color: #E14AFF;
++}
++
++body.dark .breadcrumb-item.active {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark #gallery .main-image-container,
++body.dark #gallery .thumbnail {
++    background-color: #0D1B2A;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
++}
++
++body.dark #gallery .thumbnail:hover {
++    border-color: rgba(225, 74, 255, 0.5);
++}
++
++body.dark #gallery .thumbnail-active {
++    border-color: #E14AFF !important;
++}
++
++body.dark #product-info .product-name {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark .btn-favorite {
++    border-color: rgba(255,255,255,0.1);
++}
++
++body.dark .btn-favorite:hover {
++    border-color: #E14AFF;
++    background: rgba(225, 74, 255, 0.1);
++}
++
++body.dark .btn-favorite .material-symbols-outlined {
++    color: rgba(255,255,255,0.7);
++}
++
++body.dark .btn-favorite:hover .material-symbols-outlined {
++    color: #E14AFF;
++}
++
++body.dark #product-info .product-description {
++    color: rgba(255,255,255,0.7);
++}
++
++body.dark #product-info .product-price {
++    color: #E14AFF;
++}
++
++body.dark #product-info .quantity-label {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark #product-info .quantity-controls {
++    border-color: rgba(255,255,255,0.1);
++    background: #0D1B2A;
++}
++
++body.dark #product-info .quantity-btn {
++    background: #0D1B2A;
++    color: rgba(255,255,255,0.8);
++}
++
++body.dark #product-info .quantity-btn:hover {
++    background: rgba(255,255,255,0.05);
++}
++
++body.dark #product-info .quantity-value {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark .section-title {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark #interes .product-card {
++    background: #0D1B2A;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
++}
++
++body.dark #interes .product-card:hover {
++    box-shadow: 0 4px 16px rgba(225, 74, 255, 0.3);
++}
++
++body.dark #interes .product-card h5 {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark #interes .product-card p {
++    color: rgba(255,255,255,0.7);
++}
++
++body.dark #interes .product-card .price {
++    color: #E14AFF;
++}
++
++body.dark .comments-section {
++    background: #0D1B2A;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
++}
++
++body.dark .form-select,
++body.dark .form-control {
++    background-color: rgba(255,255,255,0.03);
++    border-color: rgba(255,255,255,0.1);
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark .form-select:focus,
++body.dark .form-control:focus {
++    border-color: rgba(168,85,247,0.9);
++    box-shadow: 0 0 0 0.2rem rgba(168,85,247,0.25);
++}
++
++body.dark .form-label {
++    color: rgba(255,255,255,0.9);
++}
++
++body.dark #reviews-list .review-item {
++    border-bottom-color: rgba(255,255,255,0.1);
++}
++
++body.dark .rating-display-box,
++body.dark .review-item-box {
++    background: #0D1B2A;
++    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
++}
++
++body.dark .rating-number {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark .rating-count {
++    color: rgba(255,255,255,0.6);
++}
++
++body.dark #reviews-list .review-user {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark #reviews-list .review-date {
++    color: rgba(255,255,255,0.5);
++}
++
++body.dark #reviews-list .review-text {
++    color: rgba(255,255,255,0.8);
++}
++
++body.dark .review-user {
++    color: rgba(255,255,255,0.95);
++}
++
++body.dark .review-date {
++    color: rgba(255,255,255,0.5);
++}
++
++body.dark .star-empty {
++    color: #374151;
++}
++
++body.dark .star-half {
++    background: linear-gradient(90deg, #fbbf24 50%, #374151 50%);
++    -webkit-background-clip: text;
++    -webkit-text-fill-color: transparent;
++    background-clip: text;
++}
++
++body.dark #reviews-pagination button {
++    background: #0D1B2A;
++    border-color: rgba(255,255,255,0.1);
++    color: rgba(255,255,255,0.9);
++}
++
++body.dark #reviews-pagination button:hover:not(:disabled) {
++    background: #E14AFF;
++    color: #ffffff;
++    border-color: #E14AFF;
++}
++
++body.dark #reviews-pagination button.active {
++    background: #E14AFF;
++    color: #ffffff;
++    border-color: #E14AFF;
++}
++
++body.dark .review-form-section {
++    border-top-color: rgba(255,255,255,0.1);
++}
++
++body.dark #spinner-wrapper {
++    background-color: rgba(15, 10, 30, 0.8);
++}
++
++/* ===== DARK MODE ===== */
++body.dark {
++    background: linear-gradient(135deg, #0F0A1E 0%, #1A0E2E 100%);
++    --accent-start: #ff67e0;
++    --accent-end: #A855F7;
++    --accent: #E14AFF;
++}
++
++body.dark .category-badge {
++    background-color: #E14AFF;
++}
++
++body.dark .price {
++    color: #E14AFF;
++}
++
++body.dark .product-card {
++    background-color: #0D1B2A;
++    border-color: rgba(255, 255, 255, 0.1);
++    color: rgba(255, 255, 255, 0.95);
++}
++
++body.dark .product-card:hover {
++    box-shadow: 0 4px 12px rgba(225, 74, 255, 0.3);
++}
++
++body.dark .product-card h5,
++body.dark .product-card p {
++    color: rgba(255, 255, 255, 0.95);
++}
++
++body.dark .product-card .price {
++    color: #E14AFF;
++}
++
++body.dark .reviews .border {
++    background-color: #0D1B2A;
++    border-color: rgba(255, 255, 255, 0.1);
++}
++
++body.dark .review-form-wrap {
++    background-color: #0D1B2A;
++}
++
++body.dark #related-left,
++body.dark #related-right {
++    background-color: rgba(225, 74, 255, 0.2);
++    color: rgba(255, 255, 255, 0.9);
++}
++
++body.dark #related-left:hover,
++body.dark #related-right:hover {
++    background-color: #E14AFF;
++    color: #ffffff;
++}
++
++body.dark .custom-indicators button {
++    background-color: rgba(255, 255, 255, 0.3);
++}
++
++body.dark .custom-indicators .active {
++    background-color: #E14AFF;
++}
++
++body.dark #spinner-wrapper {
++    background-color: rgba(15, 10, 30, 0.8);
++}
++
++body.dark .secundary-images img:hover {
++    border-color: #E14AFF;
++}
++
++/* Responsive */
++@media (max-width: 768px) {
++    .reviews-container {
++        flex-direction: column;
++        gap: 20px;
++    }
++
++    .rating-display-box {
++        width: 100%;
++    }
++
++    #product-info .product-name {
++        font-size: 24px;
++    }
++
++    .btn-favorite {
++        width: 40px;
++        height: 40px;
++    }
++
++    .btn-favorite .material-symbols-outlined {
++        font-size: 20px;
++    }
+ }
+\ No newline at end of file
+diff --git a/css/stylesLogin.css b/css/stylesLogin.css
+index 1635fde..992533f 100644
+--- a/css/stylesLogin.css
++++ b/css/stylesLogin.css
+@@ -12,232 +12,224 @@ img {
+     display: block;
+ }
+ 
++:root {
++    --accent-start: #C084FC; /* gradient start */
++    --accent-end: #A855F7;   /* gradient end */
++    --accent: #A855F7;       /* main accent / button color */
++}
+ 
+ body {
+-    font-family: Arial, sans-serif;
+-    background: #ffffff;
++    font-family: 'Raleway', Arial, sans-serif;
++    background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
+     display: flex;
+     flex-direction: column;
++    min-height: 100vh;
+ }
+ 
+ header {
+-    background: #F09100;
+-    color: #ffffff;
++    background: transparent;
++    color: #1a1a1a;
+     padding: 10px;
+-    font-size: 20px;
+-    font-weight: bold;
++    font-size: 18px;
+     align-items: center;
++    border-bottom: 1px solid var(--accent);
++}
++
++header #theme {
++    color: #666;
++    font-size: 14px;
++    font-weight: 500;
+ }
+ 
+ main {
+     flex: 1;
+     display: flex;
+     justify-content: center;
+-    align-items: flex-start;
+-    padding: 16px 0;
+-    /* centra el card en la página */
+-}
+-
+-footer {
+-    padding-top: 3rem;
+-    padding-bottom: 3rem;
+-}
+-
+-footer p {
+-    margin-bottom: .25rem;
+-}
+-
+-.logo-header {
+-    width: 48px;
+-    height: auto;
+-    border-radius: 4px;
++    align-items: center;
++    padding: 20px;
+ }
+ 
+-/*para que el responsive mantenga la estetica*/
+-.login-container {
+-    background: #F09100;
+-    color: #ffffff;
++/* Tarjeta de login */
++.login-card {
++    background: #ffffff;
+     border-radius: 20px;
+-    padding: 40px;
+-    box-sizing: border-box;
+-    max-width: 900px;
+-    /*  en desktop */
++    padding: 50px 40px;
++    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
++    max-width: 450px;
+     width: 100%;
+-    /*  ocupa todo en pantallas chicas */
+ }
+ 
+-/*para que disminuya la letra en ipohne*/
+-@media (max-width: 575px) {
+-    .form-left h2 {
+-        font-size: 22px;
+-    }
+-
+-    .btn-ingresar {
+-        font-size: 18px;
+-    }
++.login-title {
++    font-size: 28px;
++    font-weight: 700;
++    color: #1a1a1a;
++    text-align: center;
++    margin-bottom: 35px;
+ }
+ 
+-.form-left {
+-    flex: 0 0 40%;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: flex-start;
++/* Grupos de formulario */
++.form-group {
++    margin-bottom: 20px;
+ }
+ 
+-.form-left h2 {
+-    font-size: 28px;
+-    margin-top: 20px;
++.form-group label {
++    display: block;
++    font-size: 14px;
++    font-weight: 500;
++    color: #1a1a1a;
++    margin-bottom: 8px;
+ }
+ 
+-.logo {
+-    width: 200px;
++.form-group input {
++    width: 100%;
++    padding: 12px 15px;
++    border: 1px solid #E0E0E0;
+     border-radius: 8px;
++    font-size: 14px;
++    color: #1a1a1a;
++    outline: none;
++    transition: border-color 0.3s;
++    box-sizing: border-box;
+ }
+ 
+-.logo-header {
+-    width: 60px;
+-    height: auto;
+-    margin-right: 10px;
+-    border-radius: 4px;
++.form-group input::placeholder {
++    color: #B8B8B8;
+ }
+ 
+-
+-.form-right {
+-    /* parte derecha del form */
+-    flex: 1;
+-    display: flex;
+-    flex-direction: column;
+-    justify-content: center;
++.form-group input:focus {
++    border-color: #A855F7;
+ }
+ 
+-.input-group {
++/* Contenedor de contraseña con ícono */
++.password-container {
+     position: relative;
+-    margin: 20px 0;
+-
+ }
+ 
+-.input-group input {
+-    width: 100%;
+-    padding: 12px 10px;
+-    border: 1px solid #ffffff;
+-    border-radius: 8px;
+-    background: transparent;
+-    color: #ffffff;
+-    font-size: 14px;
+-    outline: none;
++.password-container input {
++    padding-right: 45px;
+ }
+ 
+-.input-group label {
++.toggle-password {
+     position: absolute;
+-    top: -10px;
+-    left: 10px;
+-    background: #F09100;
+-    padding: 0 5px;
+-    font-size: 15px;
+-    color: #ffffff;
+-}
+-
+-
+-
+-
+-button {
+-    flex: 1;
+-    background: #ffffff;
+-    color: #f09100;
+-    border: none;
+-    border-radius: 8px;
+-    padding: 10px 20px;
+-    font-size: 18px;
+-    font-weight: bold;
++    right: 15px;
++    top: 50%;
++    transform: translateY(-50%);
+     cursor: pointer;
+-    transition: 0.3s;
++    font-size: 24px;
++    user-select: none;
++    background: transparent;
++    border: none;
++    padding: 0;
++    line-height: 1;
++    display: inline-flex;
++    align-items: center;
++    justify-content: center;
++    color: #666;
++}
++.toggle-password:hover {
++    color: #A855F7;
+ }
+ 
+-button:hover {
+-    background: #d88201;
+-    color: #ffffff;
+-    border: 1px solid #ffffff;
++.material-symbols-outlined {
++    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; /* default styling for material symbols */
+ }
+ 
++.toggle-password:focus {
++    outline: 2px solid rgba(168,85,247,0.25);
++    outline-offset: 2px;
++    border-radius: 4px;
++}
+ 
+-.error {
+-    /* error abajo */
+-    color: #ffcccc;
+-    font-size: 14px;
+-    margin-top: 10px;
+-    text-align: center;
++/* Olvidaste tu contraseña */
++.forgot-password-container {
++    text-align: right;
++    margin-bottom: 25px;
+ }
+ 
+-footer {
+-    margin-top: auto;
++.forgot-password {
++    font-size: 14px;
++    color: #A855F7;
++    text-decoration: none;
+ }
+ 
+-/*ajuste para que quede igual los botones al figma*/
+-/* todo */
+-.btn-container {
+-    display: flex;
+-    flex-direction: column;
+-    align-items: center;
+-    margin-top: 20px;
++.forgot-password:hover {
++    text-decoration: underline;
+ }
+ 
+-/* ingresar boton */
++/* Botón ingresar */
+ .btn-ingresar {
+-    width: 60%;
+-    background: #ffffff;
+-    color: #f09100;
++    width: 100%;
++    background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
++    color: #ffffff;
+     border: none;
+     border-radius: 8px;
+-    padding: 10px 10px;
+-    font-size: 22px;
+-    font-weight: bold;
++    padding: 14px 20px;
++    font-size: 16px;
++    font-weight: 600;
+     cursor: pointer;
+-    transition: 0.3s;
++    transition: filter 0.3s;
++    margin-bottom: 15px;
+ }
+ 
+ .btn-ingresar:hover {
+-    background: #f09100;
+-    color: #ffffff;
+-    border: 1px solid #ffffff;
++    filter: brightness(0.95);
+ }
+ 
+-/* texto de arriba */
+-.registro-text {
+-    margin-top: 5px;
+-    font-size: 16px;
+-    color: #ffffff;
++/* Mensaje de error */
++.error {
++    color: #EF4444;
++    font-size: 13px;
+     text-align: center;
++    margin: 10px 0;
+ }
+ 
+-header #theme {
+-    color: #ffffff;
+-    font-size: medium;
+-    font-weight: normal;
++/* Contenedor de registro */
++.register-container {
++    text-align: center;
++    margin-top: 15px;
+ }
+ 
+-/* registrate de forma centrada */
+-.link-registro {
+-    font-weight: bold;
+-    font-size: 18px;
+-    color: #ffffff;
++.register-text {
++    font-size: 14px;
++    color: #666;
++}
++
++.register-link {
++    font-size: 14px;
++    font-weight: 600;
++    color: #A855F7;
+     text-decoration: none;
+-    margin-top: -20px;
+-    text-align: center;
+ }
+ 
+-.link-registro:hover {
++.register-link:hover {
+     text-decoration: underline;
+ }
+ 
+-.link-registro,
+-.link-registro:visited,
+-.link-registro:hover,
+-.link-registro:active {
+-    color: #ffffff;
++footer {
++    padding-top: 3rem;
++    padding-bottom: 3rem;
++}
+ 
++footer p {
++    margin-bottom: .25rem;
++}
++
++/* Responsive */
++@media (max-width: 575px) {
++    .login-card {
++        padding: 40px 25px;
++    }
++    
++    .login-title {
++        font-size: 24px;
++    }
+ }
+ 
+-/*fin*/
++.logo-header {
++    width: 48px;
++    height: auto;
++    border-radius: 4px;
++}
+ 
+ /* para hacer que el boton inicio quede bonito y no se vuelva azul y subrayando al ponerl el mouse*/
+ .header-link {
+@@ -254,70 +246,159 @@ header #theme {
+ .header-link:hover,
+ .header-link:active {
+     color: #ffffff;
++    text-decoration: none;
++}
++
++/* Navbar layout */
++.navbar {
++    display: flex;
++    align-items: center;
++    justify-content: space-between;
++    gap: 1rem;
++    padding: 0.5rem 1rem;
++}
++
++.brand-name {
++    font-weight: 700;
++    font-size: 18px;
++    color: #111827;
++}
++
++.nav-links {
++    position: absolute;
++    left: 50%;
++    transform: translateX(-50%);
++}
+ 
++.nav-links li a {
++    color: #6B7280;
++    font-weight: 500;
++    font-size: 15px;
+     text-decoration: none;
++    transition: color 0.2s;
++}
++
++.nav-links li a:hover {
++    color: #A855F7;
++}
++
++/* Theme toggle button */
++.theme-toggle {
++    background: transparent;
++    border: none;
++    padding: 4px;
++    cursor: pointer;
++    font-size: 24px;
++    color: #6B7280;
++    transition: color 0.2s;
++    display: inline-flex;
++    align-items: center;
++    justify-content: center;
++}
++
++.theme-toggle:hover {
++    color: #A855F7;
++}
++
++/* Dark mode navbar */
++.navbar.dark {
++    background: transparent;
++}
++
++.navbar.dark .brand-name {
++    color: #ffffff;
++}
++
++.navbar.dark .nav-links li a {
++    color: rgba(255,255,255,0.8);
++}
++
++.navbar.dark .nav-links li a:hover {
++    color: #E879F9;
++}
++
++.navbar.dark .theme-toggle {
++    color: rgba(255,255,255,0.8);
++}
++
++.navbar.dark .theme-toggle:hover {
++    color: #E879F9;
+ }
+ 
+ 
+ /* ----------------dark mode----------------- */
+ 
+-header.dark {
+-    background: #FFB74D;
+-    color: #2B2B2B;
+-    padding: 10px;
+-    font-size: 20px;
+-    font-weight: bold;
+-    align-items: center;
++body.dark {
++    background: linear-gradient(135deg, #0F0A1E 0%, #1A0E2E 100%);
++    /* update css variables for dark mode */
++    --accent-start: #ff67e0;
++    --accent-end: #A855F7;
++    --accent: #E14AFF;
+ }
+ 
+-header.dark span {
+-    color: #2B2B2B;
++header.dark {
++    background: transparent;
++    color: #ffffff;
+ }
+ 
+ header.dark #theme {
+-    color: #2B2B2B;
+-    font-size: medium;
+-    font-weight: normal;
++    color: #E0E0E0;
+ }
+ 
+-body.dark {
+-    background-color: #2B2B2B;
++.login-card.dark {
++    background-color: #0D1B2A;
++    border: 1px solid rgba(255,255,255,0.05);
++    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
++}
++
++.login-card.dark .login-title {
++    color: #ffffff;
++}
++
++.login-card.dark label {
++    color: rgba(255,255,255,0.9);
+ }
+ 
+-#login-container.dark {
+-    background-color: #FFB74D;
++.login-card.dark input {
++    background-color: rgba(255,255,255,0.03);
++    border-color: rgba(255,255,255,0.06);
++    color: rgba(255,255,255,0.95);
+ }
+ 
+-#login-container.dark label {
+-    background-color: #FFB74D;
+-    color: #2B2B2B;
++.login-card.dark input::placeholder {
++    color: rgba(255,255,255,0.45);
+ }
+ 
+-#login-container.dark h2 {
+-    color: #2B2B2B;
++.login-card.dark input:focus {
++    border-color: rgba(168,85,247,0.9);
++}
++
++.login-card.dark .forgot-password {
++    color: #E14AFF; /* bright magenta */
++}
++
++.login-card.dark .btn-ingresar {
++    background: linear-gradient(90deg, #C084FC 0%, #A855F7 100%);
++    color: #ffffff;
++    box-shadow: 0 4px 12px rgba(168,85,247,0.4);
+ }
+ 
+-#login-container.dark p {
+-    color: #2B2B2B;
++.login-card.dark .btn-ingresar:hover {
++    background: linear-gradient(90deg, #B47BF0 0%, #9333EA 100%);
+ }
+ 
+-#login-container.dark a {
+-    color: #2B2B2B;
++.login-card.dark .register-text {
++    color: rgba(255,255,255,0.7);
+ }
+ 
+-#login-container.dark input {
+-    border-color: #2B2B2B;
+-    color: #2B2B2B;
++.login-card.dark .register-link {
++    color: #E14AFF;
+ }
+ 
+-#login-container.dark button {
+-    background-color: #FFB74D;
+-    color: #2B2B2B;
+-    border: 1px solid #2B2B2B;
++.login-card.dark .toggle-password {
++    color: rgba(255,255,255,0.7);
+ }
+ 
+-#login-container.dark button:hover {
+-    background: #2B2B2B;
+-    color: #FFB74D;
+-    border: 1px solid #2B2B2B;
++.login-card.dark .toggle-password:hover {
++    color: #E879F9;
+ }
+\ No newline at end of file
+diff --git a/css/stylesRegistro.css b/css/stylesRegistro.css
+index 1b637b4..d54ec91 100644
+--- a/css/stylesRegistro.css
++++ b/css/stylesRegistro.css
+@@ -5,96 +5,303 @@ body {
+     padding: 0;
+ }
+ 
++/* evita desbordes */
++img {
++    max-width: 100%;
++    height: auto;
++    display: block;
++}
++
++:root {
++    --accent-start: #C084FC;
++    --accent-end: #A855F7;
++    --accent: #A855F7;
++}
++
+ body {
+-    font-family: Arial, sans-serif;
+-    background: #ffffff;
++    font-family: 'Raleway', Arial, sans-serif;
++    background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
+     display: flex;
+     flex-direction: column;
++    min-height: 100vh;
+ }
+ 
+ header {
+-    background: #F09100;
+-    color: #ffffff;
++    background: transparent;
++    color: #1a1a1a;
+     padding: 10px;
+-    font-size: 20px;
+-    font-weight: bold;
+-    display: flex;
++    font-size: 18px;
+     align-items: center;
++    border-bottom: 1px solid var(--accent);
+ }
+ 
+-/*tarjeta amarilla*/
+ main {
+     flex: 1;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+-
+-    padding: 40px 0;
+-    /* centra el card en la página */
++    padding: 20px;
+ }
+ 
+-.registro-container {
+-    background: #F09100;
+-    color: #ffffff;
+-    border-radius: 20px;
++/* Navbar layout */
++.navbar {
+     display: flex;
+-    align-items: flex-start;
++    align-items: center;
+     justify-content: space-between;
+-    gap: 40px;
+-    width: 900px;
+-    padding: 40px;
+-    box-sizing: border-box;
+-    max-width: 900px;   /*  en desktop */
+-    width: 100%;    /*  ocupa todo en pantallas chicas */
++    gap: 1rem;
++    padding: 0.5rem 1rem;
+ }
+ 
+-/*para que disminuya la letra en ipohne*/
+-@media (max-width: 575px) {
+-    .form-left h2 {
+-        font-size: 22px;
+-    }
++.brand-name {
++    font-weight: 700;
++    font-size: 18px;
++    color: #111827;
++}
+ 
+-    .btn-ingresar {
+-        font-size: 18px;
+-    }
++.nav-links {
++    position: absolute;
++    left: 50%;
++    transform: translateX(-50%);
+ }
+ 
+-.logo {
+-    width: 200px;
+-    border-radius: 8px;
++.nav-links li a {
++    color: #6B7280;
++    font-weight: 500;
++    font-size: 15px;
++    text-decoration: none;
++    transition: color 0.2s;
+ }
+ 
+-.logo-header {
+-    width: 60px;
+-    height: auto;
+-    margin-right: 10px;
+-    border-radius: 4px;
++.nav-links li a:hover {
++    color: #A855F7;
++}
++
++/* Theme toggle button */
++.theme-toggle {
++    background: transparent;
++    border: none;
++    padding: 4px;
++    cursor: pointer;
++    font-size: 24px;
++    color: #6B7280;
++    transition: color 0.2s;
++    display: inline-flex;
++    align-items: center;
++    justify-content: center;
++}
++
++.theme-toggle:hover {
++    color: #A855F7;
++}
++
++/* Wrapper y Container de registro */
++.registro-wrapper {
++    width: 100%;
++    max-width: 1000px;
+ }
++
++.registro-container {
++    background: #ffffff;
++    border-radius: 20px;
++    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
++    display: grid;
++    grid-template-columns: 1fr 1fr;
++    overflow: hidden;
++}
++
++/* Lado izquierdo - Formulario */
+ .form-left {
+-    flex: 0 0 30%;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: flex-start;
++    padding: 50px 40px;
++}
++
++.back-link {
++    display: inline-flex;
++    align-items: center;
++    gap: 4px;
++    color: #6B7280;
++    text-decoration: none;
++    font-size: 14px;
++    margin-bottom: 20px;
++    transition: color 0.2s;
+ }
+ 
+-.form-left h2 {
++.back-link:hover {
++    color: #A855F7;
++}
++
++.back-link .material-symbols-outlined {
++    font-size: 20px;
++}
++
++.registro-title {
+     font-size: 28px;
+-    margin-top: 20px;
++    font-weight: 700;
++    color: #1a1a1a;
++    margin-bottom: 30px;
++}
++
++/* Grupos de formulario */
++.form-row {
++    display: grid;
++    grid-template-columns: 1fr 1fr;
++    gap: 15px;
+ }
+ 
+-.logo {
+-    width: 200px;
++.form-group {
++    margin-bottom: 20px;
++}
++
++.form-group label {
++    display: block;
++    font-size: 14px;
++    font-weight: 500;
++    color: #1a1a1a;
++    margin-bottom: 8px;
++}
++
++.form-group input {
++    width: 100%;
++    padding: 12px 15px;
++    border: 1px solid #E0E0E0;
+     border-radius: 8px;
++    font-size: 14px;
++    color: #1a1a1a;
++    outline: none;
++    transition: border-color 0.3s;
++    box-sizing: border-box;
++}
++
++.form-group input::placeholder {
++    color: #B8B8B8;
++}
++
++.form-group input:focus {
++    border-color: #A855F7;
++}
++
++/* Contenedor de contraseña con ícono */
++.password-container {
++    position: relative;
++}
++
++.password-container input {
++    padding-right: 45px;
++}
++
++.toggle-password {
++    position: absolute;
++    right: 15px;
++    top: 50%;
++    transform: translateY(-50%);
++    cursor: pointer;
++    font-size: 24px;
++    user-select: none;
++    background: transparent;
++    border: none;
++    padding: 0;
++    line-height: 1;
++    display: inline-flex;
++    align-items: center;
++    justify-content: center;
++    color: #666;
++}
++
++.toggle-password:hover {
++    color: #A855F7;
++}
++
++.toggle-password:focus {
++    outline: 2px solid rgba(168,85,247,0.25);
++    outline-offset: 2px;
++    border-radius: 4px;
++}
++
++.material-symbols-outlined {
++    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
++}
++
++/* Botón registrar */
++.btn-registrar {
++    width: 100%;
++    background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
++    color: #ffffff;
++    border: none;
++    border-radius: 8px;
++    padding: 14px 20px;
++    font-size: 16px;
++    font-weight: 600;
++    cursor: pointer;
++    transition: filter 0.3s;
++    margin-bottom: 15px;
++}
++
++.btn-registrar:hover {
++    filter: brightness(0.95);
++}
++
++/* Términos y condiciones */
++.terms-container {
++    text-align: center;
++    margin-bottom: 15px;
++}
++
++.terms-container p {
++    font-size: 12px;
++    color: #666;
++    margin: 0;
++}
++
++.terms-container a {
++    color: #A855F7;
++    text-decoration: none;
++}
++
++.terms-container a:hover {
++    text-decoration: underline;
++}
++
++/* Contenedor de login */
++.login-container {
++    text-align: center;
++}
++
++.login-text {
++    font-size: 14px;
++    color: #666;
++}
++
++.login-link {
++    font-size: 14px;
++    font-weight: 600;
++    color: #A855F7;
++    text-decoration: none;
++}
++
++.login-link:hover {
++    text-decoration: underline;
++}
++
++/* Lado derecho - Imagen */
++.form-right {
++    background: #F3F4F6;
++    display: flex;
++    align-items: center;
++    justify-content: center;
++    overflow: hidden;
++}
++
++.cat-image {
++    width: 100%;
++    height: 100%;
++    object-fit: cover;
+ }
+ 
+ .logo-header {
+-    width: 60px;
++    width: 48px;
+     height: auto;
+-    margin-right: 10px;
+     border-radius: 4px;
+ }
+ 
+-/* para hacer que el boton inicio quede bonito y no se vuelva azul y subrayando al ponerl el mouse*/
+ .header-link {
+     display: flex;
+     align-items: center;
+@@ -103,83 +310,158 @@ main {
+     font-weight: bold;
+ }
+ 
+-.form-left {
+-    flex: 0 0 40%;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: flex-start;
++.header-link,
++.header-link:visited,
++.header-link:hover,
++.header-link:active {
++    color: #111827;
++    text-decoration: none;
+ }
+ 
+-.form-left h2 {
+-    font-size: 28px;
+-    margin-top: 20px;
++footer {
++    padding-top: 3rem;
++    padding-bottom: 3rem;
+ }
+ 
+-.logo {
+-    width: 200px;
+-    border-radius: 8px;
++footer p {
++    margin-bottom: .25rem;
+ }
+ 
+-.logo-header {
+-    width: 60px;
+-    height: auto;
+-    margin-right: 10px;
+-    border-radius: 4px;
++/* Responsive */
++@media (max-width: 768px) {
++    .registro-container {
++        grid-template-columns: 1fr;
++    }
++    
++    .form-right {
++        display: none;
++    }
++    
++    .form-left {
++        padding: 40px 25px;
++    }
++    
++    .registro-title {
++        font-size: 24px;
++    }
++    
++    .form-row {
++        grid-template-columns: 1fr;
++    }
+ }
+ 
++/* ----------------dark mode----------------- */
+ 
+-.form-right {
+-    /* parte derecha del form */
+-    flex: 1;
+-    display: flex;
+-    flex-direction: column;
+-    justify-content: center;
++body.dark {
++    background: linear-gradient(135deg, #0F0A1E 0%, #1A0E2E 100%);
++    --accent-start: #ff67e0;
++    --accent-end: #A855F7;
++    --accent: #E14AFF;
+ }
+ 
+-.input-group {
+-    position: relative;
+-    margin: 8px 0;
++header.dark {
++    background: transparent;
++    color: #ffffff;
+ }
+ 
+-.input-group input {
+-    width: 100%;
+-    padding: 12px 10px;
+-    border: 1px solid #ffffff;
+-    border-radius: 8px;
++.navbar.dark {
+     background: transparent;
++}
++
++.navbar.dark .brand-name {
+     color: #ffffff;
+-    font-size: 14px;
+-    outline: none;
+ }
+ 
+-.input-group label {
+-    position: absolute;
+-    top: -10px;
+-    left: 10px;
+-    background: #F09100;
+-    padding: 0 5px;
+-    font-size: 15px;
++.navbar.dark .header-link {
+     color: #ffffff;
+ }
+ 
++.navbar.dark .nav-links li a {
++    color: rgba(255,255,255,0.8);
++}
+ 
++.navbar.dark .nav-links li a:hover {
++    color: #E879F9;
++}
+ 
++.navbar.dark .theme-toggle {
++    color: rgba(255,255,255,0.8);
++}
+ 
+-button {
+-    flex: 1;
+-    background: #ffffff;
+-    color: #f09100;
+-    border: none;
+-    border-radius: 8px;
+-    padding: 6px 20px;
+-    font-size: 22px;
+-    font-weight: bold;
+-    cursor: pointer;
+-    transition: 0.3s;
++.navbar.dark .theme-toggle:hover {
++    color: #E879F9;
++}
++
++.registro-container.dark {
++    background-color: #0D1B2A;
++    border: 1px solid rgba(255,255,255,0.05);
++    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+ }
+ 
+-button:hover {
+-    background: #f09100;
++.registro-container.dark .back-link {
++    color: rgba(255,255,255,0.7);
++}
++
++.registro-container.dark .back-link:hover {
++    color: #E879F9;
++}
++
++.registro-container.dark .registro-title {
+     color: #ffffff;
+-    border: 1px solid #ffffff;
++}
++
++.registro-container.dark label {
++    color: rgba(255,255,255,0.9);
++}
++
++.registro-container.dark input {
++    background-color: rgba(255,255,255,0.03);
++    border-color: rgba(255,255,255,0.06);
++    color: rgba(255,255,255,0.95);
++}
++
++.registro-container.dark input::placeholder {
++    color: rgba(255,255,255,0.45);
++}
++
++.registro-container.dark input:focus {
++    border-color: rgba(168,85,247,0.9);
++}
++
++.registro-container.dark .toggle-password {
++    color: rgba(255,255,255,0.7);
++}
++
++.registro-container.dark .toggle-password:hover {
++    color: #E879F9;
++}
++
++.registro-container.dark .btn-registrar {
++    background: linear-gradient(90deg, #C084FC 0%, #A855F7 100%);
++    color: #ffffff;
++    box-shadow: 0 4px 12px rgba(168,85,247,0.4);
++}
++
++.registro-container.dark .btn-registrar:hover {
++    background: linear-gradient(90deg, #B47BF0 0%, #9333EA 100%);
++}
++
++.registro-container.dark .terms-container p {
++    color: rgba(255,255,255,0.6);
++}
++
++.registro-container.dark .terms-container a {
++    color: #E14AFF;
++}
++
++.registro-container.dark .login-text {
++    color: rgba(255,255,255,0.7);
++}
++
++.registro-container.dark .login-link {
++    color: #E14AFF;
++}
++
++.form-right.dark {
++    background: #1a1a2e;
+ }
+diff --git a/js/dark-mode.js b/js/dark-mode.js
+index 8bb7f6b..2e7bae3 100644
+--- a/js/dark-mode.js
++++ b/js/dark-mode.js
+@@ -92,12 +92,21 @@ function applyDarkMode() {
+     const logoNavLogin = document.getElementById("logoNavLogin");
+     if (logoNavLogin) logoNavLogin.src = dark ? "img/logoDark.png" : "img/Logo.png";
+ 
++    const logoNavRegistro = document.getElementById("logoNavRegistro");
++    if (logoNavRegistro) logoNavRegistro.src = dark ? "img/logoDark.png" : "img/Logo.png";
++
+     const header = document.getElementById("header");
+     if (header) header.classList.toggle("dark", dark);
+ 
+     const loginContainer = document.getElementById("login-container");
+     if (loginContainer) loginContainer.classList.toggle("dark", dark);
+ 
++    const registroContainer = document.querySelector(".registro-container");
++    if (registroContainer) registroContainer.classList.toggle("dark", dark);
++
++    const formRight = document.querySelector(".form-right");
++    if (formRight) formRight.classList.toggle("dark", dark);
++
+     const cartPayCard = document.getElementById("cart-pay-card");
+     if (cartPayCard) cartPayCard.classList.toggle("dark", dark);
+ 
+diff --git a/js/login.js b/js/login.js
+index 1d01b56..f295810 100644
+--- a/js/login.js
++++ b/js/login.js
+@@ -1,3 +1,33 @@
++// Toggle password visibility
++const togglePassword = document.getElementById("togglePassword");
++const passwordInput = document.getElementById("contraseña");
++
++if (togglePassword) {
++    togglePassword.addEventListener("click", function() {
++        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
++        passwordInput.setAttribute("type", type);
++        // Use Material Symbols names: 'visibility' when hidden, 'visibility_off' when shown
++        this.textContent = type === "password" ? "visibility" : "visibility_off";
++        // Update aria label for accessibility
++        this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
++    });
++}
++
++// Update theme toggle icon based on dark mode state
++function updateThemeIcon() {
++    const themeButton = document.getElementById("theme");
++    if (themeButton) {
++        const dark = localStorage.getItem("dark") === "true";
++        themeButton.textContent = dark ? "dark_mode" : "light_mode";
++        themeButton.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
++    }
++}
++
++// Initialize theme icon on page load
++document.addEventListener("DOMContentLoaded", function() {
++    updateThemeIcon();
++});
++
+ document.getElementById("btnRegistro").addEventListener("click", function(){
+     //pagina de registro
+     window.location.href = "registro.html";
+diff --git a/js/product-info.js b/js/product-info.js
+index 59df081..21f79cb 100644
+--- a/js/product-info.js
++++ b/js/product-info.js
+@@ -41,20 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
+         const imgs = data.images || [data.image];
+ 
+         galleryContainer.innerHTML = `
+-            <div class="flex flex-col gap-4">
+-                <!-- Imagen principal -->
+-                <div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden aspect-square">
+-                    <img id="main-image" src="${imgs[0]}" alt="${data.name}" class="w-full h-full object-cover">
+-                </div>
+-                
+-                <!-- Thumbnails -->
+-                <div class="grid grid-cols-4 gap-3">
+-                    ${imgs.map((img, idx) => `
+-                        <button class="thumbnail ${idx === 0 ? 'thumbnail-active' : ''} border-2 border-border-light dark:border-border-dark rounded-lg overflow-hidden aspect-square hover:border-primary transition-colors" data-index="${idx}">
+-                            <img src="${img}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
+-                        </button>
+-                    `).join('')}
+-                </div>
++            <div class="main-image-container">
++                <img id="main-image" src="${imgs[0]}" alt="${data.name}">
++            </div>
++            <div class="thumbnails">
++                ${imgs.map((img, idx) => `
++                    <button class="thumbnail ${idx === 0 ? 'thumbnail-active' : ''}" data-index="${idx}">
++                        <img src="${img}" alt="Thumbnail ${idx + 1}">
++                    </button>
++                `).join('')}
+             </div>
+         `;
+ 
+@@ -69,99 +64,65 @@ document.addEventListener("DOMContentLoaded", () => {
+                 thumb.classList.add('thumbnail-active');
+             });
+         });
++
++        // Update breadcrumb
++        const breadcrumbCategory = document.getElementById('breadcrumb-category');
++        const breadcrumbProduct = document.getElementById('breadcrumb-product');
++        if (breadcrumbCategory) breadcrumbCategory.textContent = data.category;
++        if (breadcrumbProduct) breadcrumbProduct.textContent = data.name;
+     }
+ 
+     // ===== Render información del producto =====
+     function renderProductInfo(data) {
+         productInfoContainer.innerHTML = `
+-            <div class="flex flex-col gap-6">
+-                <!-- Badge de categoría -->
+-                <div class="inline-flex items-center gap-2">
+-                    <span class="px-3 py-1 rounded-full bg-primary/20 text-accent dark:text-text-dark-primary text-sm font-semibold">
+-                        ${data.category}
+-                    </span>
+-                    <span class="text-sm text-text-light-secondary dark:text-text-dark-secondary">
+-                        ${data.soldCount} vendidos
+-                    </span>
+-                </div>
+-
+-                <!-- Nombre del producto -->
+-                <h1 class="text-3xl lg:text-4xl font-black text-accent dark:text-text-dark-primary leading-tight">
+-                    ${data.name}
+-                </h1>
+-
+-                <!-- Descripción -->
+-                <p class="text-text-light-secondary dark:text-text-dark-secondary leading-relaxed">
+-                    ${data.description}
+-                </p>
+-
+-                <!-- Precio -->
+-                <div class="flex items-baseline gap-2">
+-                    <span class="text-sm text-text-light-secondary dark:text-text-dark-secondary font-medium">Precio</span>
+-                    <span class="text-5xl font-extrabold text-accent dark:text-text-dark-primary">
+-                        ${data.currency} ${data.cost}
+-                    </span>
++            <div>
++                <span class="category-badge">${data.category}</span>
++                <div class="d-flex align-items-center justify-content-between mb-3">
++                    <h1 class="product-name mb-0">${data.name}</h1>
++                    <button class="btn-favorite" aria-label="Agregar a favoritos">
++                        <span class="material-symbols-outlined">favorite_border</span>
++                    </button>
+                 </div>
+-
+-                <!-- Cantidad y botón -->
+-                <div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-6">
+-                    <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+-                        <!-- Selector de cantidad -->
+-                        <div class="flex items-center gap-3">
+-                            <label class="text-sm font-medium text-accent dark:text-text-dark-primary">Cantidad:</label>
+-                            <div class="flex items-center border border-border-light dark:border-border-dark rounded-lg overflow-hidden">
+-                                <button id="qty-minus" class="px-4 py-2 bg-background-light dark:bg-background-dark hover:bg-primary/10 transition-colors">
+-                                    <span class="material-symbols-outlined text-xl">remove</span>
+-                                </button>
+-                                <input type="number" id="cart-quantity" value="1" min="1" 
+-                                    class="w-16 text-center border-x border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary font-bold [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none">
+-                                <button id="qty-plus" class="px-4 py-2 bg-background-light dark:bg-background-dark hover:bg-primary/10 transition-colors">
+-                                    <span class="material-symbols-outlined text-xl">add</span>
+-                                </button>
+-                            </div>
++                <p class="product-description">${data.description}</p>
++                <div class="product-price">${data.currency} ${data.cost}</div>
++            </div>
++            <!-- Cantidad y botón -->
++            <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6">
++                <div class="d-flex flex-row align-items-center gap-4">
++                    <div class="quantity-selector">
++                        <div class="quantity-controls">
++                            <button type="button" class="quantity-btn" id="qty-minus">−</button>
++                            <span class="quantity-value" id="cart-quantity">1</span>
++                            <button type="button" class="quantity-btn" id="qty-plus">+</button>
+                         </div>
+-
+-                        <!-- Botón agregar al carrito -->
+-                        <button class="btn-cart flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-accent font-bold hover:bg-primary/90 transition-colors">
+-                            <span class="material-symbols-outlined text-xl">shopping_cart</span>
+-                            Agregar al Carrito
+-                        </button>
+                     </div>
+-                </div>
+ 
+-                <!-- Características adicionales -->
+-                <div class="grid grid-cols-2 gap-4">
+-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-background-light dark:bg-background-dark">
+-                        <span class="material-symbols-outlined text-2xl text-primary">local_shipping</span>
+-                        <div>
+-                            <p class="text-sm font-semibold text-accent dark:text-text-dark-primary">Envío gratis</p>
+-                            <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">En compras +$1000</p>
+-                        </div>
+-                    </div>
+-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-background-light dark:bg-background-dark">
+-                        <span class="material-symbols-outlined text-2xl text-primary">verified</span>
+-                        <div>
+-                            <p class="text-sm font-semibold text-accent dark:text-text-dark-primary">Garantía</p>
+-                            <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary">12 meses</p>
+-                        </div>
+-                    </div>
++                    <button class="btn-add-cart" id="add-to-cart-btn">
++                        <span class="material-symbols-outlined">shopping_cart</span>
++                        Agregar al Carrito
++                    </button>
+                 </div>
+             </div>
+         `;
+ 
+         // Setup quantity controls
+-        const qtyInput = document.getElementById('cart-quantity');
++        let quantity = 1;
++        const qtyDisplay = document.getElementById('cart-quantity');
+         const qtyMinus = document.getElementById('qty-minus');
+         const qtyPlus = document.getElementById('qty-plus');
+ 
+         qtyMinus.addEventListener('click', () => {
+-            if (qtyInput.value > 1) {
+-                qtyInput.value = parseInt(qtyInput.value) - 1;
++            if (quantity > 1) {
++                quantity--;
++                qtyDisplay.textContent = quantity;
++                currentQuantity = quantity;
+             }
+         });
+ 
+         qtyPlus.addEventListener('click', () => {
+-            qtyInput.value = parseInt(qtyInput.value) + 1;
++            quantity++;
++            qtyDisplay.textContent = quantity;
++            currentQuantity = quantity;
+         });
+     }
+ 
+@@ -177,23 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
+                 for (const p of data.products) {
+                     if (p.id !== productData.id) {
+                         html += `
+-                            <div class="bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-border-light dark:border-border-dark hover:shadow-lg transition-shadow duration-300 cursor-pointer" id="product-${p.id}">
+-                                <div class="aspect-square overflow-hidden">
+-                                    <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+-                                </div>
+-                                <div class="p-4">
+-                                    <h3 class="font-bold text-lg mb-1 text-accent dark:text-text-dark-primary line-clamp-1">${p.name}</h3>
+-                                    <p class="text-sm text-text-light-secondary dark:text-text-dark-secondary mb-2 line-clamp-2">${p.description}</p>
+-                                    <div class="flex items-center justify-between">
+-                                        <span class="text-lg font-extrabold text-accent dark:text-text-dark-primary">${p.currency} ${p.cost}</span>
+-                                        <span class="text-xs text-text-light-secondary dark:text-text-dark-secondary">${p.soldCount} vendidos</span>
+-                                    </div>
++                            <div class="col-sm-6 col-md-4 col-lg-3">
++                                <div class="product-card" id="product-${p.id}">
++                                    <img src="${p.image}" alt="${p.name}">
++                                    <h5>${p.name}</h5>
++                                    <p>${p.description}</p>
++                                    <div class="price">${p.currency} ${p.cost}</div>
++                                    <small>${p.soldCount} vendidos</small>
+                                 </div>
+                             </div>
+                         `;
+                     }
+                 }
+-                interesContainer.innerHTML = html || `<p class="text-text-light-secondary dark:text-text-dark-secondary col-span-full text-center">No hay productos relacionados.</p>`;
++                interesContainer.innerHTML = html || `<p class="text-center col-12">No hay productos relacionados.</p>`;
+ 
+                 data.products.forEach(p => {
+                     const prodEl = document.getElementById(`product-${p.id}`);
+@@ -257,24 +214,60 @@ document.addEventListener("DOMContentLoaded", () => {
+         const commentsToShow = sortedComments.slice(start, end);
+         const container = document.getElementById("reviews-list");
+ 
++        // Calcular promedio de calificaciones redondeando a .0 o .5 hacia abajo
++        let avgRating = 0;
++        if (allComments.length > 0) {
++            const rawAvg = allComments.reduce((sum, c) => sum + c.score, 0) / allComments.length;
++            avgRating = Math.floor(rawAvg * 2) / 2; // Redondea a .0 o .5 hacia abajo
++        }
++        const totalReviews = allComments.length;
++
++        // Función para generar estrellas (sólo llenas o vacías, consistentes con otras páginas)
++        const generateStars = (rating) => {
++            const full = Math.floor(rating);
++            let starsHTML = '';
++            for (let i = 1; i <= 5; i++) {
++                if (i <= full) starsHTML += '<span class="star star-full">★</span>';
++                else starsHTML += '<span class="star star-empty">★</span>';
++            }
++            return starsHTML;
++        };
++
+         if (commentsToShow.length === 0) {
+-            container.innerHTML = `<p class="text-center text-text-light-secondary dark:text-text-dark-secondary">No hay comentarios aún.</p>`;
++            container.innerHTML = `
++                <div class="rating-display-box">
++                    <div class="rating-number">${avgRating > 0 ? avgRating.toFixed(1) : '0.0'}</div>
++                    <div class="rating-stars">${generateStars(avgRating)}</div>
++                    <div class="rating-count">Based on ${totalReviews} reviews</div>
++                </div>
++                <p class="text-center text-muted mt-4">No hay comentarios aún.</p>
++            `;
+         } else {
+-            container.innerHTML = commentsToShow.map(c => {
+-                const stars = '⭐'.repeat(c.score);
+-                return `
+-                    <div class="border border-border-light dark:border-border-dark rounded-lg p-4 bg-background-light dark:bg-background-dark">
+-                        <div class="flex items-start justify-between mb-2">
+-                            <div>
+-                                <p class="font-bold text-accent dark:text-text-dark-primary">${c.user}</p>
+-                                <p class="text-sm text-text-light-secondary dark:text-text-dark-secondary">${c.date}</p>
+-                            </div>
+-                            <span class="text-lg">${stars}</span>
+-                        </div>
+-                        <p class="text-text-light-primary dark:text-text-dark-primary">${c.description}</p>
++            container.innerHTML = `
++                <div class="reviews-container">
++                    <div class="rating-display-box">
++                        <div class="rating-number">${avgRating.toFixed(1)}</div>
++                        <div class="rating-stars">${generateStars(avgRating)}</div>
++                        <div class="rating-count">Based on ${totalReviews} reviews</div>
++                    </div>
++                    <div class="reviews-items-column">
++                        ${commentsToShow.map(c => {
++                            return `
++                                <div class="review-item-box">
++                                    <div class="review-header">
++                                        <div class="review-user-date">
++                                            <span class="review-user">${c.user}</span>
++                                            <span class="review-date">${c.date}</span>
++                                        </div>
++                                        <div class="review-rating">${generateStars(c.score)}</div>
++                                    </div>
++                                    <p class="review-text">${c.description}</p>
++                                </div>
++                            `;
++                        }).join('')}
+                     </div>
+-                `;
+-            }).join('');
++                </div>
++            `;
+         }
+ 
+         // Paginación
+@@ -284,10 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
+         if (totalPages > 1) {
+             pagEl.innerHTML = Array.from({ length: totalPages }, (_, i) => i + 1)
+                 .map(page => `
+-                    <button class="px-4 py-2 rounded-lg font-medium transition-colors ${page === currentCommentsPage
+-                        ? 'bg-primary text-accent'
+-                        : 'bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-accent dark:text-text-dark-primary hover:bg-primary/10'
+-                    }" data-page="${page}">
++                    <button class="${page === currentCommentsPage ? 'active' : ''}" data-page="${page}">
+                         ${page}
+                     </button>
+                 `).join('');
+@@ -317,6 +307,42 @@ document.addEventListener("DOMContentLoaded", () => {
+         const form = document.getElementById("review-form");
+         if (!form) return;
+ 
++        // Setup custom star control (synchronizes with hidden #review-score)
++        const reviewScoreHidden = document.getElementById('review-score');
++        const starControl = document.getElementById('review-score-control');
++        const starBtns = starControl ? starControl.querySelectorAll('.star-btn') : [];
++
++        function setStars(value) {
++            if (reviewScoreHidden) reviewScoreHidden.value = value;
++            starBtns.forEach(btn => {
++                const v = parseInt(btn.dataset.value, 10) || 0;
++                const span = btn.querySelector('.star');
++                if (!span) return;
++                if (v <= value) {
++                    span.classList.remove('star-empty');
++                    span.classList.add('star-full');
++                    btn.classList.add('selected');
++                    btn.setAttribute('aria-pressed', 'true');
++                } else {
++                    span.classList.remove('star-full');
++                    span.classList.add('star-empty');
++                    btn.classList.remove('selected');
++                    btn.setAttribute('aria-pressed', 'false');
++                }
++            });
++        }
++
++        // initialize with hidden input value or 5
++        const initialScore = reviewScoreHidden ? parseInt(reviewScoreHidden.value, 10) || 5 : 5;
++        setStars(initialScore);
++
++        starBtns.forEach(btn => {
++            btn.addEventListener('click', () => {
++                const value = parseInt(btn.dataset.value, 10) || 1;
++                setStars(value);
++            });
++        });
++
+         form.addEventListener("submit", (e) => {
+             e.preventDefault();
+             const user = JSON.parse(localStorage.getItem("user") || '{}').email?.split('@')[0] || "Usuario";
+@@ -340,13 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
+ 
+     // ===== Agregar al carrito =====
+     document.addEventListener("click", async (e) => {
+-        const button = e.target.closest(".btn-cart");
++        const button = e.target.closest(".btn-add-cart");
+         if (!button) return;
+ 
+         const productId = localStorage.getItem("producto");
+         if (!productId) return;
+ 
+-        const quantity = parseInt(document.getElementById("cart-quantity").value) || 1;
++        const quantity = currentQuantity;
+ 
+         try {
+             const resp = await fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`);
+diff --git a/js/registro.js b/js/registro.js
+index 78db5e8..7f0430c 100644
+--- a/js/registro.js
++++ b/js/registro.js
+@@ -1,10 +1,43 @@
+-document.getElementById("btnVolver").addEventListener("click", function(){
+-    //pagina de registro
+-    window.location.href = "login.html";
++// Toggle password visibility para ambos campos
++const togglePassword1 = document.getElementById("togglePassword1");
++const togglePassword2 = document.getElementById("togglePassword2");
++const passwordInput1 = document.getElementById("pass1");
++const passwordInput2 = document.getElementById("pass2");
++
++if (togglePassword1 && passwordInput1) {
++    togglePassword1.addEventListener("click", function() {
++        const type = passwordInput1.getAttribute("type") === "password" ? "text" : "password";
++        passwordInput1.setAttribute("type", type);
++        this.textContent = type === "password" ? "visibility" : "visibility_off";
++        this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
++    });
++}
++
++if (togglePassword2 && passwordInput2) {
++    togglePassword2.addEventListener("click", function() {
++        const type = passwordInput2.getAttribute("type") === "password" ? "text" : "password";
++        passwordInput2.setAttribute("type", type);
++        this.textContent = type === "password" ? "visibility" : "visibility_off";
++        this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
++    });
++}
++
++// Update theme toggle icon based on dark mode state
++function updateThemeIcon() {
++    const themeButton = document.getElementById("theme");
++    if (themeButton) {
++        const dark = localStorage.getItem("dark") === "true";
++        themeButton.textContent = dark ? "dark_mode" : "light_mode";
++        themeButton.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
++    }
++}
++
++// Initialize theme icon on page load
++document.addEventListener("DOMContentLoaded", function() {
++    updateThemeIcon();
+ });
+ 
+-console.log('registro.js cargado'); // escribe un mensaje en la consola del navegador (inspeccionar elemento) 
+-// y comprueba que el archivo js cargo
++console.log('registro.js cargado');
+ 
+ const form = document.getElementById('registroForm');
+ const pass1 = document.getElementById('pass1');
+diff --git a/login.html b/login.html
+index 0201544..4cb574d 100644
+--- a/login.html
++++ b/login.html
+@@ -9,50 +9,49 @@
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+   <link href="css/stylesLogin.css" rel="stylesheet">
++  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+ </head>
+ 
+ <body>
+   <header class="container-fluid py-2" id="header">
+-    <div class="d-flex align-items-center justify-content-between mx-0">
+-      <a href="index.html" class="header-link d-flex align-items-center gap-2 text-decoration-none">
+-        <img src="img/Logo.png" alt="Logo" class="logo-header img-fluid" style="max-height:40px;" id="logoNavLogin">
+-        <span>Inicio</span>
+-      </a>
+-
+-      <a class="nav-link" id="theme" style="cursor: pointer;">Tema</a>
+-    </div>
+-  </header>
+-
+-  <main class="container d-flex justify-content-center align-items-start py-4">
+-    <div class="login-container row" id="login-container">
+-
+-      <!-- Izquierda -->
+-      <div class="form-left col-12 col-md-5 d-flex flex-column align-items-start text-center text-md-start">
+-        <img src="img/Logo.png" alt="Logo" class="logo mb-3" id="logoLogin">
+-        <h2>Iniciar Sesión</h2>
++    <nav class="navbar container" id="navbar">
++      <div class="d-flex align-items-center ms-auto">
++        <button class="material-symbols-outlined theme-toggle" id="theme" aria-label="Cambiar tema">light_mode</button>
+       </div>
++    </nav>
++  </header>
+ 
+-      <!-- Derecha -->
+-      <form id="loginForm" class="form-right col-12 col-md-7 mt-4 mt-md-0">
+-        <div class="input-group">
+-          <input type="text" id="usuario" name="usuario" required>
++  <main class="container d-flex justify-content-center align-items-center py-5">
++    <div class="login-card" id="login-container">
++      <h1 class="login-title">¡Bienvenido de nuevo!</h1>
++      
++      <form id="loginForm">
++        <div class="form-group">
+           <label for="usuario">Correo</label>
++          <input type="email" id="usuario" name="usuario" placeholder="Ingresa tu correo electrónico" required>
+         </div>
+ 
+-        <div class="input-group">
+-          <input type="password" id="contraseña" name="contraseña" required>
++        <div class="form-group">
+           <label for="contraseña">Contraseña</label>
++          <div class="password-container">
++            <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
++            <button type="button" class="material-symbols-outlined toggle-password" id="togglePassword" aria-label="Mostrar contraseña">visibility</button>
++          </div>
+         </div>
+ 
+-        <div class="btn-container">
+-          <button type="submit" class="btn-ingresar">Ingresar</button>
+-          <p class="registro-text">¿No tienes una cuenta?</p>
+-          <a href="#" id="btnRegistro" class="link-registro">Regístrate</a>
++        <div class="forgot-password-container">
++          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+         </div>
+ 
++        <button type="submit" class="btn-ingresar">Ingresar</button>
++        
+         <p id="mensaje" class="error"></p>
++        
++        <div class="register-container">
++          <span class="register-text">¿No tienes una cuenta? </span>
++          <a href="#" id="btnRegistro" class="register-link">Regístrate</a>
++        </div>
+       </form>
+-
+     </div>
+   </main>
+ 
+diff --git a/product-info.html b/product-info.html
+index 2714623..b9271a6 100644
+--- a/product-info.html
++++ b/product-info.html
+@@ -6,138 +6,95 @@
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <title>eMercado - Información del Producto</title>
+ 
++  <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+-    rel="stylesheet">
+-
+-  <!-- Material Symbols -->
+-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+-
+-  <!-- TAILWIND -->
+-  <script src="https://cdn.tailwindcss.com"></script>
+-
+-  <script>
+-    tailwind.config = {
+-      darkMode: "class",
+-      theme: {
+-        extend: {
+-          colors: {
+-            primary: "#f1e7f3",
+-            accent: "#190d1b",
+-            "surface-light": "#ffffff",
+-            "surface-dark": "#21162d",
+-            "background-light": "#f7f6f8",
+-            "background-dark": "#191022",
+-            "border-light": "#f2f0f4",
+-            "border-dark": "#322340",
+-            "text-light-primary": "#141118",
+-            "text-light-secondary": "#756189",
+-            "text-dark-primary": "#f7f6f8",
+-            "text-dark-secondary": "#a89cb9",
+-          },
+-          fontFamily: {
+-            display: ["Plus Jakarta Sans", "Raleway", "sans-serif"],
+-          },
+-        },
+-      },
+-    };
+-  </script>
+-
+-  <style>
+-    .material-symbols-outlined {
+-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+-    }
+-
+-    body {
+-      -webkit-font-smoothing: antialiased;
+-      -moz-osx-font-smoothing: grayscale;
+-    }
+-
+-    .thumbnail-active {
+-      border-color: #f1e7f3 !important;
+-      border-width: 3px !important;
+-    }
+-  </style>
+-
+-  <link rel="stylesheet" href="css/styles.css">
+-  <link rel="stylesheet" href="css/dark-mode.css">
++  <link href="css/product-info.css" rel="stylesheet">
++  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+ </head>
+ 
+-<body
+-  class="bg-background-light dark:bg-background-dark font-display text-text-light-primary dark:text-text-dark-primary">
+-  <nav class="navbar p-1" id="navbar" style="padding: 0%; display: block;"></nav>
+-
+-  <main class="container mx-auto px-4 py-8 max-w-7xl">
++<body>
++  <header class="container-fluid py-2" id="header">
++    <nav class="navbar container" id="navbar">
++      <div class="d-flex align-items-center ms-auto">
++        <button class="material-symbols-outlined theme-toggle" id="theme" aria-label="Cambiar tema">light_mode</button>
++      </div>
++    </nav>
++  </header>
++
++  <main class="container py-4">
++    <!-- Breadcrumbs -->
++    <nav aria-label="breadcrumb" class="mb-4">
++      <ol class="breadcrumb" id="breadcrumb">
++        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
++        <li class="breadcrumb-item"><a href="#" id="breadcrumb-category">Categoría</a></li>
++        <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-product">Producto</li>
++      </ol>
++    </nav>
+ 
+     <!-- Producto Principal -->
+-    <div id="product-block" class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+-      <!-- Columna de Imágenes (se llena dinámicamente) -->
+-      <div id="gallery"></div>
+-
+-      <!-- Columna de Información (se llena dinámicamente) -->
+-      <div id="product-info"></div>
+-    </div>
++    <div class="row mb-5">
++      <!-- Columna de Imágenes -->
++      <div class="col-lg-6 mb-4 mb-lg-0">
++        <div id="gallery"></div>
++      </div>
+ 
+-    <!-- Productos Relacionados -->
+-    <div class="mb-12">
+-      <h2 class="text-2xl font-bold mb-6 text-accent dark:text-text-dark-primary">Quizás te interese</h2>
+-      <div id="interes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
++      <!-- Columna de Información -->
++      <div class="col-lg-6">
++        <div id="product-info"></div>
++      </div>
+     </div>
+ 
+     <!-- Sección de Comentarios -->
+-    <div
+-      class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-6 lg:p-8">
+-      <div class="flex items-center justify-between mb-6">
+-        <h2 class="text-2xl font-bold text-accent dark:text-text-dark-primary">Calificaciones</h2>
+-        <select id="sort-comments"
+-          class="px-4 py-2 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary">
++    <div class="comments-section mb-5">
++      <div class="d-flex justify-content-between align-items-center mb-4">
++        <h2 class="section-title mb-0">Calificaciones</h2>
++        <select id="sort-comments" class="form-select form-select-sm" style="width: auto;">
+           <option value="fecha">Más recientes</option>
+           <option value="puntaje">Mejor valorados</option>
+         </select>
+       </div>
+ 
+-      <div id="reviews-list" class="space-y-4 mb-6"></div>
+-      <div id="reviews-pagination" class="flex gap-2 justify-center mb-8"></div>
++      <div id="reviews-list" class="mb-4"></div>
++      <div id="reviews-pagination" class="d-flex gap-2 justify-content-center mb-5"></div>
+ 
+       <!-- Formulario para agregar comentario -->
+-      <div class="border-t border-border-light dark:border-border-dark pt-6">
+-        <h3 class="text-xl font-bold mb-4 text-accent dark:text-text-dark-primary">Dejanos tu reseña</h3>
+-        <form id="review-form" class="space-y-4">
+-          <div>
+-            <label for="review-text"
+-              class="block text-sm font-medium mb-2 text-accent dark:text-text-dark-primary">Comentario</label>
+-            <textarea id="review-text" rows="4" required
+-              class="w-full px-4 py-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary placeholder:text-text-light-secondary dark:placeholder:text-text-dark-secondary focus:outline-none focus:ring-2 focus:ring-primary"
++      <div class="review-form-section">
++        <h3 class="h5 mb-3">Dejanos tu reseña</h3>
++        <form id="review-form">
++          <div class="mb-3">
++            <label for="review-text" class="form-label">Comentario</label>
++            <textarea id="review-text" rows="4" required class="form-control"
+               placeholder="Comparte tu experiencia con este producto..."></textarea>
+           </div>
+-          <div>
+-            <label for="review-score"
+-              class="block text-sm font-medium mb-2 text-accent dark:text-text-dark-primary">Puntaje</label>
+-            <select id="review-score"
+-              class="w-full px-4 py-3 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-accent dark:text-text-dark-primary focus:outline-none focus:ring-2 focus:ring-primary">
+-              <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+-              <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+-              <option value="3">⭐⭐⭐ Bueno</option>
+-              <option value="2">⭐⭐ Regular</option>
+-              <option value="1">⭐ Malo</option>
+-            </select>
++          <div class="mb-3">
++            <label for="review-score" class="form-label">Puntaje</label>
++            <input type="hidden" id="review-score" name="review-score" value="5">
++            <div id="review-score-control" class="star-input" aria-hidden="false" role="radiogroup" aria-label="Puntaje">
++              <button type="button" class="star-btn" data-value="1" aria-label="1 estrella"><span class="star star-empty">★</span></button>
++              <button type="button" class="star-btn" data-value="2" aria-label="2 estrellas"><span class="star star-empty">★</span></button>
++              <button type="button" class="star-btn" data-value="3" aria-label="3 estrellas"><span class="star star-empty">★</span></button>
++              <button type="button" class="star-btn" data-value="4" aria-label="4 estrellas"><span class="star star-empty">★</span></button>
++              <button type="button" class="star-btn" data-value="5" aria-label="5 estrellas"><span class="star star-empty">★</span></button>
++            </div>
+           </div>
+-          <button type="submit"
+-            class="w-full sm:w-auto px-8 py-3 rounded-lg bg-primary text-accent font-bold hover:bg-primary/90 transition-colors">
+-            Publicar Reseña
+-          </button>
++          <button type="submit" class="btn btn-primary">Publicar Reseña</button>
+         </form>
+       </div>
+     </div>
++
++    <!-- Productos Relacionados -->
++    <div>
++      <h2 class="section-title">Quizás te interese</h2>
++      <div id="interes" class="row g-3"></div>
++    </div>
+   </main>
+ 
+-  <footer class="text-text-light-secondary dark:text-text-dark-secondary py-8 mt-12">
+-    <div class="container mx-auto px-4">
++  <footer class="text-muted mt-5">
++    <div class="container">
+       <p class="float-end">
+-        <a href="#" class="hover:text-primary transition-colors">Volver arriba</a>
++        <a href="#">Volver arriba</a>
+       </p>
+-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+-          class="hover:text-primary transition-colors">Jovenes a Programar</a></p>
++      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+     </div>
+   </footer>
+ 
+@@ -150,9 +107,10 @@
+     </div>
+   </div>
+ 
++  <script src="js/bootstrap.bundle.min.js"></script>
+   <script src="js/init.js"></script>
+-  <script src="js/nav.js"></script>
+   <script src="js/product-info.js"></script>
++  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="js/dark-mode.js"></script>
+ </body>
+ 
+diff --git a/registro.html b/registro.html
+index 90cbb9e..1c4de63 100644
+--- a/registro.html
++++ b/registro.html
+@@ -2,73 +2,92 @@
+ <html lang="es">
+ 
+ <head>
+-    <meta charset="utf-8">
++    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <title>eMercado - Registro</title>
+ 
+-    <!-- Google Fonts -->
++    <link href="css/bootstrap.min.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+-
+-    <!-- Bootstrap CSS -->
+-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+-
+-    <!-- CSS Registro -->
+     <link href="css/stylesRegistro.css" rel="stylesheet">
+-
+-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
++    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+ </head>
+ 
+ <body>
+-    <header>
+-        <a href="index.html" class="header-link d-flex align-items-center">
+-            <img src="img/Logo.png" alt="Logo" class="logo-header">
+-            <span>Inicio</span>
+-        </a>
+-    </header>
+-
+-    <main class="container py-4 d-flex justify-content-center align-items-center">
+-        <div class="registro-container row w-100 justify-content-center">
+-
+-            <!-- Lado izquierdo: logo y titulo -->
+-            <div
+-                class="form-left col-12 col-md-5 d-flex flex-column align-items-center align-items-md-start text-center text-md-start mb-4 mb-md-0">
+-                <img src="img/Logo.png" alt="Logo" class="logo mb-3">
+-                <h2>Crear una cuenta</h2>
+-                <p>Ingresa tus datos</p>
++    <header class="container-fluid py-2" id="header">
++        <nav class="navbar container" id="navbar">
++            <div class="d-flex align-items-center ms-auto">
++                <button class="material-symbols-outlined theme-toggle" id="theme" aria-label="Cambiar tema">light_mode</button>
+             </div>
++        </nav>
++    </header>
+ 
+-            <!-- Lado derecho: formulario -->
+-            <form id="registroForm" action="" novalidate class="form-right col-12 col-md-7">
+-                <div class="input-group mb-3">
+-                    <input type="text" id="nombreyapellido" name="nombreyapellido" required autocomplete="name">
+-                    <label for="nombreyapellido">Nombre y apellido</label>
+-                </div>
+-
+-                <div class="input-group mb-3">
+-                    <input type="text" id="usuario" name="usuario" required autocomplete="username">
+-                    <label for="usuario">Usuario</label>
+-                </div>
+-
+-                <div class="input-group mb-3">
+-                    <input type="text" id="correo" name="correo" required autocomplete="email">
+-                    <label for="correo">Correo</label>
+-                </div>
+-
+-                <div class="input-group mb-3">
+-                    <input type="password" id="pass1" name="contraseña" required autocomplete="new-password">
+-                    <label for="pass1">Contraseña</label>
++    <main class="container d-flex justify-content-center align-items-center py-5">
++        <div class="registro-wrapper">
++            <div class="registro-container">
++                <!-- Lado izquierdo: formulario -->
++                <div class="form-left">
++                    <a href="login.html" class="back-link">
++                        <span class="material-symbols-outlined">arrow_back</span> Volver
++                    </a>
++                    <h1 class="registro-title">Crea tu Cuenta</h1>
++                    
++                    <form id="registroForm" action="" novalidate>
++                        <div class="form-row">
++                            <div class="form-group">
++                                <label for="nombre">Nombre</label>
++                                <input type="text" id="nombre" name="nombre" placeholder="Introduce tu nombre" required autocomplete="given-name">
++                            </div>
++                            <div class="form-group">
++                                <label for="apellido">Apellido</label>
++                                <input type="text" id="apellido" name="apellido" placeholder="Introduce tu apellido" required autocomplete="family-name">
++                            </div>
++                        </div>
++
++                        <div class="form-group">
++                            <label for="usuario">Nombre de Usuario</label>
++                            <input type="text" id="usuario" name="usuario" placeholder="Elige un nombre de usuario único" required autocomplete="username">
++                        </div>
++
++                        <div class="form-group">
++                            <label for="correo">Correo Electrónico</label>
++                            <input type="email" id="correo" name="correo" placeholder="tu@email.com" required autocomplete="email">
++                        </div>
++
++                        <div class="form-group">
++                            <label for="pass1">Contraseña</label>
++                            <div class="password-container">
++                                <input type="password" id="pass1" name="contraseña" placeholder="Crea una contraseña segura" required autocomplete="new-password">
++                                <button type="button" class="material-symbols-outlined toggle-password" id="togglePassword1" aria-label="Mostrar contraseña">visibility</button>
++                            </div>
++                        </div>
++
++                        <div class="form-group">
++                            <label for="pass2">Confirmar Contraseña</label>
++                            <div class="password-container">
++                                <input type="password" id="pass2" name="contraseña" placeholder="Vuelve a escribir la contraseña" required autocomplete="new-password">
++                                <button type="button" class="material-symbols-outlined toggle-password" id="togglePassword2" aria-label="Mostrar contraseña">visibility</button>
++                            </div>
++                        </div>
++
++                        <button type="submit" class="btn-registrar">Crear cuenta</button>
++                        
++                        <div class="terms-container">
++                            <p>Al crear una cuenta, aceptas nuestros <a href="#">Términos y Condiciones</a> y <a href="#">Política de Privacidad</a>.</p>
++                        </div>
++
++                        <div class="login-container">
++                            <span class="login-text">¿Ya tienes una cuenta? </span>
++                            <a href="login.html" class="login-link">Inicia sesión</a>
++                        </div>
++                    </form>
+                 </div>
+ 
+-                <div class="input-group mb-3">
+-                    <input type="password" id="pass2" name="contraseña" required autocomplete="new-password">
+-                    <label for="pass2">Confirmar contraseña</label>
++                <!-- Lado derecho: imagen del gato -->
++                <div class="form-right">
++                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-whRn0WTdk8DOPcR-4mR9CSS8M3y6VQXus2olqzpffFxlHRJgZVhfo97kxg5fpyn8ZE2lAWP-UFUOX1_6TjPOzCw_XOvfCjgU1501a7eS0iN2jJXCucqho2dBhaQ8LmPmnd1qdINA2-wsTWotaArwo4mqMajexEdx2LgvDoDfcarx8-XApWgHywxXdpWcd8S0h3WzQ__bxKjXbZ9SzYGATYlMLlhgRMSURdG6lV8cL3L0Hzt5NbaYXCN3qKnpPn1iS1hFwqNG86W4"
++                    alt="Gato" class="cat-image">
+                 </div>
+-
+-            <div class="btn-containerr d-flex justify-content-end mt-3 gap-2">
+-                <button type="button" class="btn-registrar">Crear cuenta</button>
+-                <button type="button" id="btnVolver" class="btn-volver">Volver</button>
+             </div>
+-            </form>
+-
+         </div>
+     </main>
+ 
+@@ -77,16 +96,14 @@
+             <p class="float-end">
+                 <a href="#">Volver arriba</a>
+             </p>
+-            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a
+-                    Programar</a></p>
++            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+         </div>
+     </footer>
+-
+-    <!-- Bootstrap JS -->
+-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+-
+-    <!-- JS -->
++    
++    <script src="js/bootstrap.bundle.min.js"></script>
+     <script src="js/registro.js"></script>
++    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
++    <script src="js/dark-mode.js"></script>
+ </body>
+ 
+ </html>
+\ No newline at end of file
