@@ -7,152 +7,205 @@
     <title>eMercado - Todo lo que busques está aquí</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="css/products.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
 
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#f1e7f3",
+                        accent: "#190d1b",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2530",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "contrast-light": "#111417",
+                        "contrast-dark": "#ffffff",
+                        "muted-light": "#647587",
+                        "muted-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "Raleway", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+    </style>
+
+    <!-- TUS ESTILOS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg p-1" id="navbar">
-
+<body class="bg-background-light dark:bg-background-dark font-display text-contrast-light dark:text-contrast-dark">
+    <nav class="navbar p-1" id="navbar" style="padding: 0%; display: block;">
     </nav>
 
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+        <!-- Título de categoría -->
+        <div class="mb-8">
+            <h2 class="text-4xl font-bold mb-2 text-accent dark:text-contrast-dark" id="category-title">Productos</h2>
+            <p class="text-accent/70 dark:text-muted-dark" id="category-description">
+                Encuentra los mejores productos al mejor precio
+            </p>
+        </div>
 
-    <main class="pb-5">
-        <div class="container">
-            <div class="row mt-2">
-                <div class="col-lg-12 mb-2 d-block d-md-none text-center" id="movile-produtcs">
-                    <div class="row g-2">
-                        <!-- Botón con dropdown, filtros de costo y mejor a peor -->
-                        <div class="col-6">
-                            <div class="btn-group w-100">
-                                <button type="button" class="btn btn-sm dropdown-toggle w-100" data-bs-toggle="dropdown"
-                                    aria-expanded="false" id="dropdownButton">
-                                    Ordenar por
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Costo: Alto a Bajo</a></li>
-                                    <li><a class="dropdown-item" href="#">Costo: Bajo a Alto</a></li>
-                                    <li><a class="dropdown-item" href="#">Opiniones: Mejor a Peor</a></li>
-                                    <li><a class="dropdown-item" href="#">Opiniones: Peor a Mejor</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-
-                        <!-- Botón que abre el modal -->
-                        <div class="col-6">
-                            <button type="button" class="btn btn-sm w-100" data-bs-toggle="modal"
-                                data-bs-target="#miModal">
-                                Abrir Modal
-                            </button>
-                        </div>
-                    </div>
+        <!-- Barra de búsqueda y filtros sticky -->
+        <div class="top-20 bg-background-light dark:bg-background-dark py-4 z-10 -mx-4 px-4 sm:mx-0 sm:px-0">
+            <!-- Buscador -->
+            <div class="relative mb-6">
+                <input id="buscador"
+                    class="w-full h-12 pl-12 pr-4 rounded-lg bg-surface-light dark:bg-surface-dark border border-primary/20 dark:border-surface-dark/50 focus:ring-2 focus:ring-primary focus:outline-none text-accent dark:text-contrast-dark placeholder:text-accent/50 dark:placeholder:text-muted-dark"
+                    placeholder="Buscar por nombre o descripción..." type="text" />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-accent/60 dark:text-muted-dark">
+                    <span class="material-symbols-outlined">search</span>
                 </div>
-
-
-                <!-- ASIDE con filtros -->
-                <aside class="col-md-3 mb-4 d-none d-md-block">
-                    <div class="filters p-3 rounded" style="min-height: 400px;" id="aside">
-                        <h5 class="fw-bold mb-3">Filtros</h5>
-
-                        <!-- Condición, filtro de nuevo, reacondicionado o usado-->
-                        <div class="mb-3">
-                            <h6>Condición</h6>
-                            <div>
-                                <input type="checkbox" id="cond-nuevo" value="nuevo"> <label
-                                    for="cond-nuevo">Nuevo</label><br>
-                                <input type="checkbox" id="cond-reacond" value="reacondicionado"> <label
-                                    for="cond-reacond">Reacondicionado</label><br>
-                                <input type="checkbox" id="cond-usado" value="usado"> <label
-                                    for="cond-usado">Usado</label>
-                            </div>
-                        </div>
-
-                        <!-- Precio, de mayor a menor -->
-                        <div class="mb-3">
-                            <h6>Precio</h6>
-                            <input type="number" id="precio-min" class="form-control mb-2" placeholder="Mínimo">
-                            <input type="number" id="precio-max" class="form-control mb-2" placeholder="Máximo">
-                        </div>
-
-                        <!-- Relevancia (respecto a cantidad de ventas) -->
-                        <div class="mb-3">
-                            <h6>Ordenar por</h6>
-                            <select id="ordenar" class="form-select">
-                                <option value="relevancia">Relevancia</option>
-                                <option value="precio-asc">Precio: menor a mayor</option>
-                                <option value="precio-desc">Precio: mayor a menor</option>
-                                <option value="nombre-asc">Nombre A-Z</option>
-                                <option value="nombre-desc">Nombre Z-A</option>
-                            </select>
-                        </div>
-
-                        <!-- Tiempo de entrega -->
-                        <div class="mb-3">
-                            <h6>Tiempo de entrega</h6>
-                            <select id="entrega" class="form-select">
-                                <option value="">Cualquiera</option>
-                                <option value="24">24h</option>
-                                <option value="48">48h</option>
-                                <option value="72">72h o más</option>
-                            </select>
-                        </div>
-
-                        <!-- En stock(los productos) -->
-                        <div class="mb-3">
-                            <h6>Disponibilidad</h6>
-                            <input type="checkbox" id="stock" value="en-stock"> <label for="stock">En stock</label>
-                        </div>
-
-                        <!-- Botones -->
-                        <div class="d-grid gap-2">
-                            <button id="aplicar-filtros" class="btn btn-primary">Aplicar</button>
-                            <button id="limpiar-filtros" class="btn btn-secondary">Limpiar</button>
-                        </div>
-                    </div>
-                </aside>
-                <div class="col-md-9">
-
-                    <!-- Barra Buscadora, tiene en cuenta los filtros -->
-                    <div class="mb-3">
-                        <input type="search" id="buscador" class="form-control" placeholder="Buscar productos...">
-                    </div>
-
-                    <div class="row" id="product-list-container">
-                        <!-- Esto se rellena con JS -->
-                    </div>
-                </div>
-                <!-- LISTA DE PRODUCTOS -->
-                <div class="col-md-9">
-                    <div class="row" id="product-list-container">
-
-                        <!-- esto se rellena en el js -->
-
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Filtros en chips -->
+            <div class="flex flex-wrap gap-3">
+                <!-- Dropdown de Condición -->
+                <div class="relative">
+                    <button id="btn-condicion"
+                        class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-primary/10 dark:hover:bg-surface-dark/50 text-accent dark:text-contrast-dark border border-primary/20 dark:border-transparent">
+                        Condición
+                        <span class="material-symbols-outlined text-base">expand_more</span>
+                    </button>
+                    <div id="dropdown-condicion"
+                        class="hidden absolute top-full mt-2 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-4 min-w-[200px] z-20 border border-primary/20 dark:border-surface-dark">
+                        <label class="flex items-center gap-2 mb-2 cursor-pointer text-accent dark:text-contrast-dark">
+                            <input type="checkbox" id="cond-nuevo" value="nuevo" class="rounded accent-primary">
+                            <span class="text-sm">Nuevo</span>
+                        </label>
+                        <label class="flex items-center gap-2 mb-2 cursor-pointer text-accent dark:text-contrast-dark">
+                            <input type="checkbox" id="cond-reacond" value="reacondicionado"
+                                class="rounded accent-primary">
+                            <span class="text-sm">Reacondicionado</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer text-accent dark:text-contrast-dark">
+                            <input type="checkbox" id="cond-usado" value="usado" class="rounded accent-primary">
+                            <span class="text-sm">Usado</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Dropdown de Precio -->
+                <div class="relative">
+                    <button id="btn-precio"
+                        class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-primary/10 dark:hover:bg-surface-dark/50 text-accent dark:text-contrast-dark border border-primary/20 dark:border-transparent">
+                        Precio
+                        <span class="material-symbols-outlined text-base">expand_more</span>
+                    </button>
+                    <div id="dropdown-precio"
+                        class="hidden absolute top-full mt-2 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-4 min-w-[200px] z-20 border border-primary/20 dark:border-surface-dark">
+                        <input type="number" id="precio-min"
+                            class="w-full mb-2 px-3 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-primary/20 dark:border-surface-dark/50 text-sm text-accent dark:text-contrast-dark placeholder:text-accent/50 dark:placeholder:text-muted-dark"
+                            placeholder="Mínimo">
+                        <input type="number" id="precio-max"
+                            class="w-full px-3 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-primary/20 dark:border-surface-dark/50 text-sm text-accent dark:text-contrast-dark placeholder:text-accent/50 dark:placeholder:text-muted-dark"
+                            placeholder="Máximo">
+                    </div>
+                </div>
+
+                <!-- Checkbox En Stock -->
+                <label
+                    class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-primary/10 dark:hover:bg-surface-dark/50 cursor-pointer text-accent dark:text-contrast-dark border border-primary/20 dark:border-transparent">
+                    <span class="material-symbols-outlined text-base">inventory_2</span>
+                    <input type="checkbox" id="stock" value="en-stock" class="rounded accent-primary">
+                    En Stock
+                </label>
+
+                <!-- Dropdown Tiempo de Entrega -->
+                <div class="relative">
+                    <button id="btn-entrega"
+                        class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-primary/10 dark:hover:bg-surface-dark/50 text-accent dark:text-contrast-dark border border-primary/20 dark:border-transparent">
+                        Tiempo de Entrega
+                        <span class="material-symbols-outlined text-base">expand_more</span>
+                    </button>
+                    <div id="dropdown-entrega"
+                        class="hidden absolute top-full mt-2 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-4 min-w-[180px] z-20 border border-primary/20 dark:border-surface-dark">
+                        <select id="entrega"
+                            class="w-full px-3 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-primary/20 dark:border-surface-dark/50 text-sm text-accent dark:text-contrast-dark">
+                            <option value="">Cualquiera</option>
+                            <option value="24">24h</option>
+                            <option value="48">48h</option>
+                            <option value="72">72h o más</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex-grow"></div>
+
+                <!-- Dropdown Ordenar -->
+                <div class="relative">
+                    <button id="btn-ordenar"
+                        class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-primary/10 dark:hover:bg-surface-dark/50 text-accent dark:text-contrast-dark border border-primary/20 dark:border-transparent">
+                        <span id="ordenar-text">Ordenar por: Relevancia</span>
+                        <span class="material-symbols-outlined text-base">expand_more</span>
+                    </button>
+                    <div id="dropdown-ordenar"
+                        class="hidden absolute top-full mt-2 right-0 bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-2 min-w-[220px] z-20 border border-primary/20 dark:border-surface-dark">
+                        <button data-value="relevancia"
+                            class="w-full text-left px-3 py-2 rounded hover:bg-primary/20 dark:hover:bg-background-dark text-sm text-accent dark:text-contrast-dark">Relevancia</button>
+                        <button data-value="precio-asc"
+                            class="w-full text-left px-3 py-2 rounded hover:bg-primary/20 dark:hover:bg-background-dark text-sm text-accent dark:text-contrast-dark">Precio:
+                            menor a mayor</button>
+                        <button data-value="precio-desc"
+                            class="w-full text-left px-3 py-2 rounded hover:bg-primary/20 dark:hover:bg-background-dark text-sm text-accent dark:text-contrast-dark">Precio:
+                            mayor a menor</button>
+                        <button data-value="nombre-asc"
+                            class="w-full text-left px-3 py-2 rounded hover:bg-primary/20 dark:hover:bg-background-dark text-sm text-accent dark:text-contrast-dark">Nombre
+                            A-Z</button>
+                        <button data-value="nombre-desc"
+                            class="w-full text-left px-3 py-2 rounded hover:bg-primary/20 dark:hover:bg-background-dark text-sm text-accent dark:text-contrast-dark">Nombre
+                            Z-A</button>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <button id="aplicar-filtros"
+                    class="px-4 py-2 rounded-full text-sm font-bold bg-primary text-accent hover:bg-primary/90">
+                    Aplicar
+                </button>
+                <button id="limpiar-filtros"
+                    class="px-4 py-2 rounded-full text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-primary/10 dark:hover:bg-surface-dark/50 text-accent dark:text-contrast-dark border border-primary/20 dark:border-transparent">
+                    Limpiar
+                </button>
+            </div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mt-8"
+            id="product-list-container">
+            <!-- Los productos se cargan aquí dinámicamente -->
         </div>
     </main>
 
-
-    <footer class="text-muted">
-        <div class="container">
+    <footer class="text-accent/60 dark:text-muted-dark py-8">
+        <div class="container mx-auto px-4">
             <p class="float-end">
-                <a href="#">Volver arriba</a>
+                <a href="#" class="hover:text-primary">Volver arriba</a>
             </p>
-            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a
-                    Programar</a>
-            </p>
+            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+                    class="hover:text-primary">Jovenes a Programar</a></p>
         </div>
     </footer>
+
     <div id="spinner-wrapper">
         <div class="lds-ring">
             <div></div>
@@ -162,106 +215,6 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header d-flex justify-content-between align-items-center">
-                    <!-- Botón cerrar a la izquierda -->
-                    <button type="button" class="btnExit" data-bs-dismiss="modal" aria-label="Cerrar">
-                        <i class="bi bi-caret-left-fill"></i>
-                    </button>
-
-                    <!-- Título centrado -->
-                    <h5 class="modal-title mx-auto" id="miModalLabel">Filtros</h5>
-                </div>
-
-                <div class="modal-body">
-                    <!-- Precio -->
-                    <h6 class="fw-bold mt-3">Precio</h6>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="precio200">
-                        <label class="form-check-label" for="precio200">Inferior a $200</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="precio500">
-                        <label class="form-check-label" for="precio500">Inferior a $500</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="precio1000">
-                        <label class="form-check-label" for="precio1000">Inferior a $1000</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="precio3000">
-                        <label class="form-check-label" for="precio3000">Inferior a $3000</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="precioSup3000">
-                        <label class="form-check-label" for="precioSup3000">Superior a $3000</label>
-                    </div>
-
-                    <!-- Ofertas -->
-                    <h6 class="fw-bold mt-3">Ofertas</h6>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="descuentos">
-                        <label class="form-check-label" for="descuentos">Todos los descuentos</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="ofertasdia">
-                        <label class="form-check-label" for="ofertasdia">Ofertas del día</label>
-                    </div>
-
-                    <!-- Opiniones -->
-                    <h6 class="fw-bold mt-3">Opiniones de usuarios</h6>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="op5">
-                        <label class="form-check-label" for="op5">5 estrellas</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="op4">
-                        <label class="form-check-label" for="op4">4 estrellas</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="reseñas">
-                        <label class="form-check-label" for="reseñas">Muchas reseñas</label>
-                    </div>
-
-                    <!-- Color -->
-                    <h6 class="fw-bold mt-3">Color</h6>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rojo">
-                        <label class="form-check-label" for="rojo">Rojo</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="azul">
-                        <label class="form-check-label" for="azul">Azul</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="verde">
-                        <label class="form-check-label" for="verde">Verde</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="rosa">
-                        <label class="form-check-label" for="rosa">Rosa</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="negro">
-                        <label class="form-check-label" for="negro">Negro</label>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn w-100 text-center" data-bs-dismiss="modal">Aplicar filtros</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/products.js"></script>
     <script src="js/nav.js"></script>

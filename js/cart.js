@@ -8,12 +8,7 @@ let descuentoAplicado = 0;
 let costoEnvioPorcentaje = 0.05;
 let direccionGuardada = JSON.parse(localStorage.getItem("direccionPredeterminada")) || null;
 
-// Modal
-const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
 let metodoSeleccionado = null;
-
-// Tooltip
-let tooltipInstance = null;
 
 // ============================================================
 // DOMContentLoaded
@@ -22,13 +17,18 @@ document.addEventListener("DOMContentLoaded", function () {
   cargarTasaYActualizar();
   inicializarEventos();
   verificarBotonPagar();
-  actualizarTooltipDinamico(); // ← Ejecutar al inicio
 
-  // Escuchar cambios
-  document.getElementById("shipping-form").addEventListener("submit", actualizarTooltipDinamico);
-  document.querySelectorAll('input[name="shipping"]').forEach(radio => {
-    radio.addEventListener("change", actualizarTooltipDinamico);
-  });
+  if (direccionGuardada) {
+    rellenarFormularioDireccion(direccionGuardada);
+    mostrarOpcionesEnvio();
+    mostrarCheckDireccion();
+    verificarBotonPagar();
+    // Abrir automáticamente si hay dirección guardada
+    const addressContent = document.getElementById("address-content");
+    const addressIcon = document.getElementById("address-icon");
+    if (addressContent) addressContent.classList.remove("hidden");
+    if (addressIcon) addressIcon.style.transform = "rotate(180deg)";
+  }
 });
 
 // ============================================================
@@ -46,15 +46,12 @@ function inicializarEventos() {
     });
   });
 
-  if (direccionGuardada) {
-    rellenarFormularioDireccion(direccionGuardada);
-    mostrarOpcionesEnvio();
-    verificarBotonPagar();
-  }
-
-  document.getElementById("checkout-button").addEventListener("click", () => {
-    paymentModal.show();
-    mostrarFormularioPago("redes");
+  // Modal
+  document.getElementById("checkout-button").addEventListener("click", abrirModal);
+  document.getElementById("close-modal").addEventListener("click", cerrarModal);
+  document.getElementById("cancel-payment").addEventListener("click", cerrarModal);
+  document.getElementById("payment-modal-backdrop").addEventListener("click", (e) => {
+    if (e.target.id === "payment-modal-backdrop") cerrarModal();
   });
 
   document.querySelectorAll('input[name="payment"]').forEach(radio => {
@@ -62,34 +59,41 @@ function inicializarEventos() {
   });
 
   document.getElementById("confirm-payment").addEventListener("click", confirmarPago);
+
+  // Toggle dirección
+  const addressToggle = document.getElementById("address-toggle");
+  const addressContent = document.getElementById("address-content");
+  const addressIcon = document.getElementById("address-icon");
+
+  if (addressToggle && addressContent && addressIcon) {
+    addressToggle.addEventListener("click", () => {
+      const isHidden = addressContent.classList.contains("hidden");
+
+      if (isHidden) {
+        addressContent.classList.remove("hidden");
+        addressIcon.style.transform = "rotate(180deg)";
+      } else {
+        addressContent.classList.add("hidden");
+        addressIcon.style.transform = "rotate(0deg)";
+      }
+    });
+  }
+
+  // Inicializar formulario de pago por defecto
+  mostrarFormularioPago("redes");
 }
 
 // ============================================================
-// TOOLTIP DINÁMICO - ARREGLADO
+// MODAL
 // ============================================================
-function actualizarTooltipDinamico() {
-  const wrapper = document.getElementById("checkout-wrapper");
-  const boton = document.getElementById("checkout-button");
+function abrirModal() {
+  document.getElementById("payment-modal-backdrop").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
 
-  if (!wrapper || !boton) return;
-
-  // Si el botón está deshabilitado → mostrar tooltip
-  if (boton.disabled) {
-    // Crear tooltip si no existe
-    if (!wrapper._tooltip) {
-      wrapper._tooltip = new bootstrap.Tooltip(wrapper, {
-        title: "Rellenar todos los campos y seleccionar método de envío para proceder",
-        placement: "top",
-        trigger: "hover focus"
-      });
-    }
-  } else {
-    // Si está habilitado → destruir tooltip
-    if (wrapper._tooltip) {
-      wrapper._tooltip.dispose();
-      wrapper._tooltip = null;
-    }
-  }
+function cerrarModal() {
+  document.getElementById("payment-modal-backdrop").classList.add("hidden");
+  document.body.style.overflow = "";
 }
 
 // ============================================================
@@ -129,9 +133,11 @@ async function actualizarSubtotal() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
-    subtotalElem.innerHTML = `<p class="text-muted mb-1">Subtotal</p><p class="fs-5 fw-bold">UYU 0</p>`;
+    subtotalElem.innerHTML = `
+      <p class="text-sm mb-1 text-text-light-secondary dark:text-text-dark-secondary">Subtotal</p>
+      <p class="text-2xl font-bold text-accent dark:text-text-dark-primary">UYU 0</p>
+    `;
     shippingCostElem.textContent = "Indefinido";
-    shippingCostElem.className = "fw-bold text-muted";
     return;
   }
 
@@ -159,38 +165,35 @@ async function actualizarSubtotal() {
   }
 
   let costoEnvioUYU = 0;
-  const tipoEnvio = document.querySelector('#shipping-options input[name="shipping"]:checked');
+  const tipoEnvio = document.querySelector('input[name="shipping"]:checked');
   if (direccionGuardada && tipoEnvio) {
     costoEnvioUYU = subtotalUYU * costoEnvioPorcentaje;
     subtotalUYU += costoEnvioUYU;
   }
 
-  let html = `<p class="text-muted mb-1">Subtotal</p>`;
+  let html = `<p class="text-sm mb-1 text-text-light-secondary dark:text-text-dark-secondary">Subtotal</p>`;
   if (tieneUSD && tieneUYU) {
     html += `
-      <p class="fs-5 fw-bold">USD ${subtotalUSD.toLocaleString('es-UY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-      <p class="fs-5 fw-bold">UYU ${Math.round(subtotalUYU).toLocaleString('es-UY')}</p>
-      <p class="text-muted small">1 USD = ${tasaUSDToUYU.toLocaleString('es-UY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} UYU</p>`;
+      <p class="text-2xl font-bold text-accent dark:text-text-dark-primary">USD ${subtotalUSD.toLocaleString('es-UY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+      <p class="text-2xl font-bold text-accent dark:text-text-dark-primary">UYU ${Math.round(subtotalUYU).toLocaleString('es-UY')}</p>
+      <p class="text-xs text-text-light-secondary dark:text-text-dark-secondary mt-1">1 USD = ${tasaUSDToUYU.toLocaleString('es-UY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} UYU</p>`;
   } else if (tieneUSD) {
-    html += `<p class="fs-5 fw-bold">USD ${subtotalUSD.toLocaleString('es-UY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>`;
+    html += `<p class="text-2xl font-bold text-accent dark:text-text-dark-primary">USD ${subtotalUSD.toLocaleString('es-UY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>`;
   } else if (tieneUYU) {
-    html += `<p class="fs-5 fw-bold">UYU ${Math.round(subtotalUYU).toLocaleString('es-UY')}</p>`;
+    html += `<p class="text-2xl font-bold text-accent dark:text-text-dark-primary">UYU ${Math.round(subtotalUYU).toLocaleString('es-UY')}</p>`;
   }
 
   if (costoEnvioUYU > 0) {
     const porcentaje = (costoEnvioPorcentaje * 100).toFixed(0);
-    html += `<p class="text-muted small">+ Envío (${porcentaje}%): UYU ${Math.round(costoEnvioUYU).toLocaleString('es-UY')}</p>`;
+    html += `<p class="text-xs text-text-light-secondary dark:text-text-dark-secondary mt-1">+ Envío (${porcentaje}%): UYU ${Math.round(costoEnvioUYU).toLocaleString('es-UY')}</p>`;
   }
 
   subtotalElem.innerHTML = html;
 
   if (costoEnvioUYU > 0) {
-    let total = costoEnvioUYU + subtotalUYU;
-    shippingCostElem.textContent = `UYU ${Math.round(total).toLocaleString('es-UY')}`;
-    shippingCostElem.className = "fw-bold text-success fs-4";
+    shippingCostElem.textContent = `UYU ${Math.round(costoEnvioUYU).toLocaleString('es-UY')}`;
   } else {
     shippingCostElem.textContent = "Indefinido";
-    shippingCostElem.className = "fw-bold text-muted";
   }
 }
 
@@ -210,18 +213,20 @@ function aplicarCupon() {
   if (CUPONES_VALIDOS[input]) {
     descuentoAplicado = CUPONES_VALIDOS[input];
     mensaje.textContent = `¡Cupón aplicado! -${(descuentoAplicado * 100).toFixed(0)}%`;
-    mensaje.className = "text-success small";
+    mensaje.className = "text-sm text-green-600 dark:text-green-400";
+    mensaje.classList.remove("hidden");
   } else {
     descuentoAplicado = 0;
     mensaje.textContent = "Cupón inválido";
-    mensaje.className = "text-danger small";
+    mensaje.className = "text-sm text-red-600 dark:text-red-400";
+    mensaje.classList.remove("hidden");
   }
   document.getElementById("coupon-input").value = "";
   actualizarSubtotal();
 }
 
 // ============================================================
-// DIRECCIÓN + CHECK VERDE
+// DIRECCIÓN
 // ============================================================
 function manejarEnvio(e) {
   e.preventDefault();
@@ -238,10 +243,8 @@ function manejarEnvio(e) {
     if (!input.value.trim()) {
       alert(`Por favor, completa el campo: ${campo.nombre}`);
       input.focus();
-      input.classList.add("is-invalid");
       valido = false;
-    } else {
-      input.classList.remove("is-invalid");
+      break;
     }
   }
   if (!valido) return;
@@ -267,9 +270,9 @@ function manejarEnvio(e) {
 
 function mostrarCheckDireccion() {
   const boton = document.querySelector("#shipping-form button[type='submit']");
-  boton.innerHTML = `Dirección confirmada <i class="bi bi-check-circle-fill text-success ms-2"></i>`;
-  boton.classList.remove("btn-primary");
-  boton.classList.add("btn-success");
+  boton.innerHTML = `Dirección confirmada <span class="material-symbols-outlined ml-2">check_circle</span>`;
+  boton.classList.remove("bg-primary", "hover:bg-primary/90");
+  boton.classList.add("bg-green-500", "hover:bg-green-600", "text-white");
   boton.disabled = true;
 }
 
@@ -282,7 +285,9 @@ function rellenarFormularioDireccion(dir) {
 }
 
 function mostrarOpcionesEnvio() {
-  document.getElementById("shipping-options").classList.remove("d-none");
+  const opciones = document.getElementById("shipping-options");
+  opciones.classList.remove("hidden");
+  opciones.classList.add("flex");
 }
 
 // ============================================================
@@ -290,20 +295,25 @@ function mostrarOpcionesEnvio() {
 // ============================================================
 function verificarBotonPagar() {
   const boton = document.getElementById("checkout-button");
-  const tipoEnvio = document.querySelector('#shipping-options input[name="shipping"]:checked');
+  const tipoEnvio = document.querySelector('input[name="shipping"]:checked');
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (direccionGuardada && tipoEnvio) {
+  if (cart.length === 0) {
+    boton.disabled = true;
+    boton.classList.remove("bg-primary", "hover:bg-primary/90", "text-accent");
+    boton.classList.add("bg-accent/20", "dark:bg-text-dark-secondary/20", "text-accent/50", "dark:text-text-dark-secondary");
+    boton.textContent = "Carrito vacío";
+  } else if (direccionGuardada && tipoEnvio) {
     boton.disabled = false;
-    boton.classList.remove("btn-secondary");
-    boton.classList.add("btn-warning");
+    boton.classList.remove("bg-accent/20", "dark:bg-text-dark-secondary/20", "text-accent/50", "dark:text-text-dark-secondary");
+    boton.classList.add("bg-primary", "hover:bg-primary/90", "text-accent");
+    boton.textContent = "Continuar con la Compra";
   } else {
     boton.disabled = true;
-    boton.classList.remove("btn-warning");
-    boton.classList.add("btn-secondary");
+    boton.classList.remove("bg-primary", "hover:bg-primary/90", "text-accent");
+    boton.classList.add("bg-accent/20", "dark:bg-text-dark-secondary/20", "text-accent/50", "dark:text-text-dark-secondary");
+    boton.textContent = "Complete dirección y envío";
   }
-
-  // FORZAR TOOLTIP
-  actualizarTooltipDinamico();
 }
 
 // ============================================================
@@ -316,58 +326,58 @@ function mostrarFormularioPago(metodo) {
 
   if (metodo === "redes") {
     html = `
-      <div class="card p-3">
-        <h6>Efectivo por redes de cobranza</h6>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">C.I.</label>
-            <input type="text" class="form-control" id="ci" placeholder="1.234.567-8" required>
+      <div class="rounded-xl bg-background-light dark:bg-background-dark p-4">
+        <h6 class="font-bold mb-3 text-accent dark:text-text-dark-primary">Efectivo por redes de cobranza</h6>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="col-span-2 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">C.I.</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="ci" placeholder="1.234.567-8" required>
           </div>
-          <div class="col-md-6">
-            <label class="form-label">Nombre y Apellido</label>
-            <input type="text" class="form-control" id="nombre-apellido" required>
+          <div class="col-span-2 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">Nombre y Apellido</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="nombre-apellido" required>
           </div>
         </div>
       </div>`;
   } else if (metodo === "tarjeta") {
     html = `
-      <div class="card p-3">
-        <h6>Tarjeta de crédito/débito</h6>
-        <div class="row g-3">
-          <div class="col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+      <div class="rounded-xl bg-background-light dark:bg-background-dark p-4">
+        <h6 class="font-bold mb-3 text-accent dark:text-text-dark-primary">Tarjeta de crédito/débito</h6>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="col-span-3">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">Número de tarjeta</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Vencimiento</label>
-            <input type="text" class="form-control" id="card-expiry" placeholder="MM/AA" maxlength="5" required>
+          <div class="col-span-3 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">Vencimiento</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="card-expiry" placeholder="MM/AA" maxlength="5" required>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">CVV</label>
-            <input type="text" class="form-control" id="card-cvv" placeholder="123" maxlength="4" required>
+          <div class="col-span-3 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">CVV</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="card-cvv" placeholder="123" maxlength="4" required>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Titular</label>
-            <input type="text" class="form-control" id="card-holder" required>
+          <div class="col-span-3 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">Titular</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="card-holder" required>
           </div>
         </div>
       </div>`;
   } else if (metodo === "transferencia") {
     html = `
-      <div class="card p-3">
-        <h6>Transferencia bancaria</h6>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Tipo de cuenta</label>
-            <select class="form-select" id="account-type" required>
+      <div class="rounded-xl bg-background-light dark:bg-background-dark p-4">
+        <h6 class="font-bold mb-3 text-accent dark:text-text-dark-primary">Transferencia bancaria</h6>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="col-span-2 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">Tipo de cuenta</label>
+            <select class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="account-type" required>
               <option value="">Seleccionar...</option>
               <option value="caja-ahorro">Caja de Ahorro</option>
               <option value="cuenta-corriente">Cuenta Corriente</option>
             </select>
           </div>
-          <div class="col-md-6">
-            <label class="form-label">Número de cuenta</label>
-            <input type="text" class="form-control" id="account-number" placeholder="1234567890" required>
+          <div class="col-span-2 sm:col-span-1">
+            <label class="block text-sm font-medium mb-1 text-accent dark:text-text-dark-primary">Número de cuenta</label>
+            <input type="text" class="w-full rounded-md border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-accent dark:text-text-dark-primary focus:border-primary focus:ring-primary/50" id="account-number" placeholder="1234567890" required>
           </div>
         </div>
       </div>`;
@@ -408,11 +418,16 @@ function confirmarPago() {
   }
 
   alert(`¡Pago confirmado por ${datos.metodo}!\n\n${Object.entries(datos).slice(1).map(([k, v]) => `${k}: ${v}`).join("\n")}`);
-  paymentModal.hide();
+  cerrarModal();
   localStorage.removeItem("cart");
   dibujarProductos();
   actualizarSubtotal();
   verificarBotonPagar();
+
+  // Actualizar contador del carrito en el nav
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 // ============================================================
@@ -426,6 +441,10 @@ function disminuirCantidad(i) {
   }
   dibujarProductos();
   actualizarSubtotal();
+
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 function aumentarCantidad(i) {
@@ -434,6 +453,10 @@ function aumentarCantidad(i) {
   localStorage.setItem("cart", JSON.stringify(cart));
   dibujarProductos();
   actualizarSubtotal();
+
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 function eliminarProducto(i) {
@@ -442,69 +465,53 @@ function eliminarProducto(i) {
   localStorage.setItem("cart", JSON.stringify(cart));
   dibujarProductos();
   actualizarSubtotal();
+  verificarBotonPagar();
+
+  if (typeof window.actualizarContadorCarrito === 'function') {
+    window.actualizarContadorCarrito();
+  }
 }
 
 function dibujarProductos() {
   const container = document.getElementById("cart-container");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  if (localStorage.getItem("cart") == "") {
-    console.log("alo")
-    container.innerHTML = `<div class="alert-secondary text-center p-4">No hay productos en el carrito.</div>`;
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-12">
+        <span class="material-symbols-outlined text-6xl text-text-light-secondary dark:text-text-dark-secondary mb-4">shopping_cart</span>
+        <p class="text-lg text-text-light-secondary dark:text-text-dark-secondary">No hay productos en el carrito</p>
+      </div>
+    `;
     return;
   }
 
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-
-
-  let tableMode = darkModeTable();
-
-  let tabla = `
-    <table class="tabla-productos table align-middle shadow-sm">
-      <thead id="product-table-head" class="${tableMode}">
-        <tr>
-          <th>Producto</th>
-          <th class="text-center">Cantidad</th>
-          <th class="text-end">Precio</th>
-          <th class="text-end">Total</th>
-          <th class="text-end"></th>
-        </tr>
-      </thead>
-      <tbody>`;
-
+  let html = "";
   cart.forEach((p, i) => {
     const total = p.cost * p.quantity;
-    tabla += `
-      <tr>
-        <td><img src="${p.image}" style="width:60px;height:60px;object-fit:cover;" class="me-2">${p.name}</td>
-        <td class="text-center">
-          <button onclick="disminuirCantidad(${i})" class="btn btn-sm btn-outline-secondary">-</button>
-          ${p.quantity}
-          <button onclick="aumentarCantidad(${i})" class="btn btn-sm btn-outline-secondary">+</button>
-        </td>
-        <td class="text-end">${p.currency} ${p.cost}</td>
-        <td class="text-end fw-semibold">${p.currency} ${total}</td>
-        <td class="text-center">
-          <button onclick="eliminarProducto(${i})" class="btn btn-sm btn-outline-danger">
-            <i class="fa-solid fa-trash"></i>
+    html += `
+      <div class="flex flex-col sm:flex-row gap-4 justify-between border-b border-border-light dark:border-border-dark pb-4 last:border-b-0 last:pb-0">
+        <div class="flex items-start gap-4">
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 sm:size-24 flex-shrink-0" style="background-image: url('${p.image}');"></div>
+          <div class="flex flex-1 flex-col justify-center gap-1">
+            <p class="text-base font-bold leading-normal text-accent dark:text-text-dark-primary">${p.name}</p>
+            <p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">Precio: ${p.currency} ${p.cost}</p>
+            <p class="text-sm font-medium leading-normal text-accent dark:text-text-dark-primary">Subtotal: ${p.currency} ${total}</p>
+          </div>
+        </div>
+        <div class="flex flex-row sm:flex-col items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button onclick="disminuirCantidad(${i})" class="text-lg font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-background-light dark:bg-background-dark cursor-pointer hover:bg-primary/20 hover:text-primary transition-colors text-accent dark:text-text-dark-primary">-</button>
+            <input class="text-base font-medium leading-normal w-8 p-0 text-center bg-transparent focus:outline-0 focus:ring-0 focus:border-none border-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-accent dark:text-text-dark-primary" type="number" value="${p.quantity}" readonly/>
+            <button onclick="aumentarCantidad(${i})" class="text-lg font-medium leading-normal flex h-8 w-8 items-center justify-center rounded-full bg-background-light dark:bg-background-dark cursor-pointer hover:bg-primary/20 hover:text-primary transition-colors text-accent dark:text-text-dark-primary">+</button>
+          </div>
+          <button onclick="eliminarProducto(${i})" class="flex h-8 w-8 cursor-pointer items-center justify-center text-text-light-secondary dark:text-text-dark-secondary hover:text-red-500 transition-colors">
+            <span class="material-symbols-outlined text-xl">delete</span>
           </button>
-        </td>
-      </tr>`;
+        </div>
+      </div>
+    `;
   });
 
-  tabla += `</tbody></table>`;
-  container.innerHTML = tabla;
-
+  container.innerHTML = html;
 }
-
-function darkModeTable() {
-  let mode = localStorage.getItem("dark");
-  if (mode == "true") {
-    tableMode = "table-dark";
-    console.log(tableMode)
-  } else {
-    tableMode = "table-light";
-    console.log(tableMode)
-  }
-  return tableMode;
-};
