@@ -501,10 +501,8 @@ function darkModeTable() {
   let mode = localStorage.getItem("dark");
   if (mode == "true") {
     tableMode = "table-dark";
-    console.log(tableMode)
   } else {
     tableMode = "table-light";
-    console.log(tableMode)
   }
   return tableMode;
 };

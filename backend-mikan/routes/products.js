@@ -4,30 +4,17 @@ const productsService = require('../services/products');
 
 //get de todos los productos
 router.get("/", (req, res, next) => {
-    res.json({
-        message: "Lista de productos",
-        status: "OK",
-        products: productsService.getAllProducts()
-    })
+    res.json(productsService.getAllProducts())
 })
 
 //get de un producto por id
 router.get("/:id", (req, res, next) => {
     const product = productsService.getProductById(req.params.id);
-    res.json({
-        message: "Producto encontrado",
-        status: "OK",
-        product: product
-    })
+    res.json(product)
 })
-
 //get de todos los productos por categoría
 router.get("/category/:cat", (req, res, next) => {
-    res.json({
-        message: `Lista de productos por ${req.params.cat}`,
-        status: "OK",
-        products: productsService.getProductByCategory(req.params.cat)
-    })
+    res.json(productsService.getProductByCategory(req.params.cat))
 })
 
 //post de un producto

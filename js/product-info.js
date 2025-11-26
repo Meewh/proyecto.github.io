@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Cargar producto =====
     function loadProduct(productId) {
-        fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
+        fetch(PRODUCT_INFO_URL + productId + EXT_TYPE)
             .then(resp => resp.json())
             .then(productData => {
                 renderProduct(productData);
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const categoryId = getCategoryId(productData.category);
         if (!categoryId) return;
 
-        fetch(`https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`)
+        fetch(PRODUCTS_URL + categoryId)
             .then(resp => resp.json())
             .then(data => {
                 let html = "";
@@ -340,7 +340,7 @@ document.addEventListener("click", async (e) => {
     if (!productId) return;
 
     try {
-        const resp = await fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`);
+        const resp = await fetch(PRODUCT_INFO_URL + productId + EXT_TYPE);
         const data = await resp.json();
 
         let cart = JSON.parse(localStorage.getItem("cart") || "[]");
