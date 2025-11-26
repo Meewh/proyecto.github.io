@@ -3,6 +3,7 @@ exports.getProductById = getProductById;
 exports.createProduct = createProduct;
 exports.updateProduct = updateProduct;
 exports.deleteProduct = deleteProduct;
+exports.getProductByCategory = getProductByCategory;
 
 const productsJSON = require('../mock_bd/products.json');
 
@@ -12,6 +13,11 @@ function getAllProducts() {
 
 function getProductById(id) {
     return productsJSON.find(product => product.id === id);
+}
+
+function getProductByCategory(cat) {
+    let category = require('../mock_bd/cats_products/' + cat + '.json');
+    return category;
 }
 
 function createProduct(product) {
