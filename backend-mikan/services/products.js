@@ -1,10 +1,3 @@
-exports.getAllProducts = getAllProducts;
-exports.getProductById = getProductById;
-exports.createProduct = createProduct;
-exports.updateProduct = updateProduct;
-exports.deleteProduct = deleteProduct;
-exports.getProductByCategory = getProductByCategory;
-
 const productsJSON = require('../mock_bd/products.json');
 
 function getAllProducts() {
@@ -35,4 +28,13 @@ function deleteProduct(id) {
     const index = productsJSON.findIndex(product => product.id === id);
     productsJSON.splice(index, 1);
     return id;
+}
+
+module.exports = {
+    getAllProducts,
+    getProductById,
+    getProductByCategory,
+    createProduct,
+    updateProduct,
+    deleteProduct
 }
