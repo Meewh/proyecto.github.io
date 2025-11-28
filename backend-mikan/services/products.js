@@ -5,7 +5,7 @@ function getAllProducts() {
 }
 
 function getProductById(id) {
-    return productsJSON.find(product => product.id === id);
+    return productsJSON.find(product => String(product.id) === String(id));
 }
 
 function getProductByCategory(cat) {
@@ -19,13 +19,13 @@ function createProduct(product) {
 }
 
 function updateProduct(id, product) {
-    const index = productsJSON.findIndex(product => product.id === id);
+    const index = productsJSON.findIndex(product => String(product.id) === String(id));
     productsJSON[index] = product;
     return product;
 }
 
 function deleteProduct(id) {
-    const index = productsJSON.findIndex(product => product.id === id);
+    const index = productsJSON.findIndex(product => String(product.id) === String(id));
     productsJSON.splice(index, 1);
     return id;
 }

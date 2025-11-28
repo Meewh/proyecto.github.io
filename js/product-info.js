@@ -1,50 +1,74 @@
+// ============================================================
+// FUNCIÓN REUTILIZABLE CON TOKEN (movida afuera para que sea global)
+// ============================================================
+async function fetchConToken(url) {
+    const token = localStorage.getItem("token");
+    const response = await fetch(url, {
+        headers: token ? { "Authorization": `Bearer ${token}` } : {}
+    });
+
+    if (!response.ok) {
+        if (response.status === 401) {
+            alert("Tu sesión expiró o no estás logueado. Volvé al login.");
+            window.location.href = "login.html";
+        }
+        throw new Error("Error HTTP: " + response.status);
+    }
+    return await response.json();
+}
+
+// ============================================================
+// Esperar al DOM
+// ============================================================
 document.addEventListener("DOMContentLoaded", () => {
 
     const productContainer = document.getElementById("product-block");
     const interesContainer = document.getElementById("interes");
-    const localStorageProduct = localStorage.getItem("producto");
+    const localStorageProduct = localStorage.getItem("producto") || localStorage.getItem("productID");
 
     const COMMENTS_PER_PAGE = 5;
     let currentCommentsPage = 1;
     let allComments = [];
     let currentSort = "fecha";
 
-    // ===== Cargar producto =====
-    function loadProduct(productId) {
-        fetch(PRODUCT_INFO_URL + productId + EXT_TYPE)
-            .then(resp => resp.json())
-            .then(productData => {
-                renderProduct(productData);
-                setupCarousel();
-                setupImageSwitch();
-                loadRelatedProducts(productData);
+    // ============================================================
+    // Cargar producto
+    // ============================================================
+    async function loadProduct(productId) {
+        try {
+            const response = await fetchConToken(`http://localhost:3000/products/${productId}`);
+            const productData = response.product;
+            if (!productData) throw new Error("Producto no encontrado");
 
-                generateMockComments(productId).then(comments => {
-                    allComments = comments;
-                    renderCommentsPage();
-                    addSortSelector();
-                    setupCommentForm();
-                });
+            renderProduct(productData);
+            setupCarousel();
+            setupImageSwitch();
+            loadRelatedProducts(productData);
 
-
-
-                // ===== Ocultar filtro blanco =====
-                const spinner = document.getElementById("spinner-wrapper");
-                if (spinner) spinner.style.display = "none";
-            })
-            .catch(err => {
-                console.error(err);
-                productContainer.innerHTML = `<div class="d-flex justify-content-center align-items-center"><h1>Error al cargar los datos</h1></div>`;
-                const spinner = document.getElementById("spinner-wrapper");
-                if (spinner) spinner.style.display = "none";
+            generateMockComments(productId).then(comments => {
+                allComments = comments;
+                renderCommentsPage();
+                addSortSelector();
+                setupCommentForm();
             });
+
+            const spinner = document.getElementById("spinner-wrapper");
+            if (spinner) spinner.style.display = "none";
+        } catch (err) {
+            console.error(err);
+            productContainer.innerHTML = `<div class="d-flex justify-content-center align-items-center"><h1>Error al cargar los datos</h1></div>`;
+            const spinner = document.getElementById("spinner-wrapper");
+            if (spinner) spinner.style.display = "none";
+        }
     }
 
-    // ===== Render producto principal con cantidad =====
+    // ============================================================
+    // Render principal
+    // ============================================================
     function renderProduct(data) {
         const imgs = data.images || [data.image];
-        productContainer.innerHTML = `<div class="container product-section p-1">
-            <!-- Carrusel mobile/tablet -->
+        productContainer.innerHTML = `
+        <div class="container product-section p-1">
             <div id="carouselExampleIndicators" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                     <span class="category-badge">${data.category}</span>
@@ -52,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <h3 class="mt-2 fw-bold">${data.name}</h3>
                         <small class="text-muted">${data.soldCount} vendidos</small>
                     </div>
+
                     <div class="carousel-inner">
                         ${imgs.map((img, idx) => `
                             <div class="carousel-item ${idx === 0 ? 'active' : ''} main-image">
@@ -59,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>`).join('')}
                     </div>
 
-                    <!-- Controles -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon"></span>
                         <span class="visually-hidden">Anterior</span>
@@ -70,11 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     </button>
                 </div>
 
-                <!-- Indicadores -->
                 <div class="custom-indicators text-center mt-3">
                     ${imgs.map((_, idx) => `
-                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>
-                    `).join('')}
+                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></button>`).join('')}
                 </div>
 
                 <div class="col-md-4" id="mobile-vista">
@@ -86,12 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
 
-            <!-- Vista escritorio -->
             <div class="row d-none d-md-flex" id="desktop-vista">
                 <div class="col-md-2 secundary-images">
-                    <img src="${imgs[1]}" alt="">
-                    <img src="${imgs[2]}" alt="">
-                    <img src="${imgs[3]}" alt="" id="last-image">
+                    <img src="${imgs[1] || ''}" alt="">
+                    <img src="${imgs[2] || ''}" alt="">
+                    <img src="${imgs[3] || ''}" alt="" id="last-image">
                 </div>
 
                 <div class="col-md-6 main-image">
@@ -114,7 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    // ===== Carrusel mobile =====
+    // ============================================================
+    // Carousel mobile
+    // ============================================================
     function setupCarousel() {
         const myCarousel = document.querySelector('#carouselExampleIndicators');
         const myIndicators = document.querySelectorAll('.custom-indicators button');
@@ -125,11 +148,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== Imagen secundaria click =====
+    // ============================================================
+    // Cambio de imágenes
+    // ============================================================
     function setupImageSwitch() {
         const mainImage = document.querySelector(".col-md-6.main-image img");
         const secondaryImages = document.querySelectorAll(".secundary-images img");
         if (!mainImage || secondaryImages.length === 0) return;
+
         secondaryImages.forEach(img => {
             img.addEventListener("click", () => {
                 const temp = mainImage.src;
@@ -139,42 +165,53 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== Productos relacionados =====
-    function loadRelatedProducts(productData) {
+    // ============================================================
+    // Productos relacionados
+    // ============================================================
+    async function loadRelatedProducts(productData) {
         const categoryId = getCategoryId(productData.category);
         if (!categoryId) return;
 
-        fetch(PRODUCTS_URL + categoryId)
-            .then(resp => resp.json())
-            .then(data => {
-                let html = "";
-                for (const p of data.products) {
-                    if (p.id !== productData.id) {
-                        html += `<div class="col-12 col-sm-6 col-md-3 mb-4">
-                            <div class="product-card" id="product-${p.id}" style="cursor:pointer;">
-                                <img src="${p.image}" alt="Producto" class="product-image">
-                                <h5 class="fw-bold">${p.name}</h5>
-                                <p class="text-muted">${p.description}</p>
-                                <p class="price">${p.currency} ${p.cost}</p>
-                                <p class="sold">${p.soldCount} vendidos</p>
-                            </div>
-                        </div>`;
-                    }
+        try {
+            const response = await fetchConToken(`http://localhost:3000/products?cat=${categoryId}`);
+            const data = response.products || [];
+
+            let html = "";
+            for (const p of data) {
+                if (p.id !== productData.id) {
+                    html += `
+                    <div class="col-12 col-sm-6 col-md-3 mb-4">
+                        <div class="product-card" id="product-${p.id}" style="cursor:pointer;">
+                            <img src="${p.image}" alt="Producto" class="product-image">
+                            <h5 class="fw-bold">${p.name}</h5>
+                            <p class="text-muted">${p.description}</p>
+                            <p class="price">${p.currency} ${p.cost}</p>
+                            <p class="sold">${p.soldCount} vendidos</p>
+                        </div>
+                    </div>`;
                 }
-                interesContainer.innerHTML = html || `<p class="text-muted">Error en la carga de productos.</p>`;
-                data.products.forEach(p => {
-                    const prodEl = document.getElementById(`product-${p.id}`);
-                    if (prodEl) {
-                        prodEl.addEventListener("click", () => {
-                            localStorage.setItem("producto", p.id);
-                            window.location.href = "product-info.html";
-                        });
-                    }
-                });
-            }).catch(err => console.error(err));
+            }
+
+            interesContainer.innerHTML = html || `<p class="text-muted">Error en la carga de productos.</p>`;
+
+            data.forEach(p => {
+                const prodEl = document.getElementById(`product-${p.id}`);
+                if (prodEl) {
+                    prodEl.addEventListener("click", () => {
+                        localStorage.setItem("producto", p.id);
+                        window.location.href = "product-info.html";
+                    });
+                }
+            });
+        } catch (err) {
+            console.error(err);
+            interesContainer.innerHTML = `<p class="text-danger">Error al cargar productos relacionados.</p>`;
+        }
     }
 
-    // ===== Categoria a ID =====
+    // ============================================================
+    // Conversión de nombre de categoría a ID
+    // ============================================================
     function getCategoryId(name) {
         switch (name) {
             case "Autos": return 101;
@@ -190,7 +227,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ===== Fetch a la api para rellenar la lista de comentarios =====
+    // ============================================================
+    // Comentarios
+    // ============================================================
     function generateMockComments(productId) {
         return fetch(PRODUCT_INFO_COMMENTS_URL + productId + EXT_TYPE)
             .then(response => {
@@ -202,14 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 return data.map(comment => {
                     const { score, user, description, dateTime } = comment;
-
-                    let formattedDate = dateTime; // usar la que trae la API
+                    let formattedDate = dateTime;
                     const date = new Date(dateTime);
                     if (!isNaN(date)) {
-                        // solo si es válida la formateo
-                        formattedDate = date.toISOString().slice(0, 19).replace("T", " ");
+                        formattedDate = date.toISOString().slice(0,19).replace("T"," ");
                     }
-
                     return { user, score, description, date: formattedDate };
                 });
             })
@@ -219,8 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-
-    // ===== Render comentarios paginados con estrellas doradas =====
+    // ============================================================
+    // Render de comentarios
+    // ============================================================
     function renderCommentsPage() {
         const start = (currentCommentsPage - 1) * COMMENTS_PER_PAGE;
         const end = start + COMMENTS_PER_PAGE;
@@ -242,26 +279,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>`;
         }).join('');
 
-        // ===== Paginación =====
         const totalPages = Math.ceil(allComments.length / COMMENTS_PER_PAGE);
         let pagEl = document.getElementById("reviews-pagination");
         if (!pagEl) {
             pagEl = document.createElement("div");
             pagEl.id = "reviews-pagination";
-            pagEl.classList.add("d-flex", "gap-2", "mb-3");
+            pagEl.classList.add("d-flex","gap-2","mb-3");
             container.parentElement.insertBefore(pagEl, container.nextSibling);
         }
+
         pagEl.innerHTML = "";
         for (let i = 1; i <= totalPages; i++) {
             const btn = document.createElement("button");
             btn.className = "btn btn-sm " + (i === currentCommentsPage ? "btn-warning" : "btn-outline-secondary");
             btn.textContent = i;
-            btn.addEventListener("click", () => { currentCommentsPage = i; renderCommentsPage(); });
+            btn.addEventListener("click", () => {
+                currentCommentsPage = i;
+                renderCommentsPage();
+            });
             pagEl.appendChild(btn);
         }
     }
 
-    // ===== Ordenar comentarios =====
+    // ============================================================
+    // Selector de ordenamiento
+    // ============================================================
     function addSortSelector() {
         const container = document.getElementById("reviews-list");
         const selectId = "sort-comments";
@@ -269,29 +311,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const select = document.createElement("select");
         select.id = selectId;
-        select.classList.add("form-select", "form-select-sm", "mb-2");
+        select.classList.add("form-select","form-select-sm","mb-2");
         select.innerHTML = `
             <option value="fecha">Ordenar por fecha</option>
             <option value="puntaje">Ordenar por puntaje</option>
         `;
+
         container.parentElement.insertBefore(select, container);
 
-        select.addEventListener("change", (e) => {
+        select.addEventListener("change", e => {
             currentSort = e.target.value;
             renderCommentsPage();
         });
     }
 
-    // ===== Formulario agregar comentario =====
+    // ============================================================
+    // Formulario de comentarios
+    // ============================================================
     function setupCommentForm() {
         const form = document.getElementById("review-form");
         if (!form) return;
+
         form.addEventListener("submit", (e) => {
             e.preventDefault();
+
             const user = localStorage.getItem("usuario") || "Usuario";
             const desc = document.getElementById("review-text").value.trim();
             const score = parseInt(document.getElementById("review-score").value);
-            const date = new Date().toISOString().slice(0, 19).replace("T", " ");
+            const date = new Date().toISOString().slice(0,19).replace("T"," ");
+
             if (desc) {
                 allComments.push({ user, score, description: desc, date });
                 document.getElementById("review-text").value = "";
@@ -302,7 +350,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== Inicializar =====
+    // ============================================================
+    // Inicializar
+    // ============================================================
     if (localStorageProduct) {
         loadProduct(localStorageProduct);
     } else {
@@ -313,25 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/*document.addEventListener("click", (e) => {
-  const button = e.target.closest(".btn-cart");
-  if (button) {
-    // Ejemplo: guardar el producto en el carrito local
-    const productId = localStorage.getItem("producto");
-    if (productId) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      if (!cart.includes(productId)) {
-        cart.push(productId);
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
-    }
-
-    // Redirigir al carrito
-    window.location.href = "cart.html";
-  }
-}); */
-
-// === AGREGAR PRODUCTO AL CARRITO ===
+// ============================================================
+// AGREGAR PRODUCTO AL CARRITO
+// ============================================================
 document.addEventListener("click", async (e) => {
     const button = e.target.closest(".btn-cart");
     if (!button) return;
@@ -340,8 +374,8 @@ document.addEventListener("click", async (e) => {
     if (!productId) return;
 
     try {
-        const resp = await fetch(PRODUCT_INFO_URL + productId + EXT_TYPE);
-        const data = await resp.json();
+        const response = await fetchConToken(`http://localhost:3000/products/${productId}`);
+        const data = response.product;
 
         let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
@@ -361,10 +395,8 @@ document.addEventListener("click", async (e) => {
 
         localStorage.setItem("cart", JSON.stringify(cart));
         window.location.href = "cart.html";
+
     } catch (err) {
         console.error("Error al agregar al carrito:", err);
     }
 });
-
-
-

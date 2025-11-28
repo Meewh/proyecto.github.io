@@ -6,6 +6,28 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
+// ============================================================
+// NUEVAS LÍNEAS ENTREGA 8: FUNCIÓN PARA FETCH CON TOKEN
+// ============================================================
+async function fetchConToken(url) {
+    const token = localStorage.getItem("token");
+    const response = await fetch(url, {
+        headers: token ? { "Authorization": `Bearer ${token}` } : {}
+    });
+    
+    if (!response.ok) {
+        if (response.status === 401) {
+            alert("Sesión expirada o no autorizada. Volviendo al login...");
+            window.location.href = "login.html";
+        }
+        throw new Error("Error HTTP: " + response.status);
+    }
+    return await response.json();
+}
+// ============================================================
+// FIN NUEVAS LÍNEAS ENTREGA 8
+// ============================================================
+
 function sortCategories(criteria, array) {
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME) {
@@ -86,14 +108,27 @@ function sortAndShowCategories(sortCriteria, categoriesArray) {
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(CATEGORIES_URL).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            currentCategoriesArray = resultObj.data
-            showCategoriesList()
-            //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
+document.addEventListener("DOMContentLoaded", async function (e) {
+    // ============================================================
+    // NUEVAS LÍNEAS ENTREGA 8: CARGA CON TOKEN EN VEZ DE getJSONData
+    // ============================================================
+    try {
+        const resultObj = await fetchConToken("http://localhost:3000/cats");
+        // CORRECCIÓN: Backend devuelve array directo [], así que asignamos directamente
+        // Si fuera { cats: [] }, cambiar a resultObj.cats, pero según tu descripción es array
+        currentCategoriesArray = Array.isArray(resultObj) ? resultObj : [];
+        if (currentCategoriesArray.length === 0) {
+            throw new Error("No se recibieron categorías");
         }
-    });
+        showCategoriesList();
+    } catch (err) {
+        console.error("Error al cargar categorías:", err);
+        document.getElementById("cat-list-container").innerHTML = 
+            `<p class="text-danger text-center">Error al cargar categorías. Intenta iniciar sesión nuevamente.</p>`;
+    }
+    // ============================================================
+    // FIN NUEVAS LÍNEAS ENTREGA 8
+    // ============================================================
 
     document.getElementById("sortAsc").addEventListener("click", function () {
         sortAndShowCategories(ORDER_ASC_BY_NAME);

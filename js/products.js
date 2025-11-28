@@ -1,5 +1,31 @@
-
+// ---- Variables globales ----
 let products = [];
+let allProducts = [];      // necesario para filtros
+let currentProducts = [];  // necesario para filtros y buscador
+
+// ============================================================
+// NUEVAS LÍNEAS ENTREGA 8: FUNCIÓN fetchConToken REUTILIZABLE
+// ============================================================
+async function fetchConToken(url) {
+    const token = localStorage.getItem("token");
+    const response = await fetch(url, {
+        headers: token ? { "Authorization": `Bearer ${token}` } : {}
+    });
+    
+    if (!response.ok) {
+        if (response.status === 401) {
+            alert("Tu sesión expiró. Volvé a iniciar sesión.");
+            window.location.href = "login.html";
+        }
+        throw new Error("Error HTTP: " + response.status);
+    }
+    return await response.json();
+}
+// ============================================================
+// FIN NUEVAS LÍNEAS ENTREGA 8
+// ============================================================
+
+
 
 // ---- Render ----
 function showProductsList(lista) {
@@ -26,12 +52,15 @@ function showProductsList(lista) {
     const prodEl = document.getElementById(`product-${p.id}`);
     if (prodEl) {
       prodEl.addEventListener("click", () => {
-        localStorage.setItem("producto", p.id); // Guardar id en localStorage
-        window.location.href = "product-info.html"; // Redirigir a otra página
+        // 🔥 FIX: usar la misma clave que espera product-info.js ("producto")
+        localStorage.setItem("producto", p.id);
+        window.location.href = "product-info.html";
       });
     }
   });
 }
+
+
 
 // ---- Helpers ----
 function getEl(id) {
@@ -39,7 +68,7 @@ function getEl(id) {
 }
 
 function getFilters() {
-  // Si algún control no existe en el HTML, devolvemos valores seguros.
+  {
   const minEl = getEl("precio-min");
   const maxEl = getEl("precio-max");
   const orderEl = getEl("ordenar");
@@ -60,17 +89,14 @@ function getFilters() {
     orden
   };
 }
+}
 
 function filterAndSort(baseList, f) {
   let lista = baseList.slice();
 
-  // Precio
   if (f.min != null && !isNaN(f.min)) lista = lista.filter(p => Number(p.cost) >= f.min);
   if (f.max != null && !isNaN(f.max)) lista = lista.filter(p => Number(p.cost) <= f.max);
 
-  // NOTA: entrega/stock/condición se omiten si no existen en el JSON
-
-  // Orden
   switch (f.orden) {
     case "precio-asc":
       lista.sort((a, b) => Number(a.cost) - Number(b.cost));
@@ -86,7 +112,6 @@ function filterAndSort(baseList, f) {
       break;
     case "relevancia":
     default:
-      // Más vendidos primero
       lista.sort((a, b) => Number(b.soldCount || 0) - Number(a.soldCount || 0));
       break;
   }
@@ -94,11 +119,12 @@ function filterAndSort(baseList, f) {
   return lista;
 }
 
+
+
 // ---- Acciones ----
 function aplicarFiltros() {
   const f = getFilters();
 
-  // Si el usuario puso min > max, los invertimos para evitar “no hay resultados”
   if (f.min != null && f.max != null && f.min > f.max) {
     const tmp = f.min;
     f.min = f.max;
@@ -119,7 +145,6 @@ function limpiarFiltros() {
   const stockEl = getEl("stock");
   if (stockEl) stockEl.checked = false;
 
-  // Mostrar por relevancia al limpiar
   currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
   showProductsList(currentProducts);
 }
@@ -129,52 +154,87 @@ const dropdownButton = document.getElementById('dropdownButton');
 
 dropdownItems.forEach(item => {
   item.addEventListener('click', function (e) {
-    e.preventDefault(); // evita que el enlace navegue
+    e.preventDefault();
     dropdownButton.textContent = this.textContent;
   });
 });
 
+
+
 // ---- Inicio ----
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
 
-  const catID = localStorage.getItem("catID");
-  const url = catID
-    ? PRODUCTS_URL + catID
-    : PRODUCTS_URL + "101";
+  // Forzamos categoría 101 (Autos) si no hay nada en localStorage
+  const catID = localStorage.getItem("catID") || "101";
 
-  getJSONData(url).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      allProducts = resultObj.data.products || [];
-      // Primera carga: mostrar por relevancia
-      currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
-      showProductsList(currentProducts);
+  // 🔥 FIX GRANDE: el backend usa ?cat= NO ?category=
+  const url = `http://localhost:3000/products?cat=${catID}`;
+
+  console.log("Intentando cargar productos...");
+  console.log("Categoría seleccionada:", catID);
+  console.log("URL:", url);
+
+  try {
+    const resultObj = await fetchConToken(url);
+
+    // DEBUG: vemos exactamente qué nos devuelve el backend
+    console.log("Respuesta completa del backend:", resultObj);
+
+    // CORRECCIÓN: Backend devuelve { products: [...] }, así que usamos resultObj.products
+    let productos = [];
+
+    if (resultObj && Array.isArray(resultObj.products)) {
+      productos = resultObj.products;
+    } else if (Array.isArray(resultObj)) {
+      productos = resultObj;
+    } else if (resultObj && resultObj.data && Array.isArray(resultObj.data)) {
+      productos = resultObj.data;
+    } else {
+      throw new Error("Formato inesperado del backend");
     }
-  });
+
+    allProducts = productos;
+
+    console.log("Productos procesados:", allProducts.length, allProducts);
+
+    if (allProducts.length === 0) {
+      document.getElementById("product-list-container").innerHTML = `
+        <p class="text-center text-muted fs-4">No hay productos en esta categoría (cat=${catID})</p>
+        <small class="text-danger d-block">Revisá la consola (F12) y pegame lo que dice arriba</small>`;
+      return;
+    }
+
+    // Si llegamos acá → ¡TENEMOS PRODUCTOS!
+    currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
+    showProductsList(currentProducts);
+
+  } catch (err) {
+    console.error("Error completo:", err);
+    document.getElementById("product-list-container").innerHTML = `
+      <p class="text-danger text-center">Error de conexión o token inválido.<br>
+      Hacé login de nuevo.</p>`;
+  }
 
   // ---- FILTRO BUSCADOR ----
   const buscadorEl = getEl("buscador");
   if (buscadorEl) {
     buscadorEl.addEventListener("input", function () {
       const texto = buscadorEl.value.toLowerCase();
-
-      // filtramos desde allProducts para no perder productos al escribir y borrar
-      const filtrados = currentProducts.filter(p => // tomamos en cuenta los ''currentProducts'' para que se aplique los filtros elegidos
+      const filtrados = allProducts.filter(p => 
         (p.name && p.name.toLowerCase().includes(texto)) ||
         (p.description && p.description.toLowerCase().includes(texto))
       );
-
       showProductsList(filtrados);
     });
   }
 
-  // Botones
+  // Botones y filtros
   const btnAplicar = getEl("aplicar-filtros");
   if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
 
   const btnLimpiar = getEl("limpiar-filtros");
   if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
 
-  // Aplicar automáticamente al cambiar el orden o escribir min/max (Enter)
   const orderEl = getEl("ordenar");
   if (orderEl) orderEl.addEventListener("change", aplicarFiltros);
 
