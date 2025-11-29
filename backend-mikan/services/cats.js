@@ -5,7 +5,7 @@ function getAllCategories() {
 }
 
 function getCategoryById(id) {
-    return catsJSON.find(cat => cat.id === id);
+    return catsJSON.find(cat => cat.id === parseInt(id));
 }
 
 module.exports = {

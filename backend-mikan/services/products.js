@@ -3,7 +3,7 @@ const db = require('./bd');
 
 async function getAllProducts() {
     try {
-        const result = await db.query('SELECT * FROM product');
+        const result = await db.query('SELECT * FROM products');
         return result.rows;
     } catch (err) {
         console.error(err);
@@ -12,13 +12,31 @@ async function getAllProducts() {
 }
 
 
-function getProductById(id) {
-    return productsJSON.find(product => product.id === id);
+async function getProductById(id) {
+    try {
+        const result = await db.query('SELECT * FROM products WHERE id = $1', [id]);
+
+        if (result.rows == []) {
+            return { error: 'Producto no encontrado' };
+        }
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
 }
 
-function getProductByCategory(cat) {
-    let category = require('../mock_bd/cats_products/' + cat + '.json');
-    return category;
+async function getProductByCategory(cat) {
+    try {
+        const result = await db.query('SELECT * FROM products WHERE categoryid = $1', [cat]);
+        if (result.rows == []) {
+            return { error: 'Producto no encontrado' };
+        }
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
 }
 
 function createProduct(product) {
