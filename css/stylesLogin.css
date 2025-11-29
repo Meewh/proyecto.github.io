@@ -321,3 +321,45 @@ body.dark {
     color: #FFB74D;
     border: 1px solid #2B2B2B;
 }
+
+/* ---------------- TOAST PERSONALIZADO ---------------- */
+
+.custom-toast {
+    background: #d9534f !important;
+    /* rojo profesional */
+    color: #fff !important;
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    font-size: 15px;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Botón cerrar */
+.custom-toast .btn-close {
+    filter: brightness(0) invert(1);
+    /* blanco puro */
+}
+
+/* ---------------- TOAST DARK MODE ---------------- */
+
+body.dark .custom-toast {
+    background: #c62828 !important;
+    /* rojo más oscuro para dark mode */
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+}

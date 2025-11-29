@@ -37,10 +37,10 @@ const users = JSON.parse(fs.readFileSync("./mock_bd/users.json", "utf8"));
 
 app.post("/login", (req, res) => {
   // Tomamos las credenciales enviadas por el formulario
-  const { correo, password } = req.body;
+  const { correo, contraseña } = req.body;
 
   // Validamos que no vengan vacias
-  if (!correo || !password) {
+  if (!correo || !contraseña) {
     return res.status(400).json({ message: "Correo y contraseña son obligatorios" });
   }
 
@@ -51,7 +51,7 @@ app.post("/login", (req, res) => {
   }
 
   // Comparamos la contraseña en texto con el hash guardado
-  if (password !== user.password) {
+  if (contraseña !== user.contraseña) {
     return res.status(401).json({ message: "Credenciales inválidas" });
   }
 
@@ -69,6 +69,51 @@ app.post("/login", (req, res) => {
     },
   });
 });
+
+// --------------------------------------------------------
+// EDITAR PERFIL (actualiza el JSON mock)
+// --------------------------------------------------------
+
+app.put("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { nombre, apellido, correo, telefono } = req.body;
+
+  // Buscar usuario por ID
+  const userIndex = users.findIndex(u => u.id == id);
+
+  if (userIndex === -1) {
+    return res.status(404).json({ message: "Usuario no encontrado" });
+  }
+
+  // Actualizar datos del usuario
+  if (nombre !== undefined) users[userIndex].nombre = nombre;
+  if (apellido !== undefined) users[userIndex].apellido = apellido;
+  if (correo !== undefined) users[userIndex].correo = correo;
+  if (telefono !== undefined) users[userIndex].telefono = telefono;
+
+  // Guardar en el archivo
+  fs.writeFileSync("./mock_bd/users.json", JSON.stringify(users, null, 2));
+
+  // 🔥 Crear un nuevo token actualizado
+  const updatedUser = users[userIndex];
+
+  const nuevoToken = jwt.sign(
+    {
+      id: updatedUser.id,
+      correo: updatedUser.correo
+    },
+    JWT_SECRET,
+    { expiresIn: "4h" }
+  );
+
+  // Respuesta
+  res.json({
+    message: "Perfil actualizado correctamente",
+    token: nuevoToken,
+    user: updatedUser
+  });
+});
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
