@@ -36,15 +36,15 @@ const users = JSON.parse(fs.readFileSync("./mock_bd/users.json", "utf8"));
 
 app.post("/login", (req, res) => {
   // Tomamos las credenciales enviadas por el formulario
-  const { username, password } = req.body;
+  const { correo, password } = req.body;
 
   // Validamos que no vengan vacias
-  if (!username || !password) {
-    return res.status(400).json({ message: "Usuario y contraseña son obligatorios" });
+  if (!correo || !password) {
+    return res.status(400).json({ message: "Correo y contraseña son obligatorios" });
   }
 
-  // Buscamos el usuario en el JSON cargado al iniciar el servidor
-  const user = users.find((u) => u.username === username);
+  // Buscamos el correo en el JSON cargado al iniciar el servidor
+  const user = users.find((u) => u.correo === correo);
   if (!user) {
     return res.status(401).json({ message: "Credenciales inválidas" });
   }
@@ -54,15 +54,17 @@ app.post("/login", (req, res) => {
     return res.status(401).json({ message: "Credenciales inválidas" });
   }
 
-  // Firmamos un token sencillo con el id y username
-  const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: "2h" });
-
+  // Firmamos un token sencillo con el id y correo
+  const token = jwt.sign({ id: user.id, correo: user.correo }, JWT_SECRET, { expiresIn: "4h" });
+  //Crear un token (una "llave") para probar que está logueado
   res.json({
     token,
     user: {
       id: user.id,
-      username: user.username,
-      fullName: user.fullName,
+      correo: user.correo,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      telefono: user.telefono
     },
   });
 });

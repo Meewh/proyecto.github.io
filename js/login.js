@@ -20,4 +20,3 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
         document.getElementById("mensaje").textContent = "Por favor, completa todos los campos.";
     }
 });
-
