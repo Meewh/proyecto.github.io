@@ -7,6 +7,7 @@ var logger = require('morgan');
 var catsRouter = require('./routes/cats');
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+require('dotenv').config();
 const JWT_SECRET = "curso-jap-secret";
 
 var indexRouter = require('./routes/index');

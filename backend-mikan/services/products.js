@@ -1,8 +1,16 @@
 const productsJSON = require('../mock_bd/products.json');
+const db = require('./bd');
 
-function getAllProducts() {
-    return productsJSON;
+async function getAllProducts() {
+    try {
+        const result = await db.query('SELECT * FROM product');
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
 }
+
 
 function getProductById(id) {
     return productsJSON.find(product => product.id === id);
