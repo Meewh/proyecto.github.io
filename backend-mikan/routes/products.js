@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsService = require('../services/products');
+const catsService = require('../services/cats');
 
 //get de todos los productos
 router.get("/", async (req, res, next) => {
@@ -13,8 +14,19 @@ router.get("/:id", async (req, res, next) => {
     res.json(product)
 })
 //get de todos los productos por categoría
-router.get("/category/:cat", (req, res, next) => {
-    res.json(productsService.getProductByCategory(req.params.cat))
+router.get("/category/:cat", async (req, res, next) => {
+    const product = await productsService.getProductByCategory(req.params.cat);
+    const cat = await catsService.getCategoryById(req.params.cat);
+    console.log("Fetching category for ID:", req.params.cat);
+    console.log("Result from getCategoryById:", cat);
+    if (!cat) {
+        return res.status(404).json({ message: "Category not found" });
+    }
+    res.json({
+        "catID": req.params.cat,
+        "catName": cat.name,
+        "products": product
+    })
 })
 
 //post de un producto

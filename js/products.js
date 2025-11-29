@@ -11,11 +11,11 @@ function showProductsList(lista) {
     html += `
       <div class="col-12 col-sm-6 col-md-4 mb-4">
         <div class="product-card" id="product-${p.id}" style="cursor:pointer;">
-          <img src="${p.image}" alt="Producto" class="product-image">
+          <img src="${p.images[0]}" alt="Producto" class="product-image">
           <h5 class="fw-bold">${p.name}</h5>
           <p class="text-muted">${p.description}</p>
           <p class="price">${p.currency} ${p.cost}</p>
-          <p class="sold">${p.soldCount} vendidos</p>
+          <p class="sold">${p.soldcount} vendidos</p>
         </div>
       </div>`;
   }
