@@ -3,12 +3,12 @@ const router = express.Router();
 const productsService = require('../services/products');
 
 //get de todos los productos
-router.get("/", (req, res, next) => {
-    res.json(productsService.getAllProducts())
+router.get("/", async (req, res, next) => {
+    res.json(await productsService.getAllProducts())
 })
 
 //get de un producto por id
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
     const product = productsService.getProductById(req.params.id);
     res.json(product)
 })
