@@ -1,51 +1,46 @@
 document.getElementById("btnRegistro").addEventListener("click", function(){
+    //pagina de registro
     window.location.href = "registro.html";
 });
 
-document.getElementById("loginForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+async function login(event) {
+    event.preventDefault();
 
-    const usuario = document.getElementById("usuario").value.trim();
-    const contraseña = document.getElementById("contraseña").value.trim();
-
-    if (usuario === "" || contraseña === "") {
-        document.getElementById("mensaje").textContent = "Por favor, completa todos los campos.";
-        return;
-    }
+    const correo = document.getElementById("correo").value;
+    const contraseña = document.getElementById("contraseña").value;
 
     try {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                username: usuario, 
-                password: contraseña 
-            })
+        const res = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ correo, contraseña })
         });
 
-        const data = await response.json();
+        const data = await res.json();
 
-        if (response.ok) {
-            // GUARDAMOS EL TOKEN REAL
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("usuario", usuario);
-            localStorage.setItem("logueado", "true");
-
-            // Mensaje lindo y redirección
-            document.getElementById("mensaje").style.color = "green";
-            document.getElementById("mensaje").textContent = "¡Login exitoso! Redirigiendo...";
-            
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1000);
-        } else {
-            document.getElementById("mensaje").style.color = "red";
-            document.getElementById("mensaje").textContent = data.mensaje || "Usuario o contraseña incorrectos";
+        // SI EL LOGIN Falla → Mostrar toast
+        if (!res.ok) {
+            mostrarToast(data.message || "Error al iniciar sesión");
+            return;
         }
-    } catch (error) {
-        document.getElementById("mensaje").style.color = "red";
-        document.getElementById("mensaje").textContent = "Error de conexión con el servidor";
+
+        // Guardar datos en localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Redirigir
+        window.location.href = "index.html";
+
+    } catch (err) {
+        mostrarToast("No se pudo conectar con el servidor");
     }
-});
+}
+
+function mostrarToast(msg) {
+    const toastEl = document.getElementById("toastMsg");
+    const toastText = document.getElementById("toastText");
+    const toast = new bootstrap.Toast(toastEl);
+
+    toastText.textContent = msg;
+    toast.show();
+}

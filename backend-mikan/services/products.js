@@ -1,16 +1,42 @@
 const productsJSON = require('../mock_bd/products.json');
+const db = require('./bd');
 
-function getAllProducts() {
-    return productsJSON;
+async function getAllProducts() {
+    try {
+        const result = await db.query('SELECT * FROM products');
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
 }
 
-function getProductById(id) {
-    return productsJSON.find(product => String(product.id) === String(id));
+
+async function getProductById(id) {
+    try {
+        const result = await db.query('SELECT * FROM products WHERE id = $1', [id]);
+
+        if (result.rows == []) {
+            return { error: 'Producto no encontrado' };
+        }
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
 }
 
-function getProductByCategory(cat) {
-    let category = require('../mock_bd/cats_products/' + cat + '.json');
-    return category;
+async function getProductByCategory(cat) {
+    try {
+        const result = await db.query('SELECT * FROM products WHERE categoryid = $1', [cat]);
+        if (result.rows == []) {
+            return { error: 'Producto no encontrado' };
+        }
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
 }
 
 function createProduct(product) {
@@ -19,13 +45,13 @@ function createProduct(product) {
 }
 
 function updateProduct(id, product) {
-    const index = productsJSON.findIndex(product => String(product.id) === String(id));
+    const index = productsJSON.findIndex(product => product.id === id);
     productsJSON[index] = product;
     return product;
 }
 
 function deleteProduct(id) {
-    const index = productsJSON.findIndex(product => String(product.id) === String(id));
+    const index = productsJSON.findIndex(product => product.id === id);
     productsJSON.splice(index, 1);
     return id;
 }
