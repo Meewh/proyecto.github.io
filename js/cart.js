@@ -8,16 +8,6 @@ let descuentoAplicado = 0;
 let costoEnvioPorcentaje = 0.05;
 let direccionGuardada = JSON.parse(localStorage.getItem("direccionPredeterminada")) || null;
 
-// ==================== AUTH TOKEN (AGREGADO) ====================
-const token = localStorage.getItem("token");
-
-// Si no está logueado y no está en login/registro → lo mandamos al login
-if (!token && !["/login.html", "registro.html", "index.html"].includes(location.pathname.split("/").pop())) {
-    window.location.href = "login.html";
-}
-// ==============================================================
-
-
 // Modal
 const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
 let metodoSeleccionado = null;

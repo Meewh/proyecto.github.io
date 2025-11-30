@@ -4,15 +4,11 @@ var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var catsRouter = require('./routes/cats');
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 require('dotenv').config();
 const JWT_SECRET = "curso-jap-secret";
-
-// NUEVA LÍNEA: importamos el middleware
-const verificarToken = require('./middleware/auth');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -33,14 +29,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rutas públicas (sin autenticación)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-// Rutas PROTEGIDAS → solo usuarios logueados
-app.use('/products', verificarToken, productsRouter);
-app.use('/cats', verificarToken, catsRouter);
-app.use('/cart', verificarToken, cartRouter);
+app.use('/products', productsRouter);
+app.use('/cats', catsRouter);
+app.use('/cart', cartRouter);
 
 const users = JSON.parse(fs.readFileSync("./mock_bd/users.json", "utf8"));
 

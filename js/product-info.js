@@ -1,16 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-// PROTECCIÓN DE RUTA
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        const paginaActual = location.pathname.split("/").pop();
-        if (!["login.html", "registro.html"].includes(paginaActual)) {
-            window.location.href = "login.html";
-            return; // importante para que no siga ejecutando
-        }
-    }
-
     const productContainer = document.getElementById("product-block");
     const interesContainer = document.getElementById("interes");
     const localStorageProduct = localStorage.getItem("producto");
@@ -20,46 +9,35 @@ document.addEventListener("DOMContentLoaded", () => {
     let allComments = [];
     let currentSort = "fecha";
 
-    // ===== CARGAR PRODUCTO CON TOKEN =====
+    // ===== Cargar producto =====
     function loadProduct(productId) {
-        fetch(`http://localhost:3000/products/${productId}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        .then(res => {
-            if (res.status === 401) {
-                localStorage.clear();
-                window.location.href = "login.html";
-                return;
-            }
-            if (!res.ok) throw new Error("Error al cargar producto");
-            return res.json();
-        })
-        .then(productData => {
-            renderProduct(productData);
-            setupCarousel();
-            setupImageSwitch();
-            loadRelatedProducts(productData);
+        fetch(PRODUCT_INFO_URL + productId + EXT_TYPE)
+            .then(resp => resp.json())
+            .then(productData => {
+                renderProduct(productData);
+                setupCarousel();
+                setupImageSwitch();
+                loadRelatedProducts(productData);
 
-            // Comentarios siguen usando la API vieja (no requiere token)
-            generateMockComments(productId).then(comments => {
-                allComments = comments;
-                renderCommentsPage();
-                addSortSelector();
-                setupCommentForm();
+                generateMockComments(productId).then(comments => {
+                    allComments = comments;
+                    renderCommentsPage();
+                    addSortSelector();
+                    setupCommentForm();
+                });
+
+
+
+                // ===== Ocultar filtro blanco =====
+                const spinner = document.getElementById("spinner-wrapper");
+                if (spinner) spinner.style.display = "none";
+            })
+            .catch(err => {
+                console.error(err);
+                productContainer.innerHTML = `<div class="d-flex justify-content-center align-items-center"><h1>Error al cargar los datos</h1></div>`;
+                const spinner = document.getElementById("spinner-wrapper");
+                if (spinner) spinner.style.display = "none";
             });
-
-            // Ocultar spinner
-            const spinner = document.getElementById("spinner-wrapper");
-            if (spinner) spinner.style.display = "none";
-        })
-        .catch(err => {
-            console.error(err);
-            productContainer.innerHTML = `<div class="text-center py-5"><h3>Error al cargar el producto</h3><p>Intenta iniciar sesión nuevamente</p></div>`;
-            const spinner = document.getElementById("spinner-wrapper");
-            if (spinner) spinner.style.display = "none";
-        });
     }
 
     // ===== Render producto principal con cantidad =====
@@ -161,52 +139,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== PRODUCTOS RELACIONADOS CON TOKEN =====
+    // ===== Productos relacionados =====
     function loadRelatedProducts(productData) {
         const categoryId = getCategoryId(productData.category);
         if (!categoryId) return;
 
-        fetch(`http://localhost:3000/products/category/${categoryId}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        .then(res => {
-            if (res.status === 401) {
-                localStorage.clear();
-                window.location.href = "login.html";
-                return;
-            }
-            return res.json();
-        })
-        .then(data => {
-            let html = "";
-            for (const p of data.products) {
-                if (p.id !== productData.id) {
-                    html += `<div class="col-12 col-sm-6 col-md-3 mb-4">
-                        <div class="product-card" id="product-${p.id}" style="cursor:pointer;">
-                            <img src="${p.images[0] || p.image}" class="product-image">
-                            <h5 class="fw-bold">${p.name}</h5>
-                            <p class="text-muted">${p.description}</p>
-                            <p class="price">${p.currency} ${p.cost}</p>
-                            <p class="sold">${p.soldCount} vendidos</p>
-                        </div>
-                    </div>`;
+        fetch(PRODUCTS_URL + categoryId)
+            .then(resp => resp.json())
+            .then(data => {
+                let html = "";
+                for (const p of data.products) {
+                    if (p.id !== productData.id) {
+                        html += `<div class="col-12 col-sm-6 col-md-3 mb-4">
+                            <div class="product-card" id="product-${p.id}" style="cursor:pointer;">
+                                <img src="${p.image}" alt="Producto" class="product-image">
+                                <h5 class="fw-bold">${p.name}</h5>
+                                <p class="text-muted">${p.description}</p>
+                                <p class="price">${p.currency} ${p.cost}</p>
+                                <p class="sold">${p.soldCount} vendidos</p>
+                            </div>
+                        </div>`;
+                    }
                 }
-            }
-            interesContainer.innerHTML = html || `<p class="text-muted">No hay productos relacionados.</p>`;
-
-            data.products.forEach(p => {
-                const el = document.getElementById(`product-${p.id}`);
-                if (el) {
-                    el.addEventListener("click", () => {
-                        localStorage.setItem("producto", p.id);
-                        window.location.href = "product-info.html";
-                    });
-                }
-            });
-        })
-        .catch(err => console.error("Error productos relacionados:", err));
+                interesContainer.innerHTML = html || `<p class="text-muted">Error en la carga de productos.</p>`;
+                data.products.forEach(p => {
+                    const prodEl = document.getElementById(`product-${p.id}`);
+                    if (prodEl) {
+                        prodEl.addEventListener("click", () => {
+                            localStorage.setItem("producto", p.id);
+                            window.location.href = "product-info.html";
+                        });
+                    }
+                });
+            }).catch(err => console.error(err));
     }
 
     // ===== Categoria a ID =====
@@ -346,78 +311,57 @@ document.addEventListener("DOMContentLoaded", () => {
         if (spinner) spinner.style.display = "none";
     }
 
-// ===== AGREGAR AL CARRITO (AHORA CON /cart POST) =====
-    document.addEventListener("click", async (e) => {
-        const button = e.target.closest(".btn-cart");
-        if (!button) return;
+});
 
-        const productId = localStorage.getItem("producto");
-        if (!productId) return;
+/*document.addEventListener("click", (e) => {
+  const button = e.target.closest(".btn-cart");
+  if (button) {
+    // Ejemplo: guardar el producto en el carrito local
+    const productId = localStorage.getItem("producto");
+    if (productId) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (!cart.includes(productId)) {
+        cart.push(productId);
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+    }
 
-        try {
-            const resp = await fetch(`http://localhost:3000/products/${productId}`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
+    // Redirigir al carrito
+    window.location.href = "cart.html";
+  }
+}); */
+
+// === AGREGAR PRODUCTO AL CARRITO ===
+document.addEventListener("click", async (e) => {
+    const button = e.target.closest(".btn-cart");
+    if (!button) return;
+
+    const productId = localStorage.getItem("producto");
+    if (!productId) return;
+
+    try {
+        const resp = await fetch(PRODUCT_INFO_URL + productId + EXT_TYPE);
+        const data = await resp.json();
+
+        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+        const existing = cart.find(p => p.id === data.id);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({
+                id: data.id,
+                name: data.name,
+                cost: data.cost,
+                currency: data.currency,
+                image: data.images[0],
+                quantity: 1
             });
-
-            if (res.status === 401) {
-                alert("Sesión expirada. Por favor inicia sesión nuevamente.");
-                window.location.href = "login.html";
-                return;
-            }
-
-            const product = await resp.json();
-
-            // ENVIAMOS AL BACKEND (nuevo endpoint /cart)
-            const cartResponse = await fetch("http://localhost:3000/cart", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    id: product.id,
-                    name: product.name,
-                    cost: product.cost,
-                    currency: product.currency,
-                    image: product.images[0],
-                    quantity: 1
-                })
-            });
-
-            if (!cartResponse.ok) throw new Error("Error al agregar al carrito");
-
-            // También guardamos en localStorage para que cart.js lo vea rápido
-            let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-            const existing = cart.find(p => p.id == product.id);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    cost: product.cost,
-                    currency: product.currency,
-                    image: product.images[0],
-                    quantity: 1
-                });
-            }
-            localStorage.setItem("cart", JSON.stringify(cart));
-
-        } catch (err) {
-            console.error("Error:", err);
-            alert("No se pudo agregar al carrito. ¿Estás logueado?");
         }
-    });
 
-    // ===== INICIO =====
-if (localStorageProduct) {
-    loadProduct(localStorageProduct);
-} else {
-    productContainer.innerHTML = `<div class="text-center py-5"><h2>No hay producto seleccionado</h2></div>`;
-    const spinner = document.getElementById("spinner-wrapper");
-    if (spinner) spinner.style.display = "none";
-}
-
+        localStorage.setItem("cart", JSON.stringify(cart));
+        window.location.href = "cart.html";
+    } catch (err) {
+        console.error("Error al agregar al carrito:", err);
+    }
 });
