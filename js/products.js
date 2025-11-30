@@ -1,5 +1,18 @@
 
 let products = [];
+let allProducts = [];      // para los filtros
+let currentProducts = [];  // lo que se muestra en pantalla
+
+// ==================== PROTECCIÓN DE RUTA ====================
+const token = localStorage.getItem("token");
+
+if (!token) {
+  const paginaActual = location.pathname.split("/").pop();
+  if (!["login.html", "registro.html"].includes(paginaActual)) {
+    window.location.href = "login.html";
+  }
+}
+// ==============================================================
 
 // ---- Render ----
 function showProductsList(lista) {
@@ -134,22 +147,32 @@ dropdownItems.forEach(item => {
   });
 });
 
-// ---- Inicio ----
+// ==================== CARGA DE PRODUCTOS CON TOKEN ====================
 document.addEventListener("DOMContentLoaded", function () {
 
-  const catID = localStorage.getItem("catID");
-  const url = catID
-    ? PRODUCTS_URL + catID
-    : PRODUCTS_URL + "101";
+  const catID = localStorage.getItem("catID") || "101";
+  const url = `http://localhost:3000/products/category/${catID}`;
 
-  getJSONData(url).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      allProducts = resultObj.data.products || [];
-      // Primera carga: mostrar por relevancia
-      currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
-      showProductsList(currentProducts);
+  fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${token}`
     }
-  });
+  })
+  .then(res => {
+    if (res.status === 401) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    }
+    return res.json();
+  })
+  .then(data => {
+    // La respuesta del backend es: { catID, catName, products: [...] }
+    allProducts = data.products || [];
+    currentProducts = filterAndSort(allProducts, { min: null, max: null, entrega: "", stock: false, orden: "relevancia" });
+    showProductsList(currentProducts);
+  })
+  .catch(err => console.error("Error cargando productos:", err));
 
   // ---- FILTRO BUSCADOR ----
   const buscadorEl = getEl("buscador");

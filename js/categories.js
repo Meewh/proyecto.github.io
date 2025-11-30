@@ -6,6 +6,15 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
+// ==================== AUTH TOKEN (AGREGADO) ====================
+const token = localStorage.getItem("token");
+
+// Si no está logueado y no está en login/registro → lo mandamos al login
+if (!token && !["/login.html", "registro.html", "index.html"].includes(location.pathname.split("/").pop())) {
+    window.location.href = "login.html";
+}
+// ==============================================================
+
 function sortCategories(criteria, array) {
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME) {
@@ -51,7 +60,7 @@ function showCategoriesList() {
             htmlContentToAppend += `
             <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-getJSONData(CA">
                         <img src="${category.imgsrc}" alt="${category.description}" class="img-thumbnail">
                     </div>
                     <div class="col">
@@ -83,17 +92,33 @@ function sortAndShowCategories(sortCriteria, categoriesArray) {
     showCategoriesList();
 }
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
+// LO ÚNICO QUE CAMBIÉ AQUÍ ABAJO: agregué el header Authorization
 document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(CATEGORIES_URL).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            currentCategoriesArray = resultObj.data
-            showCategoriesList()
-            //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
+    fetch("http://localhost:3000/cats", {
+        headers: {
+            "Authorization": `Bearer ${token}`
         }
+    })
+    .then(res => {
+        if (res.status === 401) {
+            // Token inválido o expirado → lo mandamos al login
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location.href = "login.html";
+        }
+        return res.json();
+    })
+    .then(resultObj => {
+        if (resultObj) {
+            currentCategoriesArray = resultObj;
+            showCategoriesList();
+        }
+    })
+    .catch(err => {
+        console.error("Error cargando categorías:", err);
     });
+
+    // El resto de los event listeners siguen iguales
 
     document.getElementById("sortAsc").addEventListener("click", function () {
         sortAndShowCategories(ORDER_ASC_BY_NAME);
