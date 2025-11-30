@@ -1,4 +1,4 @@
-// Toggle password visibility
+
 const togglePassword = document.getElementById("togglePassword");
 const passwordInput = document.getElementById("contraseña");
 
@@ -6,9 +6,9 @@ if (togglePassword) {
     togglePassword.addEventListener("click", function() {
         const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
         passwordInput.setAttribute("type", type);
-        // Use Material Symbols names: 'visibility' when hidden, 'visibility_off' when shown
+
         this.textContent = type === "password" ? "visibility" : "visibility_off";
-        // Update aria label for accessibility
+
         this.setAttribute('aria-label', type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
     });
 }
@@ -23,13 +23,13 @@ function updateThemeIcon() {
     }
 }
 
-// Initialize theme icon on page load
+
 document.addEventListener("DOMContentLoaded", function() {
     updateThemeIcon();
 });
 
 document.getElementById("btnRegistro").addEventListener("click", function(){
-    //pagina de registro
+
     window.location.href = "registro.html";
 });
 
