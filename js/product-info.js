@@ -8,12 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentCommentsPage = 1;
     let allComments = [];
     let currentSort = "fecha";
+    let category;
 
     // ===== Cargar producto =====
     function loadProduct(productId) {
         fetch(PRODUCT_INFO_URL + productId)
             .then(resp => resp.json())
-            .then(productData => {
+            .then(async productData => {
+
+                // Fetch category name synchronously (await) before rendering
+                try {
+                    const catResp = await fetch(CATEGORIES_URL + productData.categoryid);
+                    const catData = await catResp.json();
+                    category = catData.name;
+                } catch (e) {
+                    console.error("Error loading category", e);
+                    category = "Desconocida";
+                }
+
                 renderProduct(productData);
                 setupCarousel();
                 setupImageSwitch();
@@ -25,8 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     addSortSelector();
                     setupCommentForm();
                 });
-
-
 
                 // ===== Ocultar filtro blanco =====
                 const spinner = document.getElementById("spinner-wrapper");
@@ -47,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Carrusel mobile/tablet -->
             <div id="carouselExampleIndicators" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                    <span class="category-badge">${data.categoryid}</span>
+                    <span class="category-badge">${category || data.categoryid}</span>
                     <div class="d-flex align-items-end mb-1">
                         <h3 class="mt-2 fw-bold">${data.name}</h3>
                         <small class="text-muted">${data.soldcount} vendidos</small>
@@ -99,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="col-md-4">
-                    <span class="category-badge">${data.categoryid}</span>
+                    <span class="category-badge">${category || data.categoryid}</span>
                     <div class="d-flex align-items-end">
                         <h3 class="mt-2 fw-bold">${data.name}</h3>
                         <small class="text-muted">${data.soldcount} vendidos</small>
