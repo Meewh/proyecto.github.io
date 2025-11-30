@@ -3,16 +3,6 @@ const router = express.Router();
 const productsService = require('../services/products');
 const catsService = require('../services/cats');
 
-//get de todos los productos
-router.get("/", async (req, res, next) => {
-    res.json(await productsService.getAllProducts())
-})
-
-//get de un producto por id
-router.get("/:id", async (req, res, next) => {
-    const product = productsService.getProductById(req.params.id);
-    res.json(product)
-})
 //get de todos los productos por categoría
 router.get("/category/:cat", async (req, res, next) => {
     const product = await productsService.getProductByCategory(req.params.cat);
@@ -27,6 +17,17 @@ router.get("/category/:cat", async (req, res, next) => {
         "catName": cat.name,
         "products": product
     })
+})
+
+//get de todos los productos
+router.get("/", async (req, res, next) => {
+    res.json(await productsService.getAllProducts())
+})
+
+//get de un producto por id
+router.get("/:id", async (req, res, next) => {
+    const product = productsService.getProductById(req.params.id);
+    res.json(product)
 })
 
 //post de un producto

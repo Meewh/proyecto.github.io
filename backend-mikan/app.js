@@ -13,6 +13,7 @@ const JWT_SECRET = "curso-jap-secret";
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
+var cartRouter = require('./routes/cart');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/cats', catsRouter);
+app.use('/cart', cartRouter);
 
 const users = JSON.parse(fs.readFileSync("./mock_bd/users.json", "utf8"));
 
