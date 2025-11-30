@@ -2,7 +2,7 @@ const db = require('./bd');
 
 async function getAllProductsInCart() {
     try {
-        const result = await db.query('SELECT * FROM cart');
+        const result = await db.query('SELECT * FROM cart ORDER BY id DESC');
         return result.rows;
     } catch (err) {
         console.error(err);
@@ -50,10 +50,21 @@ async function decreaseQuantity(id) {
     }
 }
 
+async function removeAllProductsFromCart() {
+    try {
+        const result = await db.query('DELETE FROM cart');
+        return result.rows;
+    } catch (err) {
+        console.error(err);
+        return { error: 'Error en la base de datos' };
+    }
+}
+
 module.exports = {
     getAllProductsInCart,
     addProductToCart,
     removeProductFromCart,
     increaseQuantity,
-    decreaseQuantity
+    decreaseQuantity,
+    removeAllProductsFromCart
 }

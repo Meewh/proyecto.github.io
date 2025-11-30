@@ -14,12 +14,12 @@ async function getAllProducts() {
 
 async function getProductById(id) {
     try {
-        const result = await db.query('SELECT * FROM products WHERE id = $1', [id]);
+        const result = await db.query('SELECT * FROM products where id = $1', [id]);
 
-        if (result.rows == []) {
+        if (result.rows.length === 0) {
             return { error: 'Producto no encontrado' };
         }
-        return result.rows;
+        return result.rows[0];
     } catch (err) {
         console.error(err);
         return { error: 'Error en la base de datos' };
@@ -29,7 +29,7 @@ async function getProductById(id) {
 async function getProductByCategory(cat) {
     try {
         const result = await db.query('SELECT * FROM products WHERE categoryid = $1', [cat]);
-        if (result.rows == []) {
+        if (result.rows.length === 0) {
             return { error: 'Producto no encontrado' };
         }
         return result.rows;

@@ -12,6 +12,11 @@ router.post('/', async (req, res) => {
     res.status(201).json(response);
 });
 
+router.delete('/all', async (req, res) => {
+    const response = await cartService.removeAllProductsFromCart();
+    res.status(204).json(response);
+});
+
 router.delete('/:id', async (req, res) => {
     const response = await cartService.removeProductFromCart(req.params.id);
     res.status(204).json(response);

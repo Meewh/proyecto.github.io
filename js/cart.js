@@ -7,6 +7,7 @@ const TASA_FALLBACK_UYU_USD = 43;
 let descuentoAplicado = 0;
 let costoEnvioPorcentaje = 0.05;
 let direccionGuardada = JSON.parse(localStorage.getItem("direccionPredeterminada")) || null;
+let cart = []; // Global cart state
 
 // Modal
 const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
@@ -19,6 +20,7 @@ let tooltipInstance = null;
 // DOMContentLoaded
 // ============================================================
 document.addEventListener("DOMContentLoaded", function () {
+  cargarCarrito(); // Cargar carrito desde el backend
   cargarTasaYActualizar();
   inicializarEventos();
   verificarBotonPagar();
@@ -30,6 +32,54 @@ document.addEventListener("DOMContentLoaded", function () {
     radio.addEventListener("change", actualizarTooltipDinamico);
   });
 });
+
+// ============================================================
+// CARGAR CARRITO (BACKEND + PRODUCT INFO)
+// ============================================================
+async function cargarCarrito() {
+  try {
+    // 1. Obtener items del carrito desde el backend
+    const cartResponse = await getJSONData(CART_URL);
+    if (cartResponse.status !== "ok") throw new Error("Error al obtener carrito");
+
+    const cartItems = cartResponse.data;
+
+    // 2. Para cada item, obtener detalles del producto en paralelo
+    const promises = cartItems.map(async (item) => {
+      // Intentar con productid (lowercase) o productId (camelCase)
+      const pid = item.productid || item.productId;
+      const productResponse = await getJSONData(PRODUCT_INFO_URL + pid);
+
+      if (productResponse.status === "ok") {
+        const productData = productResponse.data;
+        return {
+          cartItemId: item.id, // ID de la fila en la tabla cart
+          productId: pid,
+          name: productData.name,
+          cost: productData.cost,
+          currency: productData.currency,
+          image: productData.images, // Usar la imagen del backend local (singular)
+          soldcount: productData.soldcount,
+          quantity: item.quantity
+        };
+      }
+      return null;
+    });
+
+    // Esperar a que todas las promesas se resuelvan
+    const results = await Promise.all(promises);
+    cart = results.filter(item => item !== null);
+
+    console.log("Carrito cargado:", cart);
+    dibujarProductos();
+    actualizarSubtotal();
+
+  } catch (error) {
+    console.error("Error cargando el carrito:", error);
+    document.getElementById("cart-container").innerHTML =
+      `<div class="alert alert-danger text-center">Error al cargar el carrito. Intente nuevamente.</div>`;
+  }
+}
 
 // ============================================================
 // INICIALIZAR EVENTOS
@@ -116,7 +166,7 @@ async function obtenerTasaUSDToUYU() {
 
 async function cargarTasaYActualizar() {
   tasaUSDToUYU = await obtenerTasaUSDToUYU();
-  dibujarProductos();
+  // dibujarProductos(); // Ya se llama en cargarCarrito
   actualizarSubtotal();
 }
 
@@ -126,7 +176,7 @@ async function cargarTasaYActualizar() {
 async function actualizarSubtotal() {
   const subtotalElem = document.getElementById("subtotal");
   const shippingCostElem = document.getElementById("shipping-cost");
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  // const cart = JSON.parse(localStorage.getItem("cart")) || []; // USAR VARIABLE GLOBAL
 
   if (cart.length === 0) {
     subtotalElem.innerHTML = `<p class="text-muted mb-1">Subtotal</p><p class="fs-5 fw-bold">UYU 0</p>`;
@@ -410,52 +460,69 @@ function confirmarPago() {
   alert(`¡Pago confirmado por ${datos.metodo}!\n\n${Object.entries(datos).slice(1).map(([k, v]) => `${k}: ${v}`).join("\n")}`);
   paymentModal.hide();
   localStorage.removeItem("cart");
+  fetch(CART_DELETE_ALL_URL, { method: 'DELETE' });
+  cart = [];
   dibujarProductos();
   actualizarSubtotal();
   verificarBotonPagar();
 }
 
 // ============================================================
-// CARRITO
+// CARRITO - API
 // ============================================================
-function disminuirCantidad(i) {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  if (cart[i].quantity > 1) {
-    cart[i].quantity -= 1;
-    localStorage.setItem("cart", JSON.stringify(cart));
+async function disminuirCantidad(i) {
+  const item = cart[i];
+  if (item.quantity > 1) {
+    try {
+      const response = await fetch(CART_DECREASE_URL + item.cartItemId, { method: 'PATCH' });
+      if (response.ok) {
+        cargarCarrito(); // Recargar para actualizar
+      } else {
+        console.error("Error disminuyendo cantidad");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
   }
-  dibujarProductos();
-  actualizarSubtotal();
 }
 
-function aumentarCantidad(i) {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart[i].quantity += 1;
-  localStorage.setItem("cart", JSON.stringify(cart));
-  dibujarProductos();
-  actualizarSubtotal();
+async function aumentarCantidad(i) {
+  const item = cart[i];
+  try {
+    const response = await fetch(CART_INCREACE_URL + item.cartItemId, { method: 'PATCH' });
+    if (response.ok) {
+      cargarCarrito(); // Recargar para actualizar
+    } else {
+      console.error("Error aumentando cantidad");
+    }
+  } catch (error) {
+    console.error("Error de red:", error);
+  }
 }
 
-function eliminarProducto(i) {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.splice(i, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  dibujarProductos();
-  actualizarSubtotal();
+async function eliminarProducto(i) {
+  const item = cart[i];
+  if (confirm("¿Estás seguro de eliminar este producto?")) {
+    try {
+      const response = await fetch(CART_URL + item.cartItemId, { method: 'DELETE' });
+      if (response.ok) {
+        cargarCarrito();
+      } else {
+        console.error("Error eliminando producto");
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
+  }
 }
 
 function dibujarProductos() {
   const container = document.getElementById("cart-container");
 
-  if (localStorage.getItem("cart") == "") {
-    console.log("alo")
+  if (cart.length === 0) {
     container.innerHTML = `<div class="alert-secondary text-center p-4">No hay productos en el carrito.</div>`;
     return;
   }
-
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-
 
   let tableMode = darkModeTable();
 
@@ -476,7 +543,7 @@ function dibujarProductos() {
     const total = p.cost * p.quantity;
     tabla += `
       <tr>
-        <td><img src="${p.image}" style="width:60px;height:60px;object-fit:cover;" class="me-2">${p.name}</td>
+        <td><img src="${p.image != null ? p.image[0] : ''}" style="width:60px;height:60px;object-fit:cover;" class="me-2">${p.name}</td>
         <td class="text-center">
           <button onclick="disminuirCantidad(${i})" class="btn btn-sm btn-outline-secondary">-</button>
           ${p.quantity}
@@ -494,15 +561,13 @@ function dibujarProductos() {
 
   tabla += `</tbody></table>`;
   container.innerHTML = tabla;
-
 }
 
 function darkModeTable() {
   let mode = localStorage.getItem("dark");
   if (mode == "true") {
-    tableMode = "table-dark";
+    return "table-dark";
   } else {
-    tableMode = "table-light";
+    return "table-light";
   }
-  return tableMode;
 };
