@@ -1,0 +1,365 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* evita desbordes */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: #F09100;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    align-items: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 16px 0;
+    /* centra el card en la página */
+}
+
+footer {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+.logo-header {
+    width: 48px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/*para que el responsive mantenga la estetica*/
+.login-container {
+    background: #F09100;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-sizing: border-box;
+    max-width: 900px;
+    /*  en desktop */
+    width: 100%;
+    /*  ocupa todo en pantallas chicas */
+}
+
+/*para que disminuya la letra en ipohne*/
+@media (max-width: 575px) {
+    .form-left h2 {
+        font-size: 22px;
+    }
+
+    .btn-ingresar {
+        font-size: 18px;
+    }
+}
+
+.form-left {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-left h2 {
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+.logo {
+    width: 200px;
+    border-radius: 8px;
+}
+
+.logo-header {
+    width: 60px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+
+.form-right {
+    /* parte derecha del form */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-group {
+    position: relative;
+    margin: 20px 0;
+
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    background: transparent;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+}
+
+.input-group label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #F09100;
+    padding: 0 5px;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+
+
+
+button {
+    flex: 1;
+    background: #ffffff;
+    color: #f09100;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #d88201;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+
+.error {
+    /* error abajo */
+    color: #ffcccc;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/*ajuste para que quede igual los botones al figma*/
+/* todo */
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* ingresar boton */
+.btn-ingresar {
+    width: 60%;
+    background: #ffffff;
+    color: #f09100;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 10px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-ingresar:hover {
+    background: #f09100;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+/* texto de arriba */
+.registro-text {
+    margin-top: 5px;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+}
+
+header #theme {
+    color: #ffffff;
+    font-size: medium;
+    font-weight: normal;
+}
+
+/* registrate de forma centrada */
+.link-registro {
+    font-weight: bold;
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-top: -20px;
+    text-align: center;
+}
+
+.link-registro:hover {
+    text-decoration: underline;
+}
+
+.link-registro,
+.link-registro:visited,
+.link-registro:hover,
+.link-registro:active {
+    color: #ffffff;
+
+}
+
+/*fin*/
+
+/* para hacer que el boton inicio quede bonito y no se vuelva azul y subrayando al ponerl el mouse*/
+.header-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+/* para que se deje de cambiar a color azul y subrayarce por el <a> */
+.header-link,
+.header-link:visited,
+.header-link:hover,
+.header-link:active {
+    color: #ffffff;
+
+    text-decoration: none;
+}
+
+
+/* ----------------dark mode----------------- */
+
+header.dark {
+    background: #FFB74D;
+    color: #2B2B2B;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    align-items: center;
+}
+
+header.dark span {
+    color: #2B2B2B;
+}
+
+header.dark #theme {
+    color: #2B2B2B;
+    font-size: medium;
+    font-weight: normal;
+}
+
+body.dark {
+    background-color: #2B2B2B;
+}
+
+#login-container.dark {
+    background-color: #FFB74D;
+}
+
+#login-container.dark label {
+    background-color: #FFB74D;
+    color: #2B2B2B;
+}
+
+#login-container.dark h2 {
+    color: #2B2B2B;
+}
+
+#login-container.dark p {
+    color: #2B2B2B;
+}
+
+#login-container.dark a {
+    color: #2B2B2B;
+}
+
+#login-container.dark input {
+    border-color: #2B2B2B;
+    color: #2B2B2B;
+}
+
+#login-container.dark button {
+    background-color: #FFB74D;
+    color: #2B2B2B;
+    border: 1px solid #2B2B2B;
+}
+
+#login-container.dark button:hover {
+    background: #2B2B2B;
+    color: #FFB74D;
+    border: 1px solid #2B2B2B;
+}
+
+/* ---------------- TOAST PERSONALIZADO ---------------- */
+
+.custom-toast {
+    background: #d9534f !important;
+    /* rojo profesional */
+    color: #fff !important;
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    font-size: 15px;
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Botón cerrar */
+.custom-toast .btn-close {
+    filter: brightness(0) invert(1);
+    /* blanco puro */
+}
+
+/* ---------------- TOAST DARK MODE ---------------- */
+
+body.dark .custom-toast {
+    background: #c62828 !important;
+    /* rojo más oscuro para dark mode */
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+}

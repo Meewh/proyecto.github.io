@@ -1,0 +1,115 @@
+/* === ESTILOS GENERALES === */
+body {
+    background-color: #fff7f4;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* === CONTENEDOR DE PERFIL === */
+.contenedor-perfil {
+    text-align: center;
+}
+
+/* === TARJETA PRINCIPAL === */
+.tarjeta-perfil {
+    background-color: #fffdfb;
+    border-radius: 15px;
+    max-width: 900px;
+}
+
+/* === CONTENEDOR DE IMAGEN === */
+.col-12.col-md-4.text-center.position-relative {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* espacio entre imagen y botón */
+}
+
+/* === IMAGEN DE PERFIL === */
+.imagen-perfil,
+#foto_perfil {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* evita deformaciones */
+    object-position: center;
+    border: 3px solid #f09100;
+    background-color: #fffdfb;
+    display: block;
+}
+
+/* === BOTÓN DE EDITAR FOTO (debajo de la imagen) === */
+.boton-editar-foto {
+    position: static;
+    border-radius: 50%;
+    padding: 8px 10px;
+    font-size: 1rem;
+    background-color: #fff;
+    border: 2px solid #f09100;
+    color: #f09100;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.boton-editar-foto:hover {
+    background-color: #f09100;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* === FORMULARIOS === */
+.form-control {
+    border-color: #f09100;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #f09100;
+    box-shadow: 0 0 0 0.2rem rgba(247, 168, 142, 0.25);
+}
+
+/* === BOTONES === */
+.btn-warning {
+    background-color: #f09100;
+    border: none;
+    color: #fff;
+    transition: background-color 0.2s ease;
+}
+
+.btn-warning:hover {
+    background-color: #e08000;
+}
+
+/* === TEXTOS === */
+.text-warning {
+    color: #f09100;
+}
+
+/* === RESPONSIVE === */
+
+/* Tablets */
+@media (min-width: 576px) {
+
+    .imagen-perfil,
+    #foto_perfil {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Pantallas grandes (desktop) */
+@media (min-width: 992px) {
+
+    .imagen-perfil,
+    #foto_perfil {
+        width: 230px;
+        height: 230px;
+    }
+
+    .contenedor-perfil {
+        text-align: left;
+    }
+}
