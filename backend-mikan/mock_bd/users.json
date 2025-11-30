@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "correo": "cat@gmail.com",
+    "nombre": "Cucaracha",
+    "apellido": "Petrobras",
+    "telefono": "099654321",
+    "contraseña": "123456"
+  }
+]

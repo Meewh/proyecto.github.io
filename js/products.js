@@ -251,8 +251,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const catID = localStorage.getItem("catID");
   const url = catID
-    ? `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`
-    : `https://japceibal.github.io/emercado-api/cats_products/101.json`;
+    ? PRODUCTS_URL + catID
+    : PRODUCTS_URL + "101";
 
   getJSONData(url).then(function (resultObj) {
     if (resultObj.status === "ok") {
@@ -291,11 +291,19 @@ document.addEventListener("DOMContentLoaded", function () {
       showProductsList(filtrados);
     });
   }
+      showProductsList(filtrados);
+    });
+  }
 
   // Botones
   const btnAplicar = getEl("aplicar-filtros");
   if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
+  // Botones
+  const btnAplicar = getEl("aplicar-filtros");
+  if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
 
+  const btnLimpiar = getEl("limpiar-filtros");
+  if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
   const btnLimpiar = getEl("limpiar-filtros");
   if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
 

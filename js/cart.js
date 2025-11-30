@@ -513,5 +513,17 @@ function dibujarProductos() {
     `;
   });
 
-  container.innerHTML = html;
+  tabla += `</tbody></table>`;
+  container.innerHTML = tabla;
+
 }
+
+function darkModeTable() {
+  let mode = localStorage.getItem("dark");
+  if (mode == "true") {
+    tableMode = "table-dark";
+  } else {
+    tableMode = "table-light";
+  }
+  return tableMode;
+};
