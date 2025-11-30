@@ -1,21 +1,12 @@
 let allProducts = [];
 let currentProducts = [];
-
+let products = [];
 // ---- Render con estilo Tailwind ----
 function showProductsList(lista) {
   const cont = document.getElementById("product-list-container");
   if (!cont) return;
 
   let html = "";
-
-  if (lista.length === 0) {
-    html = `
-            <div class="col-span-full text-center py-16">
-                <span class="material-symbols-outlined text-6xl text-accent/40 dark:text-muted-dark mb-4">search_off</span>
-                <p class="text-xl text-accent/70 dark:text-muted-dark">No hay productos que coincidan con los filtros.</p>
-            </div>
-        `;
-  } else {
     for (const p of lista) {
       // Determinar badge de condición
       let conditionBadge = '';
@@ -46,10 +37,8 @@ function showProductsList(lista) {
                 </div>
             `;
     }
-  }
-
-  cont.innerHTML = html;
-
+    cont.innerHTML = html;
+  
   // Asignar evento click a cada producto
   lista.forEach(p => {
     const prodEl = document.getElementById(`product-${p.id}`);
@@ -61,7 +50,17 @@ function showProductsList(lista) {
     }
   });
 }
-
+async function getJSONData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Error en la request");
+    const data = await response.json();
+    return { status: "ok", data };
+  } catch (error) {
+    console.error(error);
+    return { status: "error", data: null };
+  }
+}
 // ---- Helpers ----
 function getEl(id) {
   return document.getElementById(id);
@@ -250,9 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupOrdenarDropdown();
 
   const catID = localStorage.getItem("catID");
-  const url = catID
-    ? PRODUCTS_URL + catID
-    : PRODUCTS_URL + "101";
+  const PRODUCTS_URL = "http://localhost:3000/products/category/"; 
 
   getJSONData(url).then(function (resultObj) {
     if (resultObj.status === "ok") {
@@ -291,19 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showProductsList(filtrados);
     });
   }
-      showProductsList(filtrados);
-    });
-  }
 
-  // Botones
-  const btnAplicar = getEl("aplicar-filtros");
-  if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
-  // Botones
-  const btnAplicar = getEl("aplicar-filtros");
-  if (btnAplicar) btnAplicar.addEventListener("click", aplicarFiltros);
-
-  const btnLimpiar = getEl("limpiar-filtros");
-  if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
   const btnLimpiar = getEl("limpiar-filtros");
   if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFiltros);
 
