@@ -1,9 +1,0 @@
-# Configuración de IntelliJ/WebStorm
-.idea/
-
-# Opcional: si quieres ignorar solo algunos archivos dentro de .idea en lugar de toda la carpeta
-# .idea/workspace.xml
-# .idea/shelf/
-
-# Archivos sensibles
-.env

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     // Carga de categorías y creación de cards
-    const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
     const categoriesContainer = document.getElementById("categories-container");
 
     fetch(CATEGORIES_URL)

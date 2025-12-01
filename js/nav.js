@@ -73,31 +73,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const userMenu = document.getElementById("userMenu");
   const bienvenida = document.getElementById("bienvenida");
   const flecha = document.getElementById("flecha");
-  const usuario = localStorage.getItem("usuario");
-  const logueado = localStorage.getItem("logueado");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
 
 
-  if (logueado !== "true" || !usuario) {
-    let deseaLogin = confirm("No has iniciado sesión, ¿deseas hacerlo?"); //esto pregunta si quieres iniciar sesion o no
+  if (!token) {
+    let deseaLogin = confirm("No has iniciado sesión, ¿deseas hacerlo?");
     if (deseaLogin) {
       window.location.href = "login.html";
-      return; // para que no siga ejecutando el resto
+      return;
     } else {
       bienvenida.textContent = "Iniciar sesión";
       userMenu.innerHTML = `
-              <li style="padding: 8px 12px; cursor: pointer;"><a href="login.html">Login</a></li>
-              <li style="padding: 8px 12px; cursor: pointer;"><a href="registro.html">Crear cuenta</a></li>
-            `;
+      <li><a href="login.html">Login</a></li>
+      <li><a href="registro.html">Crear cuenta</a></li>
+    `;
     }
   } else {
-    // user logueado
-    bienvenida.textContent = usuario;
+    const nombreMostrar = user.nombre || "Usuario";
+
+    bienvenida.textContent = nombreMostrar;
     userMenu.innerHTML = `
-          <li style="padding: 8px 12px; cursor: pointer;"><a href="my-profile.html">Mi Perfil</a></li>
-          <li style="padding: 8px 12px; cursor: pointer;">
-            <button id="logoutBtn" style="background:none;border:none;cursor:pointer;">Cerrar sesión</button>
-          </li>
-        `;
+    <li><a href="my-profile.html">Mi Perfil</a></li>
+    <li><button id="logoutBtn">Cerrar sesión</button></li>
+  `;
   }
 
   let abierto = false; //abre y cierra menu

@@ -8,12 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentCommentsPage = 1;
     let allComments = [];
     let currentSort = "fecha";
+    let category;
 
     // ===== Cargar producto =====
     function loadProduct(productId) {
-        fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
+        fetch(PRODUCT_INFO_URL + productId)
             .then(resp => resp.json())
-            .then(productData => {
+            .then(async productData => {
+
+                // Fetch category name synchronously (await) before rendering
+                try {
+                    const catResp = await fetch(CATEGORIES_URL + productData.categoryid);
+                    const catData = await catResp.json();
+                    category = catData.name;
+                } catch (e) {
+                    console.error("Error loading category", e);
+                    category = "Desconocida";
+                }
+
                 renderProduct(productData);
                 setupCarousel();
                 setupImageSwitch();
@@ -25,8 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     addSortSelector();
                     setupCommentForm();
                 });
-
-
 
                 // ===== Ocultar filtro blanco =====
                 const spinner = document.getElementById("spinner-wrapper");
@@ -47,10 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Carrusel mobile/tablet -->
             <div id="carouselExampleIndicators" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                    <span class="category-badge">${data.category}</span>
+                    <span class="category-badge">${category || data.categoryid}</span>
                     <div class="d-flex align-items-end mb-1">
                         <h3 class="mt-2 fw-bold">${data.name}</h3>
-                        <small class="text-muted">${data.soldCount} vendidos</small>
+                        <small class="text-muted">${data.soldcount} vendidos</small>
                     </div>
                     <div class="carousel-inner">
                         ${imgs.map((img, idx) => `
@@ -99,10 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="col-md-4">
-                    <span class="category-badge">${data.category}</span>
+                    <span class="category-badge">${category || data.categoryid}</span>
                     <div class="d-flex align-items-end">
                         <h3 class="mt-2 fw-bold">${data.name}</h3>
-                        <small class="text-muted">${data.soldCount} vendidos</small>
+                        <small class="text-muted">${data.soldcount} vendidos</small>
                     </div>
                     <p class="mt-2">${data.description}</p>
                     <div class="d-flex justify-content-between align-items-baseline">
@@ -144,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const categoryId = getCategoryId(productData.category);
         if (!categoryId) return;
 
-        fetch(`https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`)
+        fetch(PRODUCTS_URL + categoryId)
             .then(resp => resp.json())
             .then(data => {
                 let html = "";
@@ -313,58 +323,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/*document.addEventListener("click", (e) => {
-  const button = e.target.closest(".btn-cart");
-  if (button) {
-    // Ejemplo: guardar el producto en el carrito local
-    const productId = localStorage.getItem("producto");
-    if (productId) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      if (!cart.includes(productId)) {
-        cart.push(productId);
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
-    }
-
-    // Redirigir al carrito
-    window.location.href = "cart.html";
-  }
-}); */
-
 // === AGREGAR PRODUCTO AL CARRITO ===
 document.addEventListener("click", async (e) => {
     const button = e.target.closest(".btn-cart");
     if (!button) return;
 
+    const userId = JSON.parse(localStorage.getItem("user")).id;
     const productId = localStorage.getItem("producto");
-    if (!productId) return;
 
     try {
-        const resp = await fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`);
-        const data = await resp.json();
+        fetch(CART_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "idUser": userId,
+                "productId": productId,
+                "quantity": 1
+            })
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "cart.html";
+            } else {
+                throw Error(response.statusText);
+            }
+        });
 
-        let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-        const existing = cart.find(p => p.id === data.id);
-        if (existing) {
-            existing.quantity++;
-        } else {
-            cart.push({
-                id: data.id,
-                name: data.name,
-                cost: data.cost,
-                currency: data.currency,
-                image: data.images[0],
-                quantity: 1
-            });
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-        window.location.href = "cart.html";
     } catch (err) {
         console.error("Error al agregar al carrito:", err);
     }
 });
-
-
-

@@ -3,21 +3,44 @@ document.getElementById("btnRegistro").addEventListener("click", function(){
     window.location.href = "registro.html";
 });
 
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault(); // evita que recargue la página y se pierda las cosas
+async function login(event) {
+    event.preventDefault();
 
-    const usuario = document.getElementById("usuario").value;
+    const correo = document.getElementById("correo").value;
     const contraseña = document.getElementById("contraseña").value;
 
-    if (usuario.trim() !== "" && contraseña.trim() !== "") {
-        // guarda sesion
-        localStorage.setItem("usuario", usuario);
-        localStorage.setItem("logueado", "true");
-    
-        // redirigir al inicio
-        window.location.href = "index.html";
-    } else {
-        document.getElementById("mensaje").textContent = "Por favor, completa todos los campos.";
-    }
-});
+    try {
+        const res = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ correo, contraseña })
+        });
 
+        const data = await res.json();
+
+        // SI EL LOGIN Falla → Mostrar toast
+        if (!res.ok) {
+            mostrarToast(data.message || "Error al iniciar sesión");
+            return;
+        }
+
+        // Guardar datos en localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Redirigir
+        window.location.href = "index.html";
+
+    } catch (err) {
+        mostrarToast("No se pudo conectar con el servidor");
+    }
+}
+
+function mostrarToast(msg) {
+    const toastEl = document.getElementById("toastMsg");
+    const toastText = document.getElementById("toastText");
+    const toast = new bootstrap.Toast(toastEl);
+
+    toastText.textContent = msg;
+    toast.show();
+}
