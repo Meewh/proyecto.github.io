@@ -121,8 +121,7 @@ Guardar los ítems del carrito en la base de datos.
 - Recibe un array de productos:
   ```json
   { "id", "nombre", "cantidad", "precio" }
-````
-````
+  
 * Inserta o actualiza registros en `Carrito_Productos`
 * Devuelve confirmación al frontend
 * Actualiza el badge del carrito dinámicamente
