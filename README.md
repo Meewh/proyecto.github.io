@@ -1,6 +1,8 @@
 # 🛒 Proyecto E-commerce – Backend & Frontend  
 **Entrega 8 – Jóvenes a Programar 2025 (Grupo 3)**
-
+<p align="center">
+<img src="https://drive.google.com/uc?export=view&id=1Z2CJTgfnIR9V8uVDHmt-NuTaCAUCCZOP" width="600">
+<p>
 Proyecto de e-commerce con **backend en Node.js + Express**, **autenticación con JWT**, **carrito persistido en base de datos** y frontend conectado mediante endpoints REST.
 
 > _“Kenny le quitó la varita a Naty sin saber usarla… pero el backend sí sabe lo que hace.”_
@@ -218,3 +220,7 @@ Colección lista para importar:
 ✔ Carrito persistente
 ✔ Backend y frontend integrados
 ✔ Base de datos operativa
+
+---
+
+Documento de drive original: https://docs.google.com/document/d/1kCXhCbcLuMypBaoVoZmmR4igzFQnklYUYIqC-OFTvdQ/edit?usp=sharing
